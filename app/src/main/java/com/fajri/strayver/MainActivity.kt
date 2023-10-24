@@ -6,24 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.fajri.strayver.ui.theme.Pink500
+import androidx.navigation.compose.rememberNavController
+import com.fajri.strayver.navigation.Navigation
 import com.fajri.strayver.ui.theme.Type
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@OptIn(ExperimentalPagerApi::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Greeting("Isya")
+            val navController= rememberNavController()
+            Navigation(navController = navController)
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-        color = Pink500,
-        style = Type.textMdRegular()
-    )
 }

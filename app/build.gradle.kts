@@ -1,16 +1,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.fajri.strayver"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.fajri.strayver"
-        minSdk = 24
-        targetSdk = 33
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -40,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
     packaging {
         resources {
@@ -66,4 +68,29 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //viewModel
+    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+
+    //navigation
+    implementation ("androidx.navigation:navigation-compose:2.7.4")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    // Icons
+    implementation ("androidx.compose.material:material-icons-extended:1.5.3")
+
+    //Dagger - Hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    ksp("com.google.dagger:hilt-compiler:2.48")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
+
+    // Pager and Indicators - Accompanist
+    implementation ("com.google.accompanist:accompanist-pager:0.24.2-alpha")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.24.2-alpha")
+
+    // DataStore Preferences
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }
