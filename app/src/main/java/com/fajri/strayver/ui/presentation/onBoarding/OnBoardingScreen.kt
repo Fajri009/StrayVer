@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.fajri.strayver.model.OnBoardData
 import com.fajri.strayver.ui.presentation.component.CustomButton
@@ -33,7 +34,9 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
 @Composable
-fun OnBoardAdapter() {
+fun OnBoardAdapter(
+    viewModel: OnBoardViewModel= hiltViewModel()
+) {
     val screens = screenList
     val pagerState = rememberPagerState()
     val scope= rememberCoroutineScope()
@@ -60,7 +63,7 @@ fun OnBoardAdapter() {
         )
         Spacer(modifier = Modifier.height(50.dp))
         AnimatedVisibility(visible = pagerState.currentPage == 3) {
-            ChooseRole()
+            ChooseRole(viewModel)
         }
 
         AnimatedVisibility(visible = pagerState.currentPage != (screens.size - 1)) {

@@ -14,24 +14,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomOutlinedButton
+import com.fajri.strayver.ui.presentation.onBoarding.OnBoardViewModel
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun ChooseRole() {
+fun ChooseRole(viewModel: OnBoardViewModel) {
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Masuk Sebagai", style = Type.textSmSemiBold(), color = Primary900)
         Spacer(modifier = Modifier.height(12.dp))
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             CustomOutlinedButton(
-                onClick = { /*TODO*/ }, text = "Relawan",
+                onClick = {
+                    viewModel.setOnBoardingCompleted()
+                },
+                text = "Relawan",
                 Modifier
                     .width(155.dp)
                     .height(48.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
             CustomButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    viewModel.setOnBoardingCompleted()
+                },
                 text = "Member",
                 Modifier
                     .width(155.dp)
