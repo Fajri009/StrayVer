@@ -28,6 +28,7 @@ fun ChooseRole(viewModel: OnBoardViewModel) {
             CustomOutlinedButton(
                 onClick = {
                     viewModel.setOnBoardingCompleted()
+                    viewModel.setAccountRole("relawan")
                 },
                 text = "Relawan",
                 Modifier
@@ -38,6 +39,7 @@ fun ChooseRole(viewModel: OnBoardViewModel) {
             CustomButton(
                 onClick = {
                     viewModel.setOnBoardingCompleted()
+                    viewModel.setAccountRole("member")
                 },
                 text = "Member",
                 Modifier
