@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.map
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Key.ONBOARD_KEY)
 
 class OnBoardRepository(context: Context) {
-
     private val dataStore= context.dataStore
     val onBoardIsCompletedKey = booleanPreferencesKey(Key.ONBOARD_COMPLETE_KEY)
     val roleKey= stringPreferencesKey(Key.ROLE_KEY)
