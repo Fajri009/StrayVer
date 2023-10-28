@@ -17,4 +17,10 @@ class OnBoardViewModel @Inject constructor (
             repository.setCompleted()
         }
     }
+
+    fun setAccountRole(role: String) {
+        viewModelScope.launch {
+            repository.setRole(role)
+        }
+    }
 }

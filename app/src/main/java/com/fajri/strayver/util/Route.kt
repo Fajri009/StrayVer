@@ -4,4 +4,5 @@ object Route {
     const val ONBOARD= "Onboarding"
     const val LOGIN= "Login"
     const val LUPASANDI= "LupaSandi"
+    const val MEMBER_HOME= "Home"
 }

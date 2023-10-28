@@ -20,13 +20,17 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomCheckBox
 import com.fajri.strayver.ui.presentation.component.CustomTextField
+import com.fajri.strayver.ui.presentation.login.component.Form
+import com.fajri.strayver.ui.presentation.login.component.Greeting
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Neutral900
@@ -36,8 +40,13 @@ import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun LoginScreen(navController: NavController) {
-    val viewModel = viewModel<LoginViewModel>()
+fun LoginScreen(
+    navController: NavController,
+    viewModel: LoginViewModel= hiltViewModel()
+) {
+
+    val context= LocalContext.current
+
     Box(
         Modifier
             .fillMaxSize()
@@ -65,62 +74,18 @@ fun LoginScreen(navController: NavController) {
                     .padding(20.dp),
             ) {
                 Column {
-                    Text(
-                        text = "Selamat Datang,",
-                        color = Primary900,
-                        style = Type.textLgSemiBold()
-                    )
-                    Text(
-                        text = "Halo, silahkan masuk untuk melanjutkan!",
-                        color = Neutral700,
-                        style = Type.textXsRegular()
-                    )
+                    Greeting()
+
                     Spacer(modifier = Modifier.height(25.dp))
-                    Text(
-                        text = "Email",
-                        style = Type.textSmMedium()
-                    )
-                    CustomTextField(
-                        text = viewModel.email,
-                        placeholder = "",
-                        onValueChange = { viewModel.email = it }
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Text(
-                        text = "Sandi",
-                        style = Type.textSmMedium()
-                    )
-                    CustomTextField(
-                        text = viewModel.sandi,
-                        placeholder = "",
-                        trailingIcon = Icons.Filled.Visibility
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            CustomCheckBox()
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Text(
-                                text = "Ingat saya",
-                                style = Type.text2xsRegular(),
-                                color = Neutral900
-                            )
-                        }
-                        Text(
-                            modifier = Modifier
-                                .clickable { viewModel.handleLupaSandi(navController) },
-                            text = "Lupa Sandi?",
-                            style = Type.text2xsRegular(),
-                            color = Primary800,
-                        )
-                    }
+
+                    Form(viewModel, navController)
+
                     Spacer(modifier = Modifier.height(30.dp))
-                    CustomButton(onClick = { }, text = "Login")
+
+                    CustomButton(onClick = {
+                        viewModel.onSubmit(context)
+                    }, text = "Login")
+
                     Spacer(modifier = Modifier.height(30.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),

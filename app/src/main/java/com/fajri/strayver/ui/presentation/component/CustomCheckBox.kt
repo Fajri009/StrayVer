@@ -21,7 +21,7 @@ import com.fajri.strayver.ui.theme.Primary800
 @Composable
 fun CustomCheckBox (
     onClick: () -> Unit = {},
-    isClicked: Boolean = false
+    isClicked: Boolean = false,
 ) {
     Box(
         modifier = Modifier
