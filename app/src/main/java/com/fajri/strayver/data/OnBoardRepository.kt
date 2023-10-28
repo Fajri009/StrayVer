@@ -16,6 +16,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Key
 class OnBoardRepository(context: Context) {
     private val dataStore= context.dataStore
     val onBoardIsCompletedKey = booleanPreferencesKey(Key.ONBOARD_COMPLETE_KEY)
+    val roleKey= stringPreferencesKey(Key.ROLE_KEY)
 
     val isCompleted: Flow<Boolean> =
         dataStore.data
@@ -26,6 +27,18 @@ class OnBoardRepository(context: Context) {
     suspend fun setCompleted() {
         dataStore.edit { pref ->
             pref[onBoardIsCompletedKey]= true
+        }
+    }
+
+    val getRole: Flow<String> =
+        dataStore.data
+            .map { pref ->
+                pref[roleKey] ?: ""
+            }
+
+    suspend fun setRole(role: String) {
+        dataStore.edit { pref ->
+            pref[roleKey]= role
         }
     }
 }
