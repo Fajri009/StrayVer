@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -36,47 +37,56 @@ import kotlinx.coroutines.launch
 @ExperimentalPagerApi
 @Composable
 fun OnBoardAdapter(
-    viewModel: OnBoardViewModel= hiltViewModel(),
+    viewModel: OnBoardViewModel = hiltViewModel(),
     navController: NavController
 ) {
     val screens = screenList
     val pagerState = rememberPagerState()
-    val scope= rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
-    Column(
+    LazyColumn(
         Modifier
             .fillMaxSize()
             .padding(start = 20.dp, end = 20.dp, top = 60.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        HorizontalPager(count = screens.size, state = pagerState) { position ->
-            OnBoardingScreen(screen = screens[position])
-        }
-        Spacer(modifier = Modifier.height(60.dp))
-        HorizontalPagerIndicator(
-            pagerState = pagerState,
-            Modifier
-                .align(Alignment.CenterHorizontally),
-            indicatorHeight = 6.dp,
-            indicatorWidth = 30.dp,
-            activeColor = Primary700,
-            inactiveColor = Neutral300,
-            spacing = 6.dp
-        )
-        Spacer(modifier = Modifier.height(50.dp))
-        AnimatedVisibility(visible = pagerState.currentPage == 3) {
-            ChooseRole(viewModel, navController)
+        item {
+            HorizontalPager(count = screens.size, state = pagerState) { position ->
+                OnBoardingScreen(screen = screens[position])
+            }
+            Spacer(modifier = Modifier.height(60.dp))
+
         }
 
-        AnimatedVisibility(visible = pagerState.currentPage != (screens.size - 1)) {
-            CustomButton(
-                onClick = {
-                    scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                    }
-                },
-                text = "Selanjutnya"
+        item {
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                indicatorHeight = 6.dp,
+                indicatorWidth = 30.dp,
+                activeColor = Primary700,
+                inactiveColor = Neutral300,
+                spacing = 6.dp
             )
+            Spacer(modifier = Modifier.height(50.dp))
+        }
+
+        item {
+            AnimatedVisibility(visible = pagerState.currentPage == 3) {
+                ChooseRole(viewModel, navController)
+            }
+        }
+
+        item {
+            AnimatedVisibility(visible = pagerState.currentPage != (screens.size - 1)) {
+                CustomButton(
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        }
+                    },
+                    text = "Selanjutnya"
+                )
+            }
         }
     }
 }

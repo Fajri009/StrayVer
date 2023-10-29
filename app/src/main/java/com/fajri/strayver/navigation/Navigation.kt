@@ -22,7 +22,7 @@ fun Navigation(navController: NavHostController, startDestination: String) {
             OnBoardAdapter(navController = navController)
         }
         composable(Route.REGISTER) {
-            RegisterScreen()
+            RegisterScreen(navController)
         }
         composable(Route.LOGIN) {
             LoginScreen(navController = navController)

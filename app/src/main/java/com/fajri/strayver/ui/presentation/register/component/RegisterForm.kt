@@ -10,14 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.register.RegisterViewModel
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun Form(viewModel: RegisterViewModel, navController: NavController) {
+fun RegisterForm(viewModel: RegisterViewModel, navController: NavController) {
     Column(
         Modifier
             .fillMaxSize()
@@ -36,6 +35,7 @@ fun Form(viewModel: RegisterViewModel, navController: NavController) {
                 viewModel.onChangeNama(it)
             }
         )
-        Spacer(modifier = Modifier.height())
+        Spacer(modifier = Modifier.height(6.dp))
+        Text(text = "Nama Lengkap", style = Type.textSmMedium())
     }
 }

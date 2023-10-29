@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.fajri.strayver.data.repository.FirebaseRepository
+import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.data.repository.OnBoardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: OnBoardRepository,
-    private val firebase: FirebaseRepository
+    private val firebase: UserRepository
 ) : ViewModel() {
 
     private val _email: MutableState<String> = mutableStateOf("")

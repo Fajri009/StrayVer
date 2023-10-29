@@ -46,6 +46,7 @@ fun Form(viewModel: LoginViewModel, navController: NavController) {
         text = viewModel.sandi.value,
         placeholder = "",
         trailingIcon = Icons.Filled.Visibility,
+        isPassword = true,
         onValueChange = {
             viewModel.onChangePassword(it)
         }
