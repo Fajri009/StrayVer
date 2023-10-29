@@ -1,4 +1,4 @@
-package com.fajri.strayver.data
+package com.fajri.strayver.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore

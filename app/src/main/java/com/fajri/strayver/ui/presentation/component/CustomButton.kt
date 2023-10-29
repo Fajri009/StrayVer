@@ -13,7 +13,11 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun CustomButton(onClick: () -> Unit, text: String, modifier: Modifier= Modifier.fillMaxWidth()) {
+fun CustomButton(
+    onClick: () -> Unit,
+    text: String,
+    modifier: Modifier= Modifier.fillMaxWidth()
+) {
     Button(
         onClick = {
             onClick()
@@ -22,6 +26,10 @@ fun CustomButton(onClick: () -> Unit, text: String, modifier: Modifier= Modifier
         shape = RoundedCornerShape(10.dp),
         modifier = modifier
     ) {
-        Text(text = text, style = Type.textSmSemiBold(), color = Shades50)
+        Text(
+            text = text,
+            style = Type.textSmSemiBold(),
+            color = Shades50
+        )
     }
 }
