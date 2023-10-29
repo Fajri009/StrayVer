@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.fajri.strayver.ui.theme.Pink500
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.fajri.strayver.navigation.Navigation
@@ -29,17 +28,6 @@ class MainActivity : ComponentActivity() {
             !mainViewModel.isLoading.value
         }
         setContent {
-            Greeting(name = "Isya")
-        }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        color = Pink500
-    )
             val start by mainViewModel.startDestination
             val navController= rememberNavController()
             Navigation(navController = navController, startDestination = start)
