@@ -9,6 +9,7 @@ import com.fajri.strayver.ui.presentation.login.LoginScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
 import com.fajri.strayver.ui.presentation.onBoarding.OnBoardAdapter
+import com.fajri.strayver.ui.presentation.register.RegisterScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.util.Route
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -16,15 +17,18 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController, startDestination: String) {
-    NavHost(navController = navController, startDestination = Route.MEMBER_HOME) {
+    NavHost(navController = navController, startDestination = startDestination) {
         composable(Route.ONBOARD) {
-            OnBoardAdapter()
+            OnBoardAdapter(navController = navController)
+        }
+        composable(Route.REGISTER) {
+            RegisterScreen()
         }
         composable(Route.LOGIN) {
             LoginScreen(navController = navController)
         }
         composable(Route.LUPASANDI) {
-            LupaSandi()
+            LupaSandi(navController)
         }
         composable(Route.MEMBER_HOME) {
             MemberHomeScreen()

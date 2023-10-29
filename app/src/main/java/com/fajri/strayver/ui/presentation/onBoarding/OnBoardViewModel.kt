@@ -2,7 +2,7 @@ package com.fajri.strayver.ui.presentation.onBoarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fajri.strayver.data.OnBoardRepository
+import com.fajri.strayver.data.repository.OnBoardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

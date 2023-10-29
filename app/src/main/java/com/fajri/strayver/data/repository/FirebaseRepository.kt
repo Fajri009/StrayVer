@@ -1,5 +1,6 @@
-package com.fajri.strayver.data
+package com.fajri.strayver.data.repository
 
+import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -10,4 +11,12 @@ class FirebaseRepository() {
     private var db= Firebase.database.reference
     private val gbuigbui= 0
 
+    fun resetPassword(email: String): Boolean {
+        var cond= false
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                cond = task.isSuccessful
+            }
+        return true
+    }
 }

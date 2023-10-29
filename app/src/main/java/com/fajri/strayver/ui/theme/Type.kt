@@ -11,7 +11,7 @@ object Type {
     fun text2xsRegular() = TextStyle(
         fontFamily = FontFamily(Font(R.font.poppins_regular)),
         fontSize = 10.sp,
-        lineHeight = 16.sp
+        lineHeight = 18.sp
     )
 
     fun text2xsMedium() = TextStyle(

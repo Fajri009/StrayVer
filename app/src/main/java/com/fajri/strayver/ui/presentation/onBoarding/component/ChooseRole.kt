@@ -12,15 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomOutlinedButton
 import com.fajri.strayver.ui.presentation.onBoarding.OnBoardViewModel
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun ChooseRole(viewModel: OnBoardViewModel) {
+fun ChooseRole(viewModel: OnBoardViewModel, navController: NavController) {
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Masuk Sebagai", style = Type.textSmSemiBold(), color = Primary900)
         Spacer(modifier = Modifier.height(12.dp))
@@ -29,6 +31,7 @@ fun ChooseRole(viewModel: OnBoardViewModel) {
                 onClick = {
                     viewModel.setOnBoardingCompleted()
                     viewModel.setAccountRole("relawan")
+                    navController.navigate(Route.REGISTER)
                 },
                 text = "Relawan",
                 Modifier
@@ -40,6 +43,7 @@ fun ChooseRole(viewModel: OnBoardViewModel) {
                 onClick = {
                     viewModel.setOnBoardingCompleted()
                     viewModel.setAccountRole("member")
+                    navController.navigate(Route.REGISTER)
                 },
                 text = "Member",
                 Modifier

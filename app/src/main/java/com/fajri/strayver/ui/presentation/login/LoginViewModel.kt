@@ -4,14 +4,10 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import com.fajri.strayver.data.FirebaseRepository
-import com.fajri.strayver.data.OnBoardRepository
-import com.fajri.strayver.util.Route
+import com.fajri.strayver.data.repository.FirebaseRepository
+import com.fajri.strayver.data.repository.OnBoardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

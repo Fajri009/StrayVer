@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomCheckBox
 import com.fajri.strayver.ui.presentation.component.CustomTextField
@@ -38,6 +40,7 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary800
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
 fun LoginScreen(
@@ -52,6 +55,7 @@ fun LoginScreen(
             .fillMaxSize()
             .background(Primary700),
     ) {
+        AsyncImage(model = R.drawable.ilustrasi, contentDescription = "")
         Column(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -100,7 +104,10 @@ fun LoginScreen(
                         Text(
                             text = "Daftar",
                             style = Type.textXsRegular(),
-                            color = Primary800
+                            color = Primary800,
+                            modifier = Modifier.clickable {
+                                navController.navigate(Route.REGISTER)
+                            }
                         )
                     }
                 }
