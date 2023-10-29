@@ -27,8 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
-import com.fajri.strayver.ui.presentation.lupaSandi.component.Form
-import com.fajri.strayver.ui.presentation.lupaSandi.component.Head
+import com.fajri.strayver.ui.presentation.lupaSandi.component.LupaSandiForm
+import com.fajri.strayver.ui.presentation.lupaSandi.component.LupaSandiHead
 import com.fajri.strayver.ui.presentation.lupaSandi.component.Popup
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary700
@@ -56,9 +56,9 @@ fun LupaSandi(
             contentScale = ContentScale.FillWidth
         )
         Column(Modifier.align(Alignment.TopStart)) {
-            Head(navController = navController)
+            LupaSandiHead(navController = navController)
             Spacer(modifier = Modifier.height(24.dp))
-            Form(viewModel)
+            LupaSandiForm(viewModel)
         }
     }
 }

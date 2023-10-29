@@ -18,7 +18,7 @@ import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 
 @Composable
-fun Head(navController: NavController) {
+fun LupaSandiHead(navController: NavController) {
     Row(
         Modifier
             .fillMaxWidth()

@@ -20,7 +20,7 @@ import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun Form(viewModel: LupaSandiViewModel) {
+fun LupaSandiForm(viewModel: LupaSandiViewModel) {
 
     val context = LocalContext.current
 
