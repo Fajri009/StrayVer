@@ -22,7 +22,7 @@ fun LupaSandiHead(navController: NavController) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp),
+            .padding(20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = {

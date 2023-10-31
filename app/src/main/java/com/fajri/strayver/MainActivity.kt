@@ -20,17 +20,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().setKeepOnScreenCondition {
-            !mainViewModel.isLoading.value
-        }
         setContent {
-            val start by mainViewModel.startDestination
             val navController= rememberNavController()
-            Navigation(navController = navController, startDestination = start)
+            Navigation(navController = navController)
         }
     }
 }

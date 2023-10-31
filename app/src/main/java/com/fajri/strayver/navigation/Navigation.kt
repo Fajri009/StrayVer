@@ -11,13 +11,18 @@ import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
 import com.fajri.strayver.ui.presentation.onBoarding.OnBoardAdapter
 import com.fajri.strayver.ui.presentation.register.RegisterScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
+import com.fajri.strayver.ui.presentation.splash.SplashScreen
 import com.fajri.strayver.util.Route
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
 @Composable
-fun Navigation(navController: NavHostController, startDestination: String) {
-    NavHost(navController = navController, startDestination = startDestination) {
+fun Navigation(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = Route.SPLASH) {
+        composable(Route.SPLASH) {
+            SplashScreen(navController = navController)
+        }
+
         composable(Route.ONBOARD) {
             OnBoardAdapter(navController = navController)
         }

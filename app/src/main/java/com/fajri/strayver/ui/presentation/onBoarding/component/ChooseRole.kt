@@ -32,6 +32,7 @@ fun ChooseRole(viewModel: OnBoardViewModel, navController: NavController) {
                     viewModel.setOnBoardingCompleted()
                     viewModel.setAccountRole("relawan")
                     navController.navigate(Route.REGISTER)
+                    navController.popBackStack()
                 },
                 text = "Relawan",
                 Modifier
@@ -44,6 +45,7 @@ fun ChooseRole(viewModel: OnBoardViewModel, navController: NavController) {
                     viewModel.setOnBoardingCompleted()
                     viewModel.setAccountRole("member")
                     navController.navigate(Route.REGISTER)
+                    navController.popBackStack()
                 },
                 text = "Member",
                 Modifier

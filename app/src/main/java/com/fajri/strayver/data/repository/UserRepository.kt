@@ -12,7 +12,6 @@ class UserRepository() {
     private var db = Firebase.database.reference
 
     fun resetPassword(email: String, showDialog: MutableState<Boolean>, context: Context) {
-        var cond = false
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
