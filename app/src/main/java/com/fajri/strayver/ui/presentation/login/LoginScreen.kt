@@ -40,6 +40,7 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary800
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
@@ -83,16 +84,6 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(25.dp))
 
                     Form(viewModel, navController)
-
-                    Spacer(modifier = Modifier.height(30.dp))
-
-                    CustomButton(
-                        onClick = {
-                            viewModel.onSubmit(context)
-                        },
-                        text = "Login",
-                        type = ButtonType.LARGE
-                    )
 
                     Spacer(modifier = Modifier.height(30.dp))
                     Row(

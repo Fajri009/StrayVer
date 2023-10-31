@@ -28,6 +28,7 @@ import com.fajri.strayver.ui.presentation.login.LoginViewModel
 import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Primary800
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
@@ -106,6 +107,7 @@ fun Form(viewModel: LoginViewModel, navController: NavController) {
         text = "Login",
         onClick = {
             viewModel.onSubmit(context, navController)
-        }
+        },
+        type = ButtonType.LARGE
     )
 }
