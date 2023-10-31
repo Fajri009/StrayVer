@@ -23,6 +23,7 @@ import com.fajri.strayver.ui.presentation.register.RegisterViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.ButtonType
 
 @Composable
 fun RegisterForm(viewModel: RegisterViewModel, navController: NavController) {
@@ -133,7 +134,7 @@ fun RegisterForm(viewModel: RegisterViewModel, navController: NavController) {
             CustomButton(
                 onClick = { /*TODO*/ },
                 text = "Daftar",
-                modifier = Modifier.fillMaxWidth().height(48.dp)
+                type = ButtonType.LARGE
             )
             Spacer(modifier = Modifier.height(12.dp))
         }

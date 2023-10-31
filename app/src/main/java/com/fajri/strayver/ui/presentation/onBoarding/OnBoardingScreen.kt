@@ -28,6 +28,7 @@ import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.ButtonType
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -54,7 +55,7 @@ fun OnBoardAdapter(
             HorizontalPager(count = screens.size, state = pagerState) { position ->
                 OnBoardingScreen(screen = screens[position])
             }
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(45.dp))
 
         }
 
@@ -67,7 +68,7 @@ fun OnBoardAdapter(
                 inactiveColor = Neutral300,
                 spacing = 6.dp
             )
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(45.dp))
         }
 
         item {
@@ -84,7 +85,8 @@ fun OnBoardAdapter(
                             pagerState.animateScrollToPage(pagerState.currentPage + 1)
                         }
                     },
-                    text = "Selanjutnya"
+                    text = "Selanjutnya",
+                    type = ButtonType.LARGE
                 )
             }
         }

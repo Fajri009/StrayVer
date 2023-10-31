@@ -19,6 +19,7 @@ import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandiViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.ButtonType
 
 @Composable
 fun LupaSandiForm(viewModel: LupaSandiViewModel) {
@@ -48,7 +49,7 @@ fun LupaSandiForm(viewModel: LupaSandiViewModel) {
                 viewModel.onSubmit(context)
             },
             text = "Kirim",
-            modifier = Modifier.fillMaxWidth().height(48.dp)
+            type = ButtonType.LARGE
         )
     }
 }
