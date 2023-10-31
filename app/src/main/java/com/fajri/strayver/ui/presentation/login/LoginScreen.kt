@@ -45,10 +45,10 @@ import com.fajri.strayver.util.Route
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: LoginViewModel= hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
 
-    val context= LocalContext.current
+    val context = LocalContext.current
 
     Box(
         Modifier
@@ -83,6 +83,16 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(25.dp))
 
                     Form(viewModel, navController)
+
+                    Spacer(modifier = Modifier.height(30.dp))
+
+                    CustomButton(
+                        onClick = {
+                            viewModel.onSubmit(context)
+                        },
+                        text = "Login",
+                        type = ButtonType.LARGE
+                    )
 
                     Spacer(modifier = Modifier.height(30.dp))
                     Row(

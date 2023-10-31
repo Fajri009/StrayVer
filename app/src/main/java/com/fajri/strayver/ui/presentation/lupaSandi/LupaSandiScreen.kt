@@ -57,7 +57,6 @@ fun LupaSandi(
         )
         Column(Modifier.align(Alignment.TopStart)) {
             LupaSandiHead(navController = navController)
-            Spacer(modifier = Modifier.height(24.dp))
             LupaSandiForm(viewModel)
         }
     }

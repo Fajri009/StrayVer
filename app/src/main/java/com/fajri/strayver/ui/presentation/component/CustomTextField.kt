@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -25,7 +26,7 @@ import com.fajri.strayver.ui.theme.Primary800
 import com.fajri.strayver.ui.theme.Primary900
 
 @Composable
-fun CustomTextField (
+fun CustomTextField(
     text: String,
     placeholder: String,
     trailingIcon: ImageVector? = null,
@@ -50,18 +51,20 @@ fun CustomTextField (
             if (trailingIcon != null) {
                 if (showPassword) {
                     IconButton(onClick = { onPasswordToggle(!showPassword) }) {
-                        Icon (
+                        Icon(
                             imageVector = trailingIcon,
                             contentDescription = "show",
-                            Modifier.size(25.dp)
+                            Modifier.size(25.dp),
+                            tint = Primary900
                         )
                     }
                 } else {
                     IconButton(onClick = { onPasswordToggle(!showPassword) }) {
-                        Icon (
+                        Icon(
                             imageVector = Icons.Filled.VisibilityOff,
                             contentDescription = "hide",
-                            Modifier.size(25.dp)
+                            Modifier.size(25.dp),
+                            tint = Primary900
                         )
                     }
                 }
@@ -81,21 +84,21 @@ fun CustomTextField (
             }
         },
         visualTransformation =
-            if (isPassword) {
-                if (showPassword) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                }
-            } else {
+        if (isPassword) {
+            if (showPassword) {
                 VisualTransformation.None
-            },
-        keyboardOptions =
-            if (isPassword) {
-                KeyboardOptions(keyboardType = KeyboardType.Password)
             } else {
-                KeyboardOptions(keyboardType = KeyboardType.Text)
-            },
+                PasswordVisualTransformation()
+            }
+        } else {
+            VisualTransformation.None
+        },
+        keyboardOptions =
+        if (isPassword) {
+            KeyboardOptions(keyboardType = KeyboardType.Password)
+        } else {
+            KeyboardOptions(keyboardType = KeyboardType.Text)
+        },
         maxLines = maxLine,
         minLines = minLine
     )

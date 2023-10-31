@@ -2,6 +2,7 @@ package com.fajri.strayver.ui.presentation.register
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,7 +18,7 @@ import com.fajri.strayver.ui.theme.Primary700
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    viewModel: RegisterViewModel= hiltViewModel()
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
     Box(
         Modifier
@@ -29,9 +30,10 @@ fun RegisterScreen(
             contentDescription = "",
             contentScale = ContentScale.FillWidth
         )
-        RegisterHead(navController = navController)
-        RegisterForm(viewModel = viewModel, navController = navController)
 
-
+        Column {
+            RegisterHead(navController = navController)
+            RegisterForm(viewModel = viewModel, navController = navController)
+        }
     }
 }

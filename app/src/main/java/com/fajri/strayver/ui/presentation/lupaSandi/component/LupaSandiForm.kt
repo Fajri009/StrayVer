@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandiViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.ButtonType
 
 @Composable
 fun LupaSandiForm(viewModel: LupaSandiViewModel) {
@@ -46,7 +48,8 @@ fun LupaSandiForm(viewModel: LupaSandiViewModel) {
             onClick = {
                 viewModel.onSubmit(context)
             },
-            text = "Kirim"
+            text = "Kirim",
+            type = ButtonType.LARGE
         )
     }
 }

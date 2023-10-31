@@ -25,6 +25,7 @@ import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandiViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
@@ -55,7 +56,8 @@ fun Popup(navController: NavController) {
                 onClick = {
                     navController.navigate(Route.LOGIN)
                 },
-                text = "OK"
+                text = "OK",
+                type = ButtonType.MEDIUM
             )
         }
     }

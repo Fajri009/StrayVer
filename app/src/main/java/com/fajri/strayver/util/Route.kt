@@ -1,6 +1,7 @@
 package com.fajri.strayver.util
 
 object Route {
+    const val SPLASH= "Splash"
     const val ONBOARD= "Onboarding"
     const val REGISTER= "Register"
     const val LOGIN= "Login"
