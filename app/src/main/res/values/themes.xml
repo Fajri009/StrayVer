@@ -2,7 +2,8 @@
 <resources>
 
     <style name="Theme.StrayVer" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.CustomSplashScreen" parent="Theme.SplashScreen">

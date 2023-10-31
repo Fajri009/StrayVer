@@ -12,10 +12,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomCheckBox
 import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.login.LoginViewModel
@@ -26,6 +32,12 @@ import com.fajri.strayver.util.Route
 
 @Composable
 fun Form(viewModel: LoginViewModel, navController: NavController) {
+    var showPassword by remember {
+        mutableStateOf(false)
+    }
+
+    val context= LocalContext.current
+
     Text(
         text = "Email",
         style = Type.textSmMedium()
@@ -47,6 +59,8 @@ fun Form(viewModel: LoginViewModel, navController: NavController) {
         placeholder = "",
         trailingIcon = Icons.Filled.Visibility,
         isPassword = true,
+        showPassword = viewModel.showPassword.value,
+        onPasswordToggle = { viewModel.showPassword(!viewModel.showPassword.value) },
         onValueChange = {
             viewModel.onChangePassword(it)
         }
@@ -84,5 +98,14 @@ fun Form(viewModel: LoginViewModel, navController: NavController) {
             style = Type.text2xsRegular(),
             color = Primary800,
         )
+
     }
+    Spacer(modifier = Modifier.height(30.dp))
+
+    CustomButton(
+        text = "Login",
+        onClick = {
+            viewModel.onSubmit(context, navController)
+        }
+    )
 }
