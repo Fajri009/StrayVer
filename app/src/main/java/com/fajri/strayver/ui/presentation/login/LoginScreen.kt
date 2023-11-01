@@ -89,7 +89,7 @@ fun LoginScreen(
 
                     CustomButton(
                         onClick = {
-                            viewModel.onSubmit(context)
+                            viewModel.onSubmit(context, navController)
                         },
                         text = "Login",
                         type = ButtonType.LARGE
