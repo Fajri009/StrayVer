@@ -42,7 +42,7 @@ fun MemberHomeScreen() {
                     .background(Primary700)
             )
             SaldoCard(
-                modifier = Modifier
+                Modifier
                     .align(Alignment.TopCenter)
                     .offset(y = 150.dp)
             )

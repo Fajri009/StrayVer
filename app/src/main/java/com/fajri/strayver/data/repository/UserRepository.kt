@@ -25,13 +25,11 @@ class UserRepository() {
     }
 
     suspend fun login(email: String, password: String, navController: NavController, context: Context) {
-        val user = auth.currentUser
-//        auth.signOut()
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if (it.isSuccessful) {navController.popBackStack()
-                    navController.navigate(Route.MEMBER_HOME)
-
+                if (it.isSuccessful) {
+                    navController.popBackStack()
+                    navController.navigate(Route.RELAWAN_HOME)
                 }
             }
             .addOnFailureListener {
