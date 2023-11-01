@@ -86,16 +86,6 @@ fun LoginScreen(
                     Form(viewModel, navController)
 
                     Spacer(modifier = Modifier.height(30.dp))
-
-                    CustomButton(
-                        onClick = {
-                            viewModel.onSubmit(context, navController)
-                        },
-                        text = "Login",
-                        type = ButtonType.LARGE
-                    )
-
-                    Spacer(modifier = Modifier.height(30.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center

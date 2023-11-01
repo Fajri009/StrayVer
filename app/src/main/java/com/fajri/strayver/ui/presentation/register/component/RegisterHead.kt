@@ -26,6 +26,7 @@ fun RegisterHead(navController: NavController) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = {
+            navController.popBackStack()
             navController.navigate(Route.LOGIN)
         }
         ) {

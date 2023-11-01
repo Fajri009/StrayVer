@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.register.component.RegisterForm
 import com.fajri.strayver.ui.presentation.register.component.RegisterHead
+import com.fajri.strayver.ui.presentation.register.component.RegisterPopup
 import com.fajri.strayver.ui.theme.Primary700
 
 @Composable
@@ -20,6 +22,13 @@ fun RegisterScreen(
     navController: NavController,
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
+    
+    val context= LocalContext.current
+    
+    if (viewModel.isShowDialog.value) {
+        RegisterPopup(navController = navController)
+    }
+    
     Box(
         Modifier
             .fillMaxSize()
@@ -33,7 +42,7 @@ fun RegisterScreen(
 
         Column {
             RegisterHead(navController = navController)
-            RegisterForm(viewModel = viewModel, navController = navController)
+            RegisterForm(viewModel = viewModel, navController = navController, context= context)
         }
     }
 }

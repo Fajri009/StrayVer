@@ -37,7 +37,7 @@ fun ChooseRole(viewModel: OnBoardViewModel, navController: NavController) {
                 onClick = {
                     viewModel.setOnBoardingCompleted()
                     viewModel.setAccountRole("relawan")
-                    navController.navigate(Route.REGISTER)
+                    navController.navigate(Route.LOGIN)
                 },
                 text = "Relawan",
                 type = ButtonType.MEDIUM
@@ -47,7 +47,7 @@ fun ChooseRole(viewModel: OnBoardViewModel, navController: NavController) {
                 onClick = {
                     viewModel.setOnBoardingCompleted()
                     viewModel.setAccountRole("member")
-                    navController.navigate(Route.REGISTER)
+                    navController.navigate(Route.LOGIN)
                 },
                 text = "Member",
                 type = ButtonType.MEDIUM    
