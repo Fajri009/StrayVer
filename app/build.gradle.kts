@@ -99,4 +99,9 @@ dependencies {
 
     // Splash
     implementation ("androidx.core:core-splashscreen:1.1.0-alpha02")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
 }

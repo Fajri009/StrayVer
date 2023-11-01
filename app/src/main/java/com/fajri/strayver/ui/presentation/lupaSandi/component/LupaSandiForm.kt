@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.lupaSandi.component
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,9 +23,7 @@ import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
 
 @Composable
-fun LupaSandiForm(viewModel: LupaSandiViewModel) {
-
-    val context = LocalContext.current
+fun LupaSandiForm(viewModel: LupaSandiViewModel, context: Context) {
 
     Column(
         Modifier

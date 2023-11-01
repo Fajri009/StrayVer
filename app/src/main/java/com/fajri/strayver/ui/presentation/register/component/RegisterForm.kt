@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.register.component
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +27,8 @@ import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
 
 @Composable
-fun RegisterForm(viewModel: RegisterViewModel, navController: NavController) {
+fun RegisterForm(viewModel: RegisterViewModel, navController: NavController, context: Context) {
+
     LazyColumn(
         Modifier
             .padding(top = 20.dp)
@@ -132,7 +134,9 @@ fun RegisterForm(viewModel: RegisterViewModel, navController: NavController) {
         item {
             Spacer(modifier = Modifier.height(20.dp))
             CustomButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    viewModel.onSubmit(context)
+                },
                 text = "Daftar",
                 type = ButtonType.LARGE
             )

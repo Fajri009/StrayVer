@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -41,6 +42,8 @@ fun LupaSandi(
     viewModel: LupaSandiViewModel= hiltViewModel()
 ) {
 
+    val context= LocalContext.current
+
     if (viewModel.isShowDialog.value) {
         Popup(navController = navController)
     }
@@ -57,7 +60,7 @@ fun LupaSandi(
         )
         Column(Modifier.align(Alignment.TopStart)) {
             LupaSandiHead(navController = navController)
-            LupaSandiForm(viewModel)
+            LupaSandiForm(viewModel, context)
         }
     }
 }
