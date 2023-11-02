@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 class UserRepository() {
     private var auth = FirebaseAuth.getInstance()
     private var userDb = FirebaseDatabase.getInstance().reference.child("users")
-    private var user: FirebaseUser? = null
+    var user: FirebaseUser? = null
 
     suspend fun resetPassword(email: String, showDialog: MutableState<Boolean>, context: Context) {
         auth.sendPasswordResetEmail(email)
@@ -30,16 +30,24 @@ class UserRepository() {
         email: String,
         password: String,
         navController: NavController,
-        context: Context
+        context: Context,
+        userRole: String
     ) {
-        user = auth.currentUser
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    val user = auth.currentUser
-                    navController.popBackStack()
-                    navController.navigate(Route.MEMBER_HOME)
+                    user = auth.currentUser
 
+                    when(userRole) {
+                        "member" -> {
+                            navController.popBackStack()
+                            navController.navigate(Route.MEMBER_HOME)
+                        }
+                        "relawan" -> {
+                            navController.popBackStack()
+                            navController.navigate(Route.RELAWAN_HOME)
+                        }
+                    }
                 }
             }
             .addOnFailureListener {
