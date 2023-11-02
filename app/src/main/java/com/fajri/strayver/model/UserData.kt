@@ -6,5 +6,6 @@ data class UserData(
     val email: String,
     val telp: String,
     val password: String,
-    val role: String
+    val role: String,
+    val saldo: Long
 )

@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.register
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -80,10 +81,16 @@ class RegisterViewModel @Inject constructor(
         var userRole: String = ""
 
         if (_nama.value.isEmpty() || _usernmae.value.isEmpty() || _email.value.isEmpty() ||
-            _telp.value.isEmpty() || _password.value.isEmpty() || _rePassword.value.isEmpty()) {
+            _telp.value.isEmpty() || _password.value.isEmpty() || _rePassword.value.isEmpty()
+        ) {
 
             Toast.makeText(context, "Semua data harus terisi", Toast.LENGTH_SHORT).show()
         }
+
+        else if(!_email.value.contains("@")) {
+            Toast.makeText(context, "Email anda tidak valid", Toast.LENGTH_SHORT).show()
+        }
+
         else {
             if (_password.value != _rePassword.value) {
                 Toast.makeText(context, "Masukkan password yang sama", Toast.LENGTH_SHORT)
@@ -95,25 +102,25 @@ class RegisterViewModel @Inject constructor(
                 onBoardRepository.getRole.collect { role ->
                     userRole = role
                 }
+            }
+            val user = UserData(
+                nama = _nama.value,
+                username = _usernmae.value,
+                email = _email.value,
+                telp = _telp.value,
+                password = _password.value,
+                role = userRole,
+                saldo = 1500000
+            )
 
-                val user = UserData(
-                    nama = _nama.value,
-                    username = _usernmae.value,
-                    email = _email.value,
-                    telp = _telp.value,
-                    password = _password.value,
-                    role = userRole
-                )
+            userRepository.registerUser(
+                userData = user,
+                context = context,
+                showDialog = _isShowDialog
+            )
 
-                userRepository.registerUser(
-                    userData = user,
-                    context = context,
-                    showDialog = _isShowDialog
-                )
-
-                if (_isShowDialog.value) {
-                    setDialog(true)
-                }
+            if (_isShowDialog.value) {
+                setDialog(true)
             }
         }
     }

@@ -4,9 +4,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,7 +22,8 @@ fun ProyekTerbaru() {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(horizontal = 20.dp)) {
+            .padding(horizontal = 20.dp)
+    ) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Proyek Terbaru", style = Type.textMdSemiBold())
             Text(text = "Lihat Semua >", style = Type.textMdRegular(), color = Primary900,
@@ -27,6 +31,13 @@ fun ProyekTerbaru() {
 
                 }
             )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            items(2) {
+                ProyekCard()
+            }
         }
     }
 }

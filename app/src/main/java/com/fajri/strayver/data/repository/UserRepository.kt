@@ -1,6 +1,7 @@
 package com.fajri.strayver.data.repository
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
@@ -12,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class UserRepository() {
     private var auth = FirebaseAuth.getInstance()
-    private var userDb = FirebaseDatabase.getInstance().reference.child("users")
+    private var userDb = FirebaseDatabase.getInstance("https://strayver-6c1c0-default-rtdb.asia-southeast1.firebasedatabase.app")
     var user: FirebaseUser? = null
 
     suspend fun resetPassword(email: String, showDialog: MutableState<Boolean>, context: Context) {
@@ -55,12 +56,11 @@ class UserRepository() {
             }
     }
 
-    suspend fun registerUser(
+    fun registerUser(
         userData: UserData,
         context: Context,
         showDialog: MutableState<Boolean>
     ) {
-
         auth.createUserWithEmailAndPassword(userData.email, userData.password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -74,26 +74,21 @@ class UserRepository() {
                     ).show()
                 }
             }
+            .addOnFailureListener {
+            }
     }
 
-    private fun createUser(
+    fun createUser(
         userData: UserData,
         uid: String,
         context: Context,
         showDialog: MutableState<Boolean>
     ) {
-        userDb.child(uid)
-            .setValue(uid, userData)
-            .addOnSuccessListener {
-                showDialog.value = true
-            }
-            .addOnFailureListener {
-                Toast.makeText(
-                    context,
-                    "Gagal membuat user: ${it.message}",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+        val reference= userDb.getReference("Users")
+        reference.child(uid)
+            .setValue(userData)
+            .addOnCompleteListener {
+                showDialog.value= true
             }
     }
 }
