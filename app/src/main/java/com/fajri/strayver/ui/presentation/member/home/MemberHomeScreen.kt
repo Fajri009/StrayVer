@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.ui.presentation.member.home.component.ArtikelItemCard
 import com.fajri.strayver.ui.presentation.member.home.component.Greet
 import com.fajri.strayver.ui.presentation.member.home.component.ProyekTerbaru
 import com.fajri.strayver.ui.presentation.member.home.component.SaldoCard
@@ -31,23 +35,48 @@ import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberHomeScreen() {
-    Column {
-        Box(Modifier.fillMaxWidth()) {
-            Greet(
-                Modifier
-                    .fillMaxWidth()
-                    .height(178.dp)
-                    .clip(RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp))
-                    .background(Primary700)
-            )
-            SaldoCard(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .offset(y = 150.dp)
-            )
+fun MemberHomeScreen(
+    viewModel: MemberHomeViewModel = hiltViewModel()
+) {
+    LazyColumn(Modifier.padding()) {
+        item {
+            Box(Modifier.fillMaxWidth()) {
+                Greet(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(178.dp)
+                        .clip(RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp))
+                        .background(Primary700),
+                    viewModel
+                )
+                SaldoCard(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .offset(y = 145.dp)
+                )
+            }
         }
-        Spacer(modifier = Modifier.height(56.dp))
-        ProyekTerbaru()
+
+        item {
+            Spacer(modifier = Modifier.height(56.dp))
+            ProyekTerbaru()
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(20.dp))
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp)) {
+                Text(text = "Proyek Terbaru", style = Type.textMdSemiBold())
+            }
+        }
+        ArtikelItem()
+    }
+}
+
+fun LazyListScope.ArtikelItem() {
+    items(4) {
+        ArtikelItemCard()
     }
 }

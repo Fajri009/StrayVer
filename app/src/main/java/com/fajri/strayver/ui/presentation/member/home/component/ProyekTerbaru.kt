@@ -22,7 +22,7 @@ fun ProyekTerbaru() {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(horizontal = 20.dp)
+            .padding(top = 8.dp, bottom = 8.dp, start = 20.dp)
     ) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Proyek Terbaru", style = Type.textMdSemiBold())
@@ -35,7 +35,7 @@ fun ProyekTerbaru() {
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            items(2) {
+            items(4) {
                 ProyekCard()
             }
         }

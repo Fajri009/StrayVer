@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -17,19 +18,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
+import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
 fun ProyekCard() {
     Card(
-        shape = RoundedCornerShape(30.dp),
+        shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(6.dp)
+        elevation = CardDefaults.cardElevation(6.dp),
+        modifier = Modifier.sizeIn(maxWidth = 200.dp)
     ) {
 
         AsyncImage(
@@ -50,12 +54,19 @@ fun ProyekCard() {
                 AsyncImage(model = R.drawable.anabul_foundation, contentDescription = "")
                 Text(text = "Anabul Foundation", style = Type.text2xsRegular(), color = Neutral600)
             }
-            Spacer(modifier = Modifier.height(3.dp))
-            Text(text = "Selamatkan ratusan kucing kelaparan", style = Type.textXsSemiBold(),
-                modifier = Modifier.widthIn(max = 181.dp))
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(text = "Selamatkan ratusan kucing kelaparan",
+                style = Type.textXsSemiBold(),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
 
-            Spacer(modifier = Modifier.height(3.dp))
+            Spacer(modifier = Modifier.height(6.dp))
             CustomProgressBar(progress = 31f)
+
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(text = "Terkumpul:", style = Type.text2xsRegular(), color = Neutral600)
+            Text(text = "Rp 3.258.500", style = Type.textXsSemiBold(), color = Secondary900)
         }
     }
 }

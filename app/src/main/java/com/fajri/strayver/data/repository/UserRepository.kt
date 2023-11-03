@@ -7,13 +7,19 @@ import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
 import com.fajri.strayver.model.UserData
 import com.fajri.strayver.util.Route
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.getValue
 
 class UserRepository() {
     private var auth = FirebaseAuth.getInstance()
-    private var userDb = FirebaseDatabase.getInstance("https://strayver-6c1c0-default-rtdb.asia-southeast1.firebasedatabase.app")
+    private var userDb = FirebaseDatabase
+        .getInstance("https://strayver-6c1c0-default-rtdb.asia-southeast1.firebasedatabase.app")
+        .getReference("Users")
     var user: FirebaseUser? = null
 
     suspend fun resetPassword(email: String, showDialog: MutableState<Boolean>, context: Context) {
@@ -35,19 +41,19 @@ class UserRepository() {
         userRole: String
     ) {
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    user = auth.currentUser
+            .addOnSuccessListener {
+                user = it.user!!
+                Log.i("isinya user", "getUserData: ${user}")
 
-                    when(userRole) {
-                        "member" -> {
-                            navController.popBackStack()
-                            navController.navigate(Route.MEMBER_HOME)
-                        }
-                        "relawan" -> {
-                            navController.popBackStack()
-                            navController.navigate(Route.RELAWAN_HOME)
-                        }
+                when (userRole) {
+                    "member" -> {
+                        navController.popBackStack()
+                        navController.navigate(Route.MEMBER_HOME)
+                    }
+
+                    "relawan" -> {
+                        navController.popBackStack()
+                        navController.navigate(Route.RELAWAN_HOME)
                     }
                 }
             }
@@ -64,7 +70,7 @@ class UserRepository() {
         auth.createUserWithEmailAndPassword(userData.email, userData.password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val userId= task.result.user!!.uid
+                    val userId = task.result.user!!.uid
                     createUser(userData, userId, context, showDialog)
                 } else {
                     Toast.makeText(
@@ -84,11 +90,10 @@ class UserRepository() {
         context: Context,
         showDialog: MutableState<Boolean>
     ) {
-        val reference= userDb.getReference("Users")
-        reference.child(uid)
+        userDb.child(uid)
             .setValue(userData)
             .addOnCompleteListener {
-                showDialog.value= true
+                showDialog.value = true
             }
     }
 }
