@@ -17,12 +17,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.ui.presentation.member.home.MemberHomeViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun Greet(modifier: Modifier= Modifier) {
+fun Greet(modifier: Modifier= Modifier, viewModel: MemberHomeViewModel) {
+
     Box(
         modifier= modifier
     ) {

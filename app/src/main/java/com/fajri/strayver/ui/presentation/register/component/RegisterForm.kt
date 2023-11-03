@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.register.component
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

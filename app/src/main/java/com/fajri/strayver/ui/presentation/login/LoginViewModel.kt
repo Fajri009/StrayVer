@@ -20,13 +20,15 @@ class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
+    private var userRole: String? = null
+
     private val _email: MutableState<String> = mutableStateOf("")
     val email: State<String> = _email
 
     private val _sandi: MutableState<String> = mutableStateOf("")
     val sandi: State<String> = _sandi
 
-    private val _isChecked: MutableState<Boolean> =  mutableStateOf(false)
+    private val _isChecked: MutableState<Boolean> = mutableStateOf(false)
     val isChecked: State<Boolean> = _isChecked
 
     private val _showPassword: MutableState<Boolean> = mutableStateOf(false)
@@ -41,7 +43,16 @@ class LoginViewModel @Inject constructor(
             handleBlank(context)
         } else {
             viewModelScope.launch {
-                userRepository.login(_email.value, _sandi.value, navController, context)
+                repository.getRole.collect { role ->
+                    userRole = role
+
+                    userRepository.login(
+                        _email.value,
+                        _sandi.value,
+                        navController, context,
+                        userRole = userRole!!
+                    )
+                }
             }
         }
     }

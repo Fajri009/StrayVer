@@ -2,16 +2,9 @@
 <resources>
 
     <style name="Theme.StrayVer" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/primary</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
-    <style name="Theme.CustomSplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/primary</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <item name="windowSplashScreenAnimationDuration">600</item>
-        <item name="postSplashScreenTheme">@style/Theme.StrayVer</item>
-    </style>
-    
 
 </resources>

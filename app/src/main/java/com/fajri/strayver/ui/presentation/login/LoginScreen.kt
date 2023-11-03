@@ -61,6 +61,7 @@ fun LoginScreen(
             modifier = Modifier
                 .align(Alignment.TopStart)
         ) {
+            Spacer(modifier = Modifier.height(30.dp))
             Text(
                 modifier = Modifier
                     .padding(start = 20.dp, top = 20.dp),

@@ -28,7 +28,7 @@ fun SaldoCard(modifier: Modifier= Modifier) {
         modifier = modifier
     ) {
         Row(
-            modifier = Modifier.padding(vertical = 12.dp, horizontal = 12.dp),
+            modifier = Modifier.padding(vertical = 12.dp, horizontal = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -38,8 +38,8 @@ fun SaldoCard(modifier: Modifier= Modifier) {
             )
             Spacer(modifier = Modifier.width(6.dp))
             Column() {
-                Text(text = "Saldo", style = Type.textXsSemiBold())
-                Text(text = "Rp 1.500.000", style = Type.textSmMedium(), color = Neutral700)
+                Text(text = "Saldo", style = Type.textXsMedium())
+                Text(text = "Rp 1.500.000", style = Type.textSmSemiBold(), color = Neutral700)
             }
         }
     }
