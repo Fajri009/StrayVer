@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.home.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,7 +34,7 @@ fun ProyekCard() {
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(6.dp),
-        modifier = Modifier.sizeIn(maxWidth = 200.dp)
+        modifier = Modifier.sizeIn(maxWidth = 200.dp).clickable {  }
     ) {
 
         AsyncImage(

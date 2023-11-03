@@ -8,9 +8,12 @@ import androidx.navigation.compose.composable
 import com.fajri.strayver.ui.presentation.login.LoginScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
+import com.fajri.strayver.ui.presentation.member.donasi.MemberDonasiScreen
 import com.fajri.strayver.ui.presentation.onBoarding.OnBoardAdapter
 import com.fajri.strayver.ui.presentation.register.RegisterScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
+import com.fajri.strayver.ui.presentation.member.profil.MemberProfilScreen
+import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeScreen
 import com.fajri.strayver.ui.presentation.splash.SplashScreen
 import com.fajri.strayver.util.Route
@@ -38,6 +41,15 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Route.MEMBER_HOME) {
             MemberHomeScreen()
+        }
+        composable(Route.MEMBER_DONASI) {
+            MemberDonasiScreen()
+        }
+        composable(Route.MEMBER_RIWAYAT) {
+            MemberRiwayatScreen()
+        }
+        composable(Route.MEMBER_PROFIL) {
+            MemberProfilScreen()
         }
         composable(Route.RELAWAN_HOME) {
             RelawanHomeScreen()

@@ -68,7 +68,7 @@ fun MemberHomeScreen(
                 Modifier
                     .fillMaxSize()
                     .padding(horizontal = 20.dp)) {
-                Text(text = "Proyek Terbaru", style = Type.textMdSemiBold())
+                Text(text = "Artikel Terkini", style = Type.textMdSemiBold())
             }
         }
         ArtikelItem()
@@ -76,7 +76,7 @@ fun MemberHomeScreen(
 }
 
 fun LazyListScope.ArtikelItem() {
-    items(4) {
+    items(3) {
         ArtikelItemCard()
     }
 }

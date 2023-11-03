@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.home.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +29,7 @@ import com.fajri.strayver.ui.theme.Type
 fun ArtikelItemCard() {
     Card(
         Modifier
-            .padding(vertical = 8.dp, horizontal = 20.dp),
+            .padding(vertical = 8.dp, horizontal = 20.dp).clickable {  },
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
