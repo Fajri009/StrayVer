@@ -39,7 +39,6 @@ class UserRepository() {
                     val user = auth.currentUser
                     navController.popBackStack()
                     navController.navigate(Route.MEMBER_HOME)
-
                 }
             }
             .addOnFailureListener {
@@ -52,7 +51,6 @@ class UserRepository() {
         context: Context,
         showDialog: MutableState<Boolean>
     ) {
-
         auth.createUserWithEmailAndPassword(userData.email, userData.password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
