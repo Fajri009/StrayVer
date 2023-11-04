@@ -22,11 +22,10 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.MEMBER_HOME) {
+    NavHost(navController = navController, startDestination = Route.ONBOARD) {
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
-
         composable(Route.ONBOARD) {
             OnBoardAdapter(navController = navController)
         }
@@ -40,7 +39,7 @@ fun Navigation(navController: NavHostController) {
             LupaSandi(navController)
         }
         composable(Route.MEMBER_HOME) {
-            MemberHomeScreen()
+            MemberHomeScreen(navController = navController)
         }
         composable(Route.MEMBER_DONASI) {
             MemberDonasiScreen()
