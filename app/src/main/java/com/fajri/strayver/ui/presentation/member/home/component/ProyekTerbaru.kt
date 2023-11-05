@@ -29,7 +29,9 @@ fun ProyekTerbaru(navController: NavController) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Proyek Terbaru", style = Type.textMdSemiBold())
             Text(text = "Lihat Semua >", style = Type.textMdRegular(), color = Primary900,
-                modifier = Modifier.clickable {
+                modifier = Modifier
+                    .padding(end = 20.dp)
+                    .clickable {
                     navController.navigate(Route.MEMBER_DONASI)
                 }
             )
@@ -38,7 +40,7 @@ fun ProyekTerbaru(navController: NavController) {
 
         LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             items(4) {
-                ProyekCard()
+                ProyekCard(navController)
             }
         }
     }

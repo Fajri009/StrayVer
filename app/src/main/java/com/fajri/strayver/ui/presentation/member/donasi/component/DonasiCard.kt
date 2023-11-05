@@ -18,11 +18,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
 fun DonasiCard(
@@ -32,18 +34,23 @@ fun DonasiCard(
     companyName: String,
     companyIcon: Int,
     progress: Float,
-    value: Any
+    value: Any,
+    navController: NavController
 ) {
     Card(
         Modifier
             .padding(top = 20.dp, start = 20.dp, end = 20.dp, bottom = 0.dp)
-            .clickable { },
+            .clickable {
+                navController.navigate(Route.DETAIL_DONASI)
+            },
         elevation = CardDefaults.cardElevation(6.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Row(Modifier.padding(horizontal = 16.dp, vertical = 4.dp), verticalAlignment = Alignment
-            .CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(
+            Modifier.padding(horizontal = 16.dp, vertical = 4.dp), verticalAlignment = Alignment
+                .CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             AsyncImage(
                 model = img,
                 contentDescription = "",

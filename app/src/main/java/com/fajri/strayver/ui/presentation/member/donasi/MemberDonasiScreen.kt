@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.member.donasi.component.DonasiCard
@@ -23,7 +24,7 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberDonasiScreen() {
+fun MemberDonasiScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -43,7 +44,7 @@ fun MemberDonasiScreen() {
                 modifier = Modifier.padding(top = 4.dp, start = 20.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            DonasiContent()
+            DonasiContent(navController = navController)
         }
     }
 }

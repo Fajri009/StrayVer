@@ -55,7 +55,6 @@ fun OnBoardAdapter(
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-//            modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             HorizontalPager(count = screens.size, state = pagerState) { position ->

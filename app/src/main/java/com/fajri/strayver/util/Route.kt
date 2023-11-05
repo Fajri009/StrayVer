@@ -7,6 +7,7 @@ object Route {
     const val LOGIN= "Login"
     const val MEMBER_HOME= "MemberHome"
     const val MEMBER_DONASI= "MemberDonasi"
+    const val DETAIL_DONASI= "DetailDonasi"
     const val MEMBER_RIWAYAT= "MemberRiwayat"
     const val MEMBER_PROFIL= "MemberProfil"
     const val LUPASANDI= "LupaSandi"

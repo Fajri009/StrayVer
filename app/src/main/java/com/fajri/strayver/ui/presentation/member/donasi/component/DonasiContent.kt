@@ -20,13 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Primary100
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun DonasiContent() {
+fun DonasiContent(navController: NavController) {
     Column(
         Modifier
             .fillMaxSize()
@@ -72,7 +73,8 @@ fun DonasiContent() {
                     companyName = "Anabul Foundation",
                     companyIcon = R.drawable.anabul_foundation,
                     progress = .45f,
-                    value = 3258000
+                    value = 3258000,
+                    navController
                 )
             }
         }

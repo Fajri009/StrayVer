@@ -2,6 +2,8 @@ package com.fajri.strayver.ui.presentation.member.donasi.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,8 +26,12 @@ fun CompanyTag(
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = companyIcon, contentDescription = companyName, modifier = Modifier
-                .clip(CircleShape), contentScale = ContentScale.Crop
+            model = companyIcon,
+            contentDescription = companyName,
+            modifier = Modifier
+                .size(20.dp)
+                .clip(CircleShape),
+            contentScale = ContentScale.Crop
         )
         Text(text = companyName, style = Type.text2xsRegular(), color = Neutral600)
     }

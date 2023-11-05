@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.component
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.LinearProgressIndicator
@@ -17,6 +18,7 @@ fun CustomProgressBar(progress: Float) {
         trackColor = Neutral200,
         progress = 0.3f,
         modifier = Modifier
+            .fillMaxWidth()
             .height(6.dp)
             .clip(CircleShape)
     )
