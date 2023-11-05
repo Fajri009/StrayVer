@@ -23,7 +23,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.DETAIL_DONASI) {
+    NavHost(navController = navController, startDestination = Route.MEMBER_HOME) {
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }

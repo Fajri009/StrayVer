@@ -4,10 +4,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -41,7 +49,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             viewModel.getRole()
@@ -52,16 +60,18 @@ class MainActivity : ComponentActivity() {
 
             Log.i("inforole", "onCreate: $role")
 
-            CustomScaffold(
-                navController = navController,
-                showBottomBar =
-                if (role == "member") {
-                    currPage in memberScreen
-                } else {
-                    currPage in relawanScreen
+            Surface(Modifier.windowInsetsPadding(WindowInsets(bottom = 40.dp))) {
+                CustomScaffold(
+                    navController = navController,
+                    showBottomBar =
+                    if (role == "member") {
+                        currPage in memberScreen
+                    } else {
+                        currPage in relawanScreen
+                    }
+                ) {
+                    Navigation(navController = navController)
                 }
-            ) {
-                Navigation(navController = navController)
             }
         }
     }
