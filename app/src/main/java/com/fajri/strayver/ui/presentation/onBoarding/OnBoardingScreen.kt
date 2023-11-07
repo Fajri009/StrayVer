@@ -45,53 +45,50 @@ fun OnBoardAdapter(
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
 
-    LazyColumn(
+    Column(
         Modifier
             .fillMaxSize()
-            .padding(start = 20.dp, end = 20.dp, top = 60.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .padding(start = 20.dp, end = 20.dp, top = 60.dp, bottom = 20.dp),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item {
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
             HorizontalPager(count = screens.size, state = pagerState) { position ->
                 OnBoardingScreen(screen = screens[position])
             }
-            Spacer(modifier = Modifier.height(45.dp))
-
         }
 
-        item {
-            HorizontalPagerIndicator(
-                pagerState = pagerState,
-                indicatorHeight = 6.dp,
-                indicatorWidth = 30.dp,
-                activeColor = Primary700,
-                inactiveColor = Neutral300,
-                spacing = 6.dp
+        HorizontalPagerIndicator(
+            pagerState = pagerState,
+            indicatorHeight = 6.dp,
+            indicatorWidth = 30.dp,
+            activeColor = Primary700,
+            inactiveColor = Neutral300,
+            spacing = 6.dp
+        )
+
+        AnimatedVisibility(visible = pagerState.currentPage == 3) {
+            ChooseRole(viewModel, navController)
+        }
+
+        AnimatedVisibility(visible = pagerState.currentPage != (screens.size - 1)) {
+            CustomButton(
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    }
+                },
+                text = "Selanjutnya",
+                type = ButtonType.LARGE
             )
-            Spacer(modifier = Modifier.height(45.dp))
-        }
-
-        item {
-            AnimatedVisibility(visible = pagerState.currentPage == 3) {
-                ChooseRole(viewModel, navController)
-            }
-        }
-
-        item {
-            AnimatedVisibility(visible = pagerState.currentPage != (screens.size - 1)) {
-                CustomButton(
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                        }
-                    },
-                    text = "Selanjutnya",
-                    type = ButtonType.LARGE
-                )
-            }
         }
     }
 }
+
 
 @Composable
 private fun OnBoardingScreen(screen: OnBoardData) {

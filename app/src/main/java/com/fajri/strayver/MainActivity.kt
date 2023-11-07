@@ -7,22 +7,17 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fajri.strayver.navigation.Navigation
 import com.fajri.strayver.ui.presentation.component.CustomScaffold
-import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagerApi::class)
@@ -60,7 +55,7 @@ class MainActivity : ComponentActivity() {
             Log.i("inforole", "onCreate: $role")
 
             Surface(
-                modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 25.dp))
+                modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 35.dp))
             ) {
                 CustomScaffold(
                     navController = navController,

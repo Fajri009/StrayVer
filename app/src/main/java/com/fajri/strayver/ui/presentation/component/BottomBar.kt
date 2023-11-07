@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.component
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -54,7 +56,8 @@ fun BottomBar(navController: NavController) {
 
     val currPage = navController.currentBackStackEntry?.destination?.route
 
-    BottomAppBar(backgroundColor = Color.White, elevation = 6.dp) {
+    BottomAppBar(backgroundColor = Color.White, elevation = 12.dp, modifier = Modifier.padding
+        (vertical = 8.dp)) {
         bottomBarList.forEach {
             BottomNavigationItem(
                 selected = false,

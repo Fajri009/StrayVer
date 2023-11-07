@@ -34,6 +34,7 @@ fun CustomTextField(
     onPasswordToggle: (Boolean) -> Unit = {},
     label: String? = null,
     isPassword: Boolean = false,
+    isNumeric: Boolean= false,
     maxLine: Int = 1,
     minLine: Int = 1
 ) {
@@ -95,7 +96,10 @@ fun CustomTextField(
         keyboardOptions =
         if (isPassword) {
             KeyboardOptions(keyboardType = KeyboardType.Password)
-        } else {
+        } else if (isNumeric) {
+            KeyboardOptions(keyboardType = KeyboardType.Number)
+        }
+        else {
             KeyboardOptions(keyboardType = KeyboardType.Text)
         },
         maxLines = maxLine,

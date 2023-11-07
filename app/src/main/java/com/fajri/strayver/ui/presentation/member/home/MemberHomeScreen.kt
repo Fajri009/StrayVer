@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.member.home.component.ArtikelItemCard
@@ -36,7 +37,8 @@ import com.fajri.strayver.ui.theme.Type
 
 @Composable
 fun MemberHomeScreen(
-    viewModel: MemberHomeViewModel = hiltViewModel()
+    viewModel: MemberHomeViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     LazyColumn(Modifier.padding()) {
         item {
@@ -59,7 +61,7 @@ fun MemberHomeScreen(
 
         item {
             Spacer(modifier = Modifier.height(56.dp))
-            ProyekTerbaru()
+            ProyekTerbaru(navController = navController)
         }
 
         item {

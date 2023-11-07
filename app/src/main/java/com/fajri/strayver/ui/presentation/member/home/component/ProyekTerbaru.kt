@@ -14,11 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
-fun ProyekTerbaru() {
+fun ProyekTerbaru(navController: NavController) {
     Column(
         Modifier
             .fillMaxSize()
@@ -27,8 +29,10 @@ fun ProyekTerbaru() {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Proyek Terbaru", style = Type.textMdSemiBold())
             Text(text = "Lihat Semua >", style = Type.textMdRegular(), color = Primary900,
-                modifier = Modifier.clickable {
-
+                modifier = Modifier
+                    .padding(end = 20.dp)
+                    .clickable {
+                    navController.navigate(Route.MEMBER_DONASI)
                 }
             )
         }
@@ -36,7 +40,7 @@ fun ProyekTerbaru() {
 
         LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             items(4) {
-                ProyekCard()
+                ProyekCard(navController)
             }
         }
     }
