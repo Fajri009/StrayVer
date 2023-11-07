@@ -1,4 +1,4 @@
-package com.fajri.strayver.ui.presentation.register.component
+package com.fajri.strayver.ui.presentation.relawan.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Secondary900
@@ -24,9 +25,9 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun ItemDonasiTerbaru(image: Int, judul: String, terkumpul: String) {
+fun DonasiTerbaruItem(image: Int, judul: String, progress: Float, terkumpul: String) {
     Card(
-        elevation = CardDefaults.cardElevation(1.dp)
+        elevation = CardDefaults.cardElevation(2.dp)
     ) {
         Row(
             modifier = Modifier
@@ -46,7 +47,9 @@ fun ItemDonasiTerbaru(image: Int, judul: String, terkumpul: String) {
                     style = Type.textXsSemiBold(),
                     color = Neutral800
                 )
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(5.dp))
+                CustomProgressBar(progress = progress)
+                Spacer(modifier = Modifier.height(5.dp))
                 Text(
                     text = "Terkumpul :",
                     style = Type.text2xsRegular(),

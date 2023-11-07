@@ -1,6 +1,5 @@
-package com.fajri.strayver.ui.presentation.member.home.component
+package com.fajri.strayver.ui.presentation.relawan.home.component
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -9,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fajri.strayver.R
-import com.fajri.strayver.ui.presentation.register.component.ItemDonasiTerbaru
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
@@ -20,7 +18,8 @@ fun DonasiTerbaru(modifier: Modifier) {
             style = Type.textMdSemiBold(),
         )
         Spacer(modifier = Modifier.height(10.dp))
-        ItemDonasiTerbaru(R.drawable.terbaru, "Dibutuhkan kandang hewan (kucing atau anjing)", "10 barang")
-        ItemDonasiTerbaru(R.drawable.terbaru2, "Selamatkan ratusan kucing kelaparan di Kecamatan Tou", "Rp 3.258.500")
+        DonasiTerbaruItem(R.drawable.terbaru2, "Dibutuhkan kandang hewan (kucing atau anjing)", 0.5f, "10 barang")
+        DonasiTerbaruItem(R.drawable.terbaru, "Selamatkan ratusan kucing kelaparan di Kecamatan Tou", 0.3f, "Rp 3.258.500")
+        DonasiTerbaruItem(R.drawable.terbaru, "Selamatkan ratusan kucing kelaparan di Kecamatan Tou", 0.3f, "Rp 3.258.500")
     }
 }

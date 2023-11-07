@@ -15,7 +15,7 @@ fun CustomProgressBar(progress: Float) {
     LinearProgressIndicator(
         color = Primary700,
         trackColor = Neutral200,
-        progress = 0.3f,
+        progress = progress,
         modifier = Modifier
             .height(6.dp)
             .clip(CircleShape)

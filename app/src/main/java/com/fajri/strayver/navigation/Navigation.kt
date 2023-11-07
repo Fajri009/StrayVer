@@ -14,7 +14,12 @@ import com.fajri.strayver.ui.presentation.register.RegisterScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.member.profil.MemberProfilScreen
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatScreen
+import com.fajri.strayver.ui.presentation.relawan.buatProyek.BuatProyekScreen
+import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiScreen
 import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeScreen
+import com.fajri.strayver.ui.presentation.relawan.kirimDonasi.KirimDonasiScreen
+import com.fajri.strayver.ui.presentation.relawan.profil.RelawanProfilScreen
+import com.fajri.strayver.ui.presentation.relawan.transaksi.RelawanTransaksiScreen
 import com.fajri.strayver.ui.presentation.splash.SplashScreen
 import com.fajri.strayver.util.Route
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -22,7 +27,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.SPLASH) {
+    NavHost(navController = navController, startDestination = Route.RELAWAN_HOME){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -52,7 +57,22 @@ fun Navigation(navController: NavHostController) {
             MemberProfilScreen()
         }
         composable(Route.RELAWAN_HOME) {
-            RelawanHomeScreen()
+            RelawanHomeScreen(navController)
+        }
+        composable(Route.RELAWAN_DONASI) {
+            RelawanDonasiScreen()
+        }
+        composable(Route.RELAWAN_TRANSAKSI) {
+            RelawanTransaksiScreen()
+        }
+        composable(Route.RELAWAN_PROFIL) {
+            RelawanProfilScreen()
+        }
+        composable(Route.BUAT_PROYEK) {
+            BuatProyekScreen(navController)
+        }
+        composable(Route.KIRIM_DONASI) {
+            KirimDonasiScreen()
         }
     }
 }

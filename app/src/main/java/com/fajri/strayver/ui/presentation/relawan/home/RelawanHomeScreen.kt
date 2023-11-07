@@ -15,13 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.fajri.strayver.ui.presentation.register.component.ContentRelawanHome
+import androidx.navigation.NavController
+import com.fajri.strayver.ui.presentation.relawan.home.component.ContentRelawanHome
 import com.fajri.strayver.ui.presentation.relawan.home.component.DonasiCard
 import com.fajri.strayver.ui.presentation.relawan.home.component.RelawanGreet
 import com.fajri.strayver.ui.theme.Primary700
 
 @Composable
-fun RelawanHomeScreen() {
+fun RelawanHomeScreen(navController: NavController) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -47,9 +48,11 @@ fun RelawanHomeScreen() {
         item {
             ContentRelawanHome(
                 modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
+                navController
             )
+            Spacer(modifier = Modifier.height(60.dp))
         }
     }
 }

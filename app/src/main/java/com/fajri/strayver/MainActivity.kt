@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -33,7 +37,10 @@ class MainActivity : ComponentActivity() {
     )
 
     val relawanScreen = listOf(
-        Route.RELAWAN_HOME
+        Route.RELAWAN_HOME,
+        Route.RELAWAN_DONASI,
+        Route.RELAWAN_TRANSAKSI,
+        Route.RELAWAN_PROFIL
     )
 
     @Inject
@@ -41,27 +48,31 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             viewModel.getRole()
             val navController = rememberNavController()
             val backStackEntry by navController.currentBackStackEntryAsState()
             val currPage = backStackEntry?.destination?.route
-            val role = "member"
+            val role = "relawan"
 
             Log.i("inforole", "onCreate: $role")
 
-            CustomScaffold(
-                navController = navController,
-                showBottomBar =
-                if (role == "member") {
-                    currPage in memberScreen
-                } else {
-                    currPage in relawanScreen
-                }
+            Surface(
+                modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 25.dp))
             ) {
-                Navigation(navController = navController)
+                CustomScaffold(
+                    navController = navController,
+                    showBottomBar =
+                    if (role == "member") {
+                        currPage in memberScreen
+                    } else {
+                        currPage in relawanScreen
+                    }
+                ) {
+                    Navigation(navController = navController)
+                }
             }
         }
     }

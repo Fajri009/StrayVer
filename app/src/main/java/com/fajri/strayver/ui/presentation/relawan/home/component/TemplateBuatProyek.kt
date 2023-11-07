@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,24 +26,27 @@ import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemplateBuatProyek(
     judul: String,
     image: Int,
     color1: Color,
-    color2: Color
+    color2: Color,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
-            .width(175.dp)
-            .height(180.dp),
-        elevation = CardDefaults.cardElevation(5.dp)
+            .width(165.dp)
+            .height(170.dp),
+        onClick = { onClick() },
+        elevation = CardDefaults.cardElevation(5.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Brush.verticalGradient(listOf(color1, color2)))
-                .padding(top = 10.dp)
+                .padding(top = 10.dp),
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 10.dp),

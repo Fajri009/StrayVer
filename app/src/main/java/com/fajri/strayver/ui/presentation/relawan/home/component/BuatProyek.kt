@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
-fun BuatProyek(modifier: Modifier = Modifier) {
+fun BuatProyek(modifier: Modifier = Modifier, navController: NavController) {
     Column(
         modifier = modifier
     ) {
@@ -34,13 +36,15 @@ fun BuatProyek(modifier: Modifier = Modifier) {
                 judul = "Proyek \nDonasi Dana",
                 image = R.drawable.money,
                 color1 = Color(0xFFEE7180),
-                color2 = Color(0xFFFDECEE)
+                color2 = Color(0xFFFDECEE),
+                onClick = {navController.navigate(Route.BUAT_PROYEK)}
             )
             TemplateBuatProyek(
                 judul = "Proyek \nDonasi Barang",
                 image = R.drawable.barang,
                 color1 = Color(0xFF02C0E5),
-                color2 = Color(0xFFD9F9FF)
+                color2 = Color(0xFFD9F9FF),
+                onClick = {navController.navigate(Route.BUAT_PROYEK)}
             )
         }
     }
