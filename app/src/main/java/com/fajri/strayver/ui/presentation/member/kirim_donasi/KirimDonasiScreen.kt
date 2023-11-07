@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomButton
+import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.FormBarang
 import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.MetodePembayaran
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary700
@@ -36,11 +37,11 @@ import com.fajri.strayver.util.Route
 @Composable
 fun KirimDonasiScreen(navController: NavController) {
 
-    val type = "dana"
+    val type = "barang"
 
     when (type) {
         "dana" -> KirimDana(navController)
-        "barang" -> KirimBarang()
+        "barang" -> KirimBarang(navController)
     }
 }
 
@@ -87,13 +88,57 @@ private fun KirimDana(navController: NavController) {
             )
         }
 
-        Column(Modifier.align(Alignment.BottomCenter).padding(20.dp)) {
+        Column(
+            Modifier
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 20.dp, vertical = 40.dp)
+        ) {
             CustomButton(onClick = { /*TODO*/ }, text = "Kirim", type = ButtonType.LARGE)
         }
     }
 }
 
 @Composable
-private fun KirimBarang() {
+private fun KirimBarang(navController: NavController) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(Primary700)
+    ) {
+        AsyncImage(model = R.drawable.ilustrasi, contentDescription = "")
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 40.dp),
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            IconButton(
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(Route.DETAIL_DONASI)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBackIosNew,
+                    contentDescription = "",
+                    tint = Shades50
+                )
+            }
+            Text(text = "Donasi Barang", style = Type.displayXsSemiBold(), color = Shades50)
 
+        }
+        Column(Modifier.align(Alignment.TopStart)) {
+            Spacer(modifier = Modifier.height(40.dp))
+            FormBarang(
+                navController = navController,
+                Modifier
+                    .padding(top = 60.dp)
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                    .background(Neutral50)
+                    .padding(20.dp)
+            )
+        }
+    }
 }
