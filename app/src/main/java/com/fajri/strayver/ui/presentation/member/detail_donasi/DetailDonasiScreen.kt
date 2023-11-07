@@ -45,7 +45,7 @@ fun DetailDonasiScreen(navController: NavController) {
         Color(red= 0f, green = 0f, blue = 0f, alpha = .55f)
     )
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().padding()) {
         AsyncImage(
             model = R.drawable.kucing_makan,
             contentDescription = "",
@@ -59,14 +59,13 @@ fun DetailDonasiScreen(navController: NavController) {
                     )
                 }
         )
-
         IconButton(
             onClick = {
                 navController.popBackStack()
                 navController.navigate(Route.MEMBER_DONASI)
             },
             Modifier
-                .padding(12 .dp)
+                .padding(start= 10.dp, top = 50.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBackIosNew,
@@ -82,7 +81,7 @@ fun DetailDonasiScreen(navController: NavController) {
 
         Column(Modifier.align(Alignment.TopStart)) {
             Spacer(modifier = Modifier.height(180.dp))
-            DetailContent()
+            DetailContent(navController)
         }
     }
 }

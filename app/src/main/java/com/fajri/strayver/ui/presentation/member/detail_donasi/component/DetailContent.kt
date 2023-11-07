@@ -13,13 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.theme.Primary400
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.util.ButtonType
+import com.fajri.strayver.util.Route
 
 @Composable
-fun DetailContent() {
+fun DetailContent(navController: NavController) {
     LazyColumn(
         Modifier
             .fillMaxSize()
@@ -45,7 +47,13 @@ fun DetailContent() {
         item {
             ContentDescription()
             Spacer(modifier = Modifier.height(16.dp))
-            CustomButton(onClick = { /*TODO*/ }, text = "Donasi", type = ButtonType.LARGE)
+            CustomButton(
+                onClick = {
+                    navController.navigate(Route.KIRIM_DONASI)
+                },
+                text = "Donasi",
+                type = ButtonType.LARGE
+            )
         }
     }
 }

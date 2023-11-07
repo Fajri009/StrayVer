@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
             Log.i("inforole", "onCreate: $role")
 
-            Surface(Modifier.windowInsetsPadding(WindowInsets(bottom = 40.dp))) {
+            Surface(Modifier.windowInsetsPadding(WindowInsets(bottom = 35.dp))) {
                 CustomScaffold(
                     navController = navController,
                     showBottomBar =

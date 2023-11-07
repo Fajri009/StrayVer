@@ -13,6 +13,7 @@ import com.fajri.strayver.ui.presentation.member.donasi.MemberDonasiScreen
 import com.fajri.strayver.ui.presentation.onBoarding.OnBoardAdapter
 import com.fajri.strayver.ui.presentation.register.RegisterScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
+import com.fajri.strayver.ui.presentation.member.kirim_donasi.KirimDonasiScreen
 import com.fajri.strayver.ui.presentation.member.profil.MemberProfilScreen
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeScreen
@@ -23,7 +24,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.MEMBER_HOME) {
+    NavHost(navController = navController, startDestination = Route.KIRIM_DONASI) {
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -47,6 +48,9 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Route.DETAIL_DONASI) {
             DetailDonasiScreen(navController)
+        }
+        composable(Route.KIRIM_DONASI) {
+            KirimDonasiScreen(navController)
         }
         composable(Route.MEMBER_RIWAYAT) {
             MemberRiwayatScreen()
