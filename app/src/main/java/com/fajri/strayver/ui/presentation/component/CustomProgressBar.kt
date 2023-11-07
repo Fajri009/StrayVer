@@ -16,7 +16,7 @@ fun CustomProgressBar(progress: Float) {
     LinearProgressIndicator(
         color = Primary700,
         trackColor = Neutral200,
-        progress = 0.3f,
+        progress = progress,
         modifier = Modifier
             .fillMaxWidth()
             .height(6.dp)
