@@ -30,10 +30,10 @@ fun TambahDonasiContainerDonatur(navController: NavController) {
                 Spacer(modifier = Modifier.height(5.dp))
                 TambahDonasiItem(foto = R.drawable.freya, tanggal = "11 November 2023", progres = DonaturProgres.PROSES, nama = "Freya_Jayawardana", jumlah = "3 pcs", onClick = {navController.navigate(Route.DETAIL_RIWAYAT)})
                 TambahDonasiItem(foto = R.drawable.louis, tanggal = "9 November 2023", progres = DonaturProgres.SELESAI, nama = "Louis_Tomlinson", jumlah = "1 pc", onClick = {})
-                TambahDonasiItem(foto = R.drawable.zee, tanggal = "9 November 2023", progres = DonaturProgres.DIBATALKAN, nama = "Azizi_Asadel", jumlah = "10 pcs", onClick = {})
+                TambahDonasiItem(foto = R.drawable.zee, tanggal = "9 November 2023", progres = DonaturProgres.PROSES, nama = "Azizi_Asadel", jumlah = "10 pcs", onClick = {})
                 TambahDonasiItem(foto = R.drawable.peter, tanggal = "8 November 2023", progres = DonaturProgres.PROSES, nama = "Peter_Parker", jumlah = "5 pcs", onClick = {})
-                TambahDonasiItem(foto = R.drawable.chaewon, tanggal = "5 November 2023", progres = DonaturProgres.DIBATALKAN, nama = "Kim_Chaewon", jumlah = "4 pcs", onClick = {})
-                TambahDonasiItem(foto = R.drawable.bruno, tanggal = "1 November 2023", progres = DonaturProgres.DIBATALKAN, nama = "Bruno_Fernandes", jumlah = "20 pcs", onClick = {})
+                TambahDonasiItem(foto = R.drawable.chaewon, tanggal = "5 November 2023", progres = DonaturProgres.PROSES, nama = "Kim_Chaewon", jumlah = "4 pcs", onClick = {})
+                TambahDonasiItem(foto = R.drawable.bruno, tanggal = "1 November 2023", progres = DonaturProgres.SELESAI, nama = "Bruno_Fernandes", jumlah = "20 pcs", onClick = {})
                 TambahDonasiItem(foto = R.drawable.haewon, tanggal = "20 Oktober 2023", progres = DonaturProgres.SELESAI, nama = "Oh_Haewon", jumlah = "15 pcs", onClick = {})
                 TambahDonasiItem(foto = R.drawable.shani, tanggal = "15 Oktober 2023", progres = DonaturProgres.SELESAI, nama = "Shani_Indira_Natio", jumlah = "20 pcs", onClick = {})
             }

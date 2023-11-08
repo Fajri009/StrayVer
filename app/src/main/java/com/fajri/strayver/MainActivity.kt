@@ -46,11 +46,10 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            viewModel.getRole()
             val navController = rememberNavController()
             val backStackEntry by navController.currentBackStackEntryAsState()
             val currPage = backStackEntry?.destination?.route
-            val role = "relawan"
+            val role = "member"
 
             Log.i("inforole", "onCreate: $role")
 

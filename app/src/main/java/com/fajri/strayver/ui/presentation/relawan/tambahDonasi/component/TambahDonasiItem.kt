@@ -76,7 +76,6 @@ fun TambahDonasiItem(
                     when (progres) {
                         DonaturProgres.PROSES -> ProgresProses()
                         DonaturProgres.SELESAI -> ProgresSelesai()
-                        DonaturProgres.DIBATALKAN -> ProgresBatal()
                     }
                 }
                 Text(

@@ -59,9 +59,7 @@ fun DonasiCard(modifier: Modifier = Modifier) {
 
             ) {
                 Column(
-                    modifier = Modifier
-                        .weight(1f)
-                    ,
+                    modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(

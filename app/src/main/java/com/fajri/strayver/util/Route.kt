@@ -13,10 +13,10 @@ object Route {
     const val MEMBER_PROFIL= "MemberProfil"
     const val LUPASANDI= "LupaSandi"
     const val RELAWAN_HOME= "RelawanHome"
+    const val BUAT_PROYEK= "BuatProyek"
     const val RELAWAN_DONASI= "RelawanDonasi"
     const val TAMBAH_DONASI= "TambahDonasi"
-    const val DETAIL_RIWAYAT= "DetailRiwayat"
     const val RELAWAN_TRANSAKSI= "RelawanTransaksi"
     const val RELAWAN_PROFIL= "RelawanProfil"
-    const val BUAT_PROYEK= "BuatProyek"
+    const val DETAIL_RIWAYAT= "DetailRiwayat"
 }
