@@ -1,4 +1,4 @@
-package com.fajri.strayver.ui.presentation.member.donasi.component
+package com.fajri.strayver.ui.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -29,7 +29,7 @@ fun CompanyTag(
             model = companyIcon,
             contentDescription = companyName,
             modifier = Modifier
-                .size(20.dp)
+                .size(12.dp)
                 .clip(CircleShape),
             contentScale = ContentScale.Crop
         )

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.fajri.strayver.ui.presentation.component.CompanyTag
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Secondary900
