@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,9 +25,19 @@ import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DonasiTerbaruItem(image: Int, judul: String, progress: Float, terkumpul: String) {
+fun DonasiTerbaruItem(
+    image: Int,
+    judul: String,
+    progress: Float,
+    terkumpul: String,
+    onClick: () -> Unit
+) {
     Card(
+        onClick = {
+            onClick()
+        },
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
         Row(
