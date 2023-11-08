@@ -18,6 +18,6 @@ fun ContentRelawanHome(modifier: Modifier = Modifier, navController: NavControll
     ) {
         BuatProyek(modifier = Modifier.fillMaxWidth(), navController)
         Spacer(modifier = Modifier.height(30.dp))
-        DonasiTerbaru(modifier = Modifier.fillMaxWidth())
+        DonasiTerbaru(modifier = Modifier.fillMaxWidth(), navController)
     }
 }

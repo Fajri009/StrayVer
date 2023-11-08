@@ -56,8 +56,7 @@ fun BottomBar(navController: NavController) {
 
     val currPage = navController.currentBackStackEntry?.destination?.route
 
-    BottomAppBar(backgroundColor = Color.White, elevation = 12.dp, modifier = Modifier.padding
-        (vertical = 8.dp)) {
+    BottomAppBar(backgroundColor = Color.White, elevation = 12.dp, modifier = Modifier) {
         bottomBarList.forEach {
             BottomNavigationItem(
                 selected = false,

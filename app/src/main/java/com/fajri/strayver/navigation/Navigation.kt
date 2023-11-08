@@ -15,6 +15,7 @@ import com.fajri.strayver.ui.presentation.member.kirim_donasi.KirimDonasiScreen
 import com.fajri.strayver.ui.presentation.member.profil.MemberProfilScreen
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.BuatProyekScreen
+import com.fajri.strayver.ui.presentation.relawan.detailRiwayat.DetailRiwayat
 import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiScreen
 import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeScreen
 import com.fajri.strayver.ui.presentation.relawan.profil.RelawanProfilScreen
@@ -67,6 +68,12 @@ fun Navigation(navController: NavHostController) {
         composable(Route.RELAWAN_DONASI) {
             RelawanDonasiScreen()
         }
+        composable(Route.TAMBAH_DONASI) {
+            TambahDonasiScreen(navController)
+        }
+        composable(Route.DETAIL_RIWAYAT) {
+            DetailRiwayat()
+        }
         composable(Route.RELAWAN_TRANSAKSI) {
             RelawanTransaksiScreen()
         }
@@ -75,9 +82,6 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Route.BUAT_PROYEK) {
             BuatProyekScreen(navController)
-        }
-        composable(Route.TAMBAH_DONASI) {
-            TambahDonasiScreen()
         }
     }
 }
