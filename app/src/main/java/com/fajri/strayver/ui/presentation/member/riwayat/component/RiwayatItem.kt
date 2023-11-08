@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.riwayat.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,10 @@ fun RiwayatItem(type: String) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 8.dp),
+            .padding(horizontal = 20.dp, vertical = 8.dp)
+            .clickable {
+
+            },
         horizontalArrangement = Arrangement.spacedBy(27.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
