@@ -15,7 +15,7 @@ import com.fajri.strayver.ui.presentation.member.kirim_donasi.KirimDonasiScreen
 import com.fajri.strayver.ui.presentation.member.profil.MemberProfilScreen
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.BuatProyekScreen
-import com.fajri.strayver.ui.presentation.relawan.detailRiwayat.DetailRiwayat
+import com.fajri.strayver.ui.presentation.relawan.detailRiwayat.DetailRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiScreen
 import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeScreen
 import com.fajri.strayver.ui.presentation.relawan.profil.RelawanProfilScreen
@@ -28,7 +28,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.RELAWAN_HOME){
+    NavHost(navController = navController, startDestination = Route.DETAIL_RIWAYAT){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -47,6 +47,9 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Route.MEMBER_HOME) {
             MemberHomeScreen(navController = navController)
+        }
+        composable(Route.BUAT_PROYEK) {
+            BuatProyekScreen(navController)
         }
         composable(Route.MEMBER_DONASI) {
             MemberDonasiScreen(navController)
@@ -73,16 +76,13 @@ fun Navigation(navController: NavHostController) {
             TambahDonasiScreen(navController)
         }
         composable(Route.DETAIL_RIWAYAT) {
-            DetailRiwayat()
+            DetailRiwayatScreen()
         }
         composable(Route.RELAWAN_TRANSAKSI) {
             RelawanTransaksiScreen()
         }
         composable(Route.RELAWAN_PROFIL) {
             RelawanProfilScreen()
-        }
-        composable(Route.BUAT_PROYEK) {
-            BuatProyekScreen(navController)
         }
     }
 }
