@@ -34,7 +34,7 @@ import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.DonaturProgres
 
 @Composable
-fun DetailRiwayatCard(
+fun DetailRiwayatBarangCard(
     kode: String,
     judul: String,
     nama: String,
@@ -207,7 +207,7 @@ fun DetailRiwayatCard(
                                     style = Type.textSmSemiBold()
                                 )
                                 Text(
-                                    text = noResi,
+                                    text = "SP$noResi",
                                     color = Color.Black,
                                     style = Type.textXsRegular()
                                 )

@@ -96,19 +96,6 @@ fun BuatProyekContent(viewModel: BuatProyekViewModel, ) {
 
         item {
             Text(
-                text = "Tanggal Maksimal Berdonasi",
-                color = Color.Black,
-                style = Type.textSmMedium()
-            )
-            CustomTextField(
-                text = "",
-                placeholder = ""
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-        }
-
-        item {
-            Text(
                 text = "Foto Proyek",
                 color = Color.Black,
                 style = Type.textSmMedium()

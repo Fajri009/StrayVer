@@ -21,9 +21,6 @@ class BuatProyekViewModel @Inject constructor(
     private val _jumlahMaks: MutableState<String> = mutableStateOf("")
     val jumlahMaks: State<String> = _jumlahMaks
 
-//    private val _tanggalMaks: MutableState<Date> = mutableStateOf()
-//    val tanggalMaks: State<Date> = _tanggalMaks
-
     fun onChangeNamaProyek(value: String) {
         _namaProyek.value = value
     }
@@ -35,10 +32,4 @@ class BuatProyekViewModel @Inject constructor(
     fun onChangeJumlahMaks(value: String) {
         _jumlahMaks.value = value
     }
-
-//    fun onChangeTanggalMaks(value: Date) {
-//        _tanggalMaks.value = value
-//    }
-
-//6
 }
