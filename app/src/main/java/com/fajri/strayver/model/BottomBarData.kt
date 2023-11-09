@@ -7,5 +7,6 @@ data class BottomBarData(
     val title: String,
     val icon: Painter,
     val relawanRoute: String,
-    val memberRoute: String
+    val memberRoute: String,
+    val altRoute: String= ""
 )

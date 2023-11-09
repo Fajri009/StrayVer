@@ -9,6 +9,7 @@ import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
 import com.fajri.strayver.ui.presentation.member.detail_donasi.DetailDonasiScreen
 import com.fajri.strayver.ui.presentation.member.donasi.MemberDonasiScreen
+import com.fajri.strayver.ui.presentation.member.edit_profil.EditProfilMemberScreen
 import com.fajri.strayver.ui.presentation.onBoarding.OnBoardAdapter
 import com.fajri.strayver.ui.presentation.register.RegisterScreen
 import com.fajri.strayver.ui.presentation.member.kirim_donasi.KirimDonasiScreen
@@ -28,7 +29,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.MEMBER_RIWAYAT){
+    NavHost(navController = navController, startDestination = Route.MEMBER_EDIT_PROFIL){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -59,11 +60,11 @@ fun Navigation(navController: NavHostController) {
         composable(Route.MEMBER_RIWAYAT) {
             MemberRiwayatScreen()
         }
-        composable(Route.DETAIL_RIWAYAT) {
-
-        }
         composable(Route.MEMBER_PROFIL) {
             MemberProfilScreen()
+        }
+        composable(Route.MEMBER_EDIT_PROFIL) {
+            EditProfilMemberScreen()
         }
         composable(Route.RELAWAN_HOME) {
             RelawanHomeScreen(navController)

@@ -28,7 +28,8 @@ class MainActivity : ComponentActivity() {
         Route.MEMBER_HOME,
         Route.MEMBER_DONASI,
         Route.MEMBER_RIWAYAT,
-        Route.MEMBER_PROFIL
+        Route.MEMBER_PROFIL,
+        Route.MEMBER_EDIT_PROFIL,
     )
 
     val relawanScreen = listOf(
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
             Log.i("inforole", "onCreate: $role")
 
             Surface(
-                modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 35.dp))
+                modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 40.dp))
             ) {
                 CustomScaffold(
                     navController = navController,

@@ -50,7 +50,8 @@ fun BottomBar(navController: NavController) {
             icon = painterResource(id = R.drawable.profil),
             title = "Profil",
             relawanRoute = Route.RELAWAN_PROFIL,
-            memberRoute = Route.MEMBER_PROFIL
+            memberRoute = Route.MEMBER_PROFIL,
+            altRoute = Route.MEMBER_EDIT_PROFIL
         ),
     )
 
@@ -73,13 +74,13 @@ fun BottomBar(navController: NavController) {
                         contentDescription = it.title,
                         tint =
                         if (currPage!!.contains("Member")) {
-                            if (currPage == it.memberRoute) {
+                            if (currPage == it.memberRoute || currPage == it.altRoute) {
                                 Primary700
                             } else {
                                 Neutral300
                             }
                         } else if (currPage.contains("Relawan")) {
-                            if (currPage == it.relawanRoute) {
+                            if (currPage == it.memberRoute || currPage == it.altRoute) {
                                 Primary700
                             } else {
                                 Neutral300
@@ -95,13 +96,13 @@ fun BottomBar(navController: NavController) {
                         style = Type.text2xsRegular(),
                         color =
                         if (currPage!!.contains("Member")) {
-                            if (currPage == it.memberRoute) {
+                            if (currPage == it.memberRoute || currPage == it.altRoute) {
                                 Primary700
                             } else {
                                 Neutral300
                             }
                         } else if (currPage.contains("Relawan")) {
-                            if (currPage == it.relawanRoute) {
+                            if (currPage == it.memberRoute || currPage == it.altRoute) {
                                 Primary700
                             } else {
                                 Neutral300
