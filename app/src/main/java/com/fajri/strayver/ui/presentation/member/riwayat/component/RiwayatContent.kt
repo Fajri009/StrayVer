@@ -28,7 +28,6 @@ fun RiwayatContent() {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(top = 120.dp)
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(Shades50)
     ) {

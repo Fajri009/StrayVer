@@ -11,6 +11,7 @@ object Route {
     const val KIRIM_DONASI= "KirimDonasi"
     const val MEMBER_RIWAYAT= "MemberRiwayat"
     const val MEMBER_PROFIL= "MemberProfil"
+    const val MEMBER_EDIT_PROFIL= "MemberEditProfil"
     const val LUPASANDI= "LupaSandi"
     const val RELAWAN_HOME= "RelawanHome"
     const val BUAT_PROYEK= "BuatProyek"
