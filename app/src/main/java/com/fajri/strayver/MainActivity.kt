@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 CustomScaffold(
                     navController = navController,
                     showBottomBar =
-                    if (role == "member") {
+                    if (role == "relawan") {
                         currPage in memberScreen
                     } else {
                         currPage in relawanScreen

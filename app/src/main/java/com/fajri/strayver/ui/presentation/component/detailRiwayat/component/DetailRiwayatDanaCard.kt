@@ -37,7 +37,7 @@ fun DetailRiwayatDanaCard(
     total: String
 ) {
     Card(
-        elevation = CardDefaults.cardElevation(8.dp)
+        elevation = CardDefaults.cardElevation(5.dp)
     ) {
         Column(
             modifier = Modifier
@@ -48,7 +48,7 @@ fun DetailRiwayatDanaCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
-                text = "DonasiDana",
+                text = "Donasi Dana",
                 color = Secondary900,
                 style = Type.textLgSemiBold(),
                 textAlign = TextAlign.Center
@@ -103,7 +103,7 @@ fun DetailRiwayatDanaCard(
                             )
                         }
                         Column(
-                            modifier = Modifier.weight(.5f)
+                            modifier = Modifier.weight(.4f)
                         ) {
                             Text(
                                 text = "Tanggal",

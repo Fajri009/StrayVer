@@ -76,7 +76,10 @@ fun CustomTextField(
             unfocusedIndicatorColor = Primary400,
             focusedIndicatorColor = Primary800,
             cursorColor = Primary900,
-            textColor = Color.Black
+            textColor = Color.Black,
+            placeholderColor = Primary800,
+            focusedLabelColor = Primary800,
+            unfocusedLabelColor = Primary800
         ),
         label = {
             label?.let {

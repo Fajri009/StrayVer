@@ -97,7 +97,7 @@ fun DetailRiwayatBarangCard(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.SpaceAround
                         ) {
                             Column(
                                 modifier = Modifier.weight(.6f)
@@ -114,7 +114,7 @@ fun DetailRiwayatBarangCard(
                                 )
                             }
                             Column(
-                                modifier = Modifier.weight(.5f)
+                                modifier = Modifier.weight(.4f)
                             ) {
                                 Text(
                                     text = "Jumlah Barang",
@@ -154,7 +154,7 @@ fun DetailRiwayatBarangCard(
                                 )
                             }
                             Column(
-                                modifier = Modifier.weight(.5f)
+                                modifier = Modifier.weight(.4f)
                             ) {
                                 Text(
                                     text = "Status",
@@ -199,7 +199,7 @@ fun DetailRiwayatBarangCard(
                                 )
                             }
                             Column(
-                                modifier = Modifier.weight(.5f)
+                                modifier = Modifier.weight(.4f)
                             ) {
                                 Text(
                                     text = "Nomor Resi",

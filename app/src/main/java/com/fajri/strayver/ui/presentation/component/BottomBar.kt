@@ -80,7 +80,7 @@ fun BottomBar(navController: NavController) {
                                 Neutral300
                             }
                         } else if (currPage.contains("Relawan")) {
-                            if (currPage == it.memberRoute || currPage == it.altRoute) {
+                            if (currPage == it.relawanRoute || currPage == it.altRoute) {
                                 Primary700
                             } else {
                                 Neutral300
@@ -102,7 +102,7 @@ fun BottomBar(navController: NavController) {
                                 Neutral300
                             }
                         } else if (currPage.contains("Relawan")) {
-                            if (currPage == it.memberRoute || currPage == it.altRoute) {
+                            if (currPage == it.relawanRoute || currPage == it.altRoute) {
                                 Primary700
                             } else {
                                 Neutral300

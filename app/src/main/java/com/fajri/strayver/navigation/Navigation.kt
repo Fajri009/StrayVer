@@ -29,7 +29,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.MEMBER_RIWAYAT){
+    NavHost(navController = navController, startDestination = Route.SPLASH){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -76,7 +76,7 @@ fun Navigation(navController: NavHostController) {
             BuatProyekScreen(navController)
         }
         composable(Route.RELAWAN_DONASI) {
-            RelawanDonasiScreen()
+            RelawanDonasiScreen(navController)
         }
         composable(Route.TAMBAH_DONASI) {
             TambahDonasiScreen(navController)
