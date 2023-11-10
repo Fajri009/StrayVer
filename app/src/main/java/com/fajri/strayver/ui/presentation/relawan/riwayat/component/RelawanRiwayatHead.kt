@@ -1,12 +1,10 @@
-package com.fajri.strayver.ui.presentation.relawan.donasi.component
+package com.fajri.strayver.ui.presentation.relawan.riwayat.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,11 +13,11 @@ import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun RelawanDonasiHead() {
+fun RelawanRiwayatHead() {
     Spacer(modifier = Modifier.height(55.dp))
     Text(
         modifier = Modifier.padding(start = 20.dp),
-        text = "Proyek Donasimu",
+        text = "Riwayat Donasi",
         color = Color.White,
         style = Type.displayXsSemiBold()
     )

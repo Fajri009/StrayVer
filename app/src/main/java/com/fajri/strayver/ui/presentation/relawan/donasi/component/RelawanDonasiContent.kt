@@ -15,6 +15,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,6 +23,7 @@ import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary100
+import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 
@@ -35,7 +37,8 @@ fun RelawanDonasiContent(navController: NavController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 15.dp),
+                .background(Shades50, RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                .padding(top = 15.dp, bottom = 10.dp),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Text(
@@ -55,7 +58,6 @@ fun RelawanDonasiContent(navController: NavController) {
                 textAlign = TextAlign.Center
             )
         }
-        Spacer(modifier = Modifier.height(10.dp))
         Divider(
             modifier = Modifier
                 .fillMaxWidth(),

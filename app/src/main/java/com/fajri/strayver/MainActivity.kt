@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
     val relawanScreen = listOf(
         Route.RELAWAN_HOME,
         Route.RELAWAN_DONASI,
-        Route.RELAWAN_TRANSAKSI,
+        Route.RELAWAN_RIWAYAT,
         Route.RELAWAN_PROFIL
     )
 

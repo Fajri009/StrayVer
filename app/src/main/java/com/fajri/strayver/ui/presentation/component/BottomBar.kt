@@ -43,7 +43,7 @@ fun BottomBar(navController: NavController) {
         BottomBarData(
             icon = painterResource(id = R.drawable.riwayat),
             title = "Riwayat",
-            relawanRoute = Route.RELAWAN_TRANSAKSI,
+            relawanRoute = Route.RELAWAN_RIWAYAT,
             memberRoute = Route.MEMBER_RIWAYAT
         ),
         BottomBarData(

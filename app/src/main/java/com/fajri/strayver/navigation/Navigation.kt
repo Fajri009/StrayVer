@@ -20,8 +20,8 @@ import com.fajri.strayver.ui.presentation.relawan.detailRiwayat.DetailRiwayatScr
 import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiScreen
 import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeScreen
 import com.fajri.strayver.ui.presentation.relawan.profil.RelawanProfilScreen
+import com.fajri.strayver.ui.presentation.relawan.riwayat.RelawanRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.tambahDonasi.TambahDonasiScreen
-import com.fajri.strayver.ui.presentation.relawan.transaksi.RelawanTransaksiScreen
 import com.fajri.strayver.ui.presentation.splash.SplashScreen
 import com.fajri.strayver.util.Route
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -29,7 +29,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.SPLASH){
+    NavHost(navController = navController, startDestination = Route.RELAWAN_RIWAYAT){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -81,8 +81,8 @@ fun Navigation(navController: NavHostController) {
         composable(Route.TAMBAH_DONASI) {
             TambahDonasiScreen(navController)
         }
-        composable(Route.RELAWAN_TRANSAKSI) {
-            RelawanTransaksiScreen()
+        composable(Route.RELAWAN_RIWAYAT) {
+            RelawanRiwayatScreen()
         }
         composable(Route.RELAWAN_PROFIL) {
             RelawanProfilScreen()
