@@ -40,7 +40,7 @@ fun MemberHomeScreen(
     viewModel: MemberHomeViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    LazyColumn(Modifier.padding()) {
+    LazyColumn(Modifier.padding(bottom = 56.dp)) {
         item {
             Box(Modifier.fillMaxWidth()) {
                 Greet(

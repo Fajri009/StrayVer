@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,6 +32,7 @@ import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomCheckBox
 import com.fajri.strayver.ui.presentation.component.CustomTextField
+import com.fajri.strayver.ui.presentation.component.LoadingDialog
 import com.fajri.strayver.ui.presentation.login.component.Form
 import com.fajri.strayver.ui.presentation.login.component.Greeting
 import com.fajri.strayver.ui.theme.Neutral50
@@ -49,7 +51,11 @@ fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
 
-    val context = LocalContext.current
+    val scope= rememberCoroutineScope()
+
+    if (viewModel.isLoading.value) {
+        LoadingDialog()
+    }
 
     Box(
         Modifier
@@ -84,7 +90,7 @@ fun LoginScreen(
 
                     Spacer(modifier = Modifier.height(25.dp))
 
-                    Form(viewModel, navController)
+                    Form(viewModel, navController, scope)
 
                     Spacer(modifier = Modifier.height(30.dp))
                     Row(

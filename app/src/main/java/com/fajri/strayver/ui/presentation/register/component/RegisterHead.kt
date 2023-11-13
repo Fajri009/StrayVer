@@ -1,7 +1,9 @@
 package com.fajri.strayver.ui.presentation.register.component
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -23,7 +25,7 @@ fun RegisterHead(navController: NavController) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp),
+            .padding(start = 20.dp, top = 48.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = {

@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.model.UserData
 import com.fajri.strayver.util.Route
 import com.google.firebase.Firebase
@@ -14,6 +15,9 @@ import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.getValue
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 class UserRepository() {
     private var auth = FirebaseAuth.getInstance()
@@ -22,78 +26,78 @@ class UserRepository() {
         .getReference("Users")
     var user: FirebaseUser? = null
 
-    suspend fun resetPassword(email: String, showDialog: MutableState<Boolean>, context: Context) {
-        auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    showDialog.value = true
-                } else {
-                    Toast.makeText(context, "Email tidak terdaftar", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
+    fun resetPassword(email: String): Flow<Resource<String>> =
+        callbackFlow {
+            trySend(Resource.Loading())
 
-    suspend fun login(
+
+            auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        trySend(Resource.Success("Password Berhasil diubah"))
+
+                    }
+                }
+                .addOnFailureListener {
+                    trySend(Resource.Error("Gagal mengubah password\n${it.message}"))
+                }
+            awaitClose {
+                close()
+            }
+        }
+
+    fun login(
         email: String,
         password: String,
-        navController: NavController,
-        context: Context,
-        userRole: String
-    ) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                user = it.user!!
-                Log.i("isinya user", "getUserData: ${user}")
+    ): Flow<Resource<String>> =
+        callbackFlow {
+            trySend(Resource.Loading())
 
-                when (userRole) {
-                    "member" -> {
-                        navController.popBackStack()
-                        navController.navigate(Route.MEMBER_HOME)
-                    }
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    user = it.user!!
+                    Log.i("isinya user", "getUserData: $user")
+                    trySend(Resource.Success("Berhasil Login"))
 
-                    "relawan" -> {
-                        navController.popBackStack()
-                        navController.navigate(Route.RELAWAN_HOME)
-                    }
                 }
+                .addOnFailureListener {
+                    trySend(Resource.Error(message = "Email atau password salah"))
+                }
+            awaitClose {
+                close()
             }
-            .addOnFailureListener {
-                Toast.makeText(context, "Email atau password salah", Toast.LENGTH_SHORT).show()
-            }
-    }
+        }
 
     fun registerUser(
         userData: UserData,
-        context: Context,
+//        context: Context,
         showDialog: MutableState<Boolean>
-    ) {
-        auth.createUserWithEmailAndPassword(userData.email, userData.password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val userId = task.result.user!!.uid
-                    createUser(userData, userId, context, showDialog)
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Proses Registrasi Gagal",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                }
-            }
-            .addOnFailureListener {
-            }
-    }
+    ) =
+        callbackFlow<Resource<String>> {
+            trySend(Resource.Loading())
 
-    fun createUser(
-        userData: UserData,
-        uid: String,
-        context: Context,
-        showDialog: MutableState<Boolean>
-    ) {
-        userDb.child(uid)
-            .setValue(userData)
-            .addOnCompleteListener {
-                showDialog.value = true
+            auth.createUserWithEmailAndPassword(userData.email, userData.password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val userId = task.result.user!!.uid
+
+                        userDb.child(userId)
+                            .setValue(userData)
+                            .addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    trySend(Resource.Success(data = "Berhasil"))
+                                }
+                            }
+
+                    } else {
+                        trySend(Resource.Error(message = "Proses Registrasi Gagal"))
+                    }
+                }
+                .addOnFailureListener {
+                    trySend(Resource.Error(message = "Proses Registrasi Gagal\n${it.message}"))
+                }
+            awaitClose {
+                close()
             }
-    }
+        }
 }

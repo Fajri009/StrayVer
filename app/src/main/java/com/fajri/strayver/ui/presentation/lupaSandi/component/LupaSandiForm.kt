@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.lupaSandi.component
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,15 +14,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandiViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @Composable
-fun LupaSandiForm(viewModel: LupaSandiViewModel, context: Context) {
+fun LupaSandiForm(viewModel: LupaSandiViewModel, context: Context, scope: CoroutineScope) {
 
     Column(
         Modifier
@@ -43,7 +48,27 @@ fun LupaSandiForm(viewModel: LupaSandiViewModel, context: Context) {
         Spacer(modifier = Modifier.height(12.dp))
         CustomButton(
             onClick = {
-                viewModel.onSubmit(context)
+                if (!viewModel.isValid()) {
+                    scope.launch {
+                        viewModel.onSubmit().collect {
+                            when(it) {
+                                is Resource.Loading -> {
+                                    viewModel.setLoading(true)
+                                }
+                                is Resource.Success -> {
+                                    viewModel.setDialog(true)
+                                }
+                                is Resource.Error -> {
+                                    Toast.makeText(context, it.message.toString(), Toast
+                                        .LENGTH_SHORT).show()
+                                }
+                                else -> Unit
+                            }
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                }
             },
             text = "Kirim",
             type = ButtonType.LARGE

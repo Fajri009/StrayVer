@@ -10,6 +10,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Shades50
@@ -20,12 +21,13 @@ import com.fajri.strayver.util.ButtonType
 fun CustomOutlinedButton(
     onClick: () -> Unit,
     text: String,
-    type: String
+    color: Color = Primary700,
+    type: String,
 ) {
     when (type) {
-        ButtonType.LARGE -> ButtonOutlineLarge(onClick = { onClick() }, text = text)
-        ButtonType.MEDIUM -> ButtonOutlineMedium(onClick = { onClick() }, text = text)
-        ButtonType.SMALL -> ButtonOutlineSmall(onClick = { onClick() }, text = text)
+        ButtonType.LARGE -> ButtonOutlineLarge(onClick = { onClick() }, text = text, color= color)
+        ButtonType.MEDIUM -> ButtonOutlineMedium(onClick = { onClick() }, text = text, color= color)
+        ButtonType.SMALL -> ButtonOutlineSmall(onClick = { onClick() }, text = text, color= color)
     }
 }
 
@@ -33,18 +35,19 @@ fun CustomOutlinedButton(
 private fun ButtonOutlineLarge(
     onClick: () -> Unit,
     text: String,
+    color: Color
 ) {
     OutlinedButton(
         onClick = {
             onClick()
         },
-        border = BorderStroke(1.5.dp, Primary700),
+        border = BorderStroke(1.5.dp, color),
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .width(320.dp)
             .height(48.dp)
     ) {
-        Text(text = text, style = Type.textSmSemiBold(), color = Primary700)
+        Text(text = text, style = Type.textSmSemiBold(), color = color)
     }
 }
 
@@ -52,18 +55,19 @@ private fun ButtonOutlineLarge(
 private fun ButtonOutlineMedium(
     onClick: () -> Unit,
     text: String,
+    color: Color
 ) {
     OutlinedButton(
         onClick = {
             onClick()
         },
-        border = BorderStroke(1.5.dp, Primary700),
+        border = BorderStroke(1.5.dp, color),
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .width(155.dp)
             .height(48.dp)
     ) {
-        Text(text = text, style = Type.textSmSemiBold(), color = Primary700)
+        Text(text = text, style = Type.textSmSemiBold(), color = color)
     }
 }
 
@@ -71,17 +75,18 @@ private fun ButtonOutlineMedium(
 private fun ButtonOutlineSmall(
     onClick: () -> Unit,
     text: String,
+    color: Color
 ) {
     OutlinedButton(
         onClick = {
             onClick()
         },
-        border = BorderStroke(1.5.dp, Primary700),
+        border = BorderStroke(1.5.dp, color),
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .width(55.dp)
             .height(30.dp)
     ) {
-        Text(text = text, style = Type.textSmSemiBold(), color = Primary700)
+        Text(text = text, style = Type.textSmSemiBold(), color = color)
     }
 }

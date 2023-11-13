@@ -41,7 +41,7 @@ fun MemberDonasiScreen(navController: NavController) {
                 text = "Donasi",
                 style = Type.displayXsSemiBold(),
                 color = Neutral50,
-                modifier = Modifier.padding(top = 4.dp, start = 20.dp)
+                modifier = Modifier.padding(top = 20.dp, start = 20.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
             DonasiContent(navController = navController)

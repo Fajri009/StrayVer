@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.ProfilePicture
-import com.fajri.strayver.ui.presentation.member.edit_profil.component.EditProfilContent
+import com.fajri.strayver.ui.presentation.member.profil.component.OpsiButton
+import com.fajri.strayver.ui.presentation.member.profil.component.ProfilContent
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
@@ -35,17 +36,17 @@ fun MemberProfilScreen() {
                 .offset(y = 60.dp)
                 .clip(CircleShape)
                 .background(Shades50)
-                .padding(vertical = 4.dp, horizontal = 24.dp)
+                .padding(vertical = 4.dp, horizontal = 32.dp)
         ) {
             Text(
-                text = "Edit Profil",
-                style = Type.textLgSemiBold(),
+                text = "Profil",
+                style = Type.textLgBold(),
                 color = Primary700,
             )
         }
 
         Column(Modifier.align(Alignment.TopStart)) {
-            EditProfilContent()
+            ProfilContent()
         }
 
         ProfilePicture(

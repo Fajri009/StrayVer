@@ -20,7 +20,7 @@ class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    private var userRole: String? = null
+    var userRole = repository.getRole
 
     private val _email: MutableState<String> = mutableStateOf("")
     val email: State<String> = _email
@@ -31,31 +31,15 @@ class LoginViewModel @Inject constructor(
     private val _isChecked: MutableState<Boolean> = mutableStateOf(false)
     val isChecked: State<Boolean> = _isChecked
 
+    private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+
     private val _showPassword: MutableState<Boolean> = mutableStateOf(false)
     val showPassword: State<Boolean> = _showPassword
 
-    fun handleBlank(context: Context) {
-        Toast.makeText(context, "Email dan sandi tidak boleh kosong", Toast.LENGTH_SHORT).show()
-    }
+    fun isNotValid() =_email.value.isEmpty() || _sandi.value.isEmpty()
 
-    fun onSubmit(context: Context, navController: NavController) {
-        if (_email.value.isEmpty() || _sandi.value.isEmpty()) {
-            handleBlank(context)
-        } else {
-            viewModelScope.launch {
-                repository.getRole.collect { role ->
-                    userRole = role
-
-                    userRepository.login(
-                        _email.value,
-                        _sandi.value,
-                        navController, context,
-                        userRole = userRole!!
-                    )
-                }
-            }
-        }
-    }
+    fun onSubmit() = userRepository.login(_email.value, _sandi.value)
 
     fun onChangeEmail(value: String) {
         _email.value = value
@@ -71,5 +55,9 @@ class LoginViewModel @Inject constructor(
 
     fun showPassword(showPassword: Boolean) {
         _showPassword.value = showPassword
+    }
+
+    fun setLoading(state: Boolean) {
+        _isLoading.value= state
     }
 }
