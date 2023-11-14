@@ -43,6 +43,12 @@ fun EditProfilContent() {
         }
 
         item {
+            Text(text = "Bio", style = Type.textSmMedium())
+            CustomTextField(text = "", placeholder = "", minLine = 6, maxLine = 6)
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
+        item {
             Text(text = "Email", style = Type.textSmMedium())
             CustomTextField(text = "", placeholder = "")
             Spacer(modifier = Modifier.height(8.dp))

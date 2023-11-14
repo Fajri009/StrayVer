@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.register.component
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.register.RegisterViewModel
@@ -23,9 +25,16 @@ import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
+import com.fajri.strayver.util.Route
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @Composable
-fun RegisterForm(viewModel: RegisterViewModel, navController: NavController, context: Context) {
+fun RegisterForm(
+    viewModel: RegisterViewModel, navController: NavController, context: Context,
+    scope: CoroutineScope
+) {
 
     LazyColumn(
         Modifier
@@ -95,6 +104,18 @@ fun RegisterForm(viewModel: RegisterViewModel, navController: NavController, con
 
         item {
             Spacer(modifier = Modifier.height(14.dp))
+            Text(text = "Alamat", style = Type.textSmMedium())
+            CustomTextField(
+                text = viewModel.alamat.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onChangeAlamat(it)
+                }
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(14.dp))
             Text(text = "Password", style = Type.textSmMedium())
             CustomTextField(
                 text = viewModel.password.value,
@@ -133,7 +154,24 @@ fun RegisterForm(viewModel: RegisterViewModel, navController: NavController, con
             Spacer(modifier = Modifier.height(20.dp))
             CustomButton(
                 onClick = {
-                    viewModel.onSubmit(context)
+                    if (viewModel.isValid(context)) {
+                        scope.launch {
+                            viewModel.onSubmit().collect {
+                                when(it) {
+                                    is Resource.Loading -> {
+                                        viewModel.setLoading(true)
+                                    }
+                                    is Resource.Success -> {
+                                        viewModel.setDialog(true)
+                                    }
+                                    is Resource.Error -> {
+                                        Toast.makeText(context, it.message, Toast
+                                            .LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
                 text = "Daftar",
                 type = ButtonType.LARGE

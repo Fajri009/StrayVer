@@ -8,10 +8,12 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.repository.OnBoardRepository
 import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,6 +35,9 @@ class RegisterViewModel @Inject constructor(
     private val _telp: MutableState<String> = mutableStateOf("")
     val telp: State<String> = _telp
 
+    private val _alamat: MutableState<String> = mutableStateOf("")
+    val alamat: State<String> = _alamat
+
     private val _password: MutableState<String> = mutableStateOf("")
     val password: State<String> = _password
 
@@ -47,6 +52,9 @@ class RegisterViewModel @Inject constructor(
 
     private val _isShowDialog: MutableState<Boolean> = mutableStateOf(false)
     val isShowDialog: State<Boolean> = _isShowDialog
+
+    private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
 
     fun onChangeNama(value: String) {
         _nama.value = value
@@ -64,6 +72,10 @@ class RegisterViewModel @Inject constructor(
         _telp.value = value
     }
 
+    fun onChangeAlamat(value: String) {
+        _alamat.value = value
+    }
+
     fun onChangePassword(value: String) {
         _password.value = value
     }
@@ -76,53 +88,65 @@ class RegisterViewModel @Inject constructor(
         _isShowDialog.value = show
     }
 
-    fun onSubmit(context: Context) {
+    fun setLoading(state: Boolean) {
+        _isLoading.value = state
+    }
 
-        var userRole: String = ""
+
+    fun isValid(context: Context): Boolean {
+
+        var isValid: Boolean?
+
 
         if (_nama.value.isEmpty() || _usernmae.value.isEmpty() || _email.value.isEmpty() ||
-            _telp.value.isEmpty() || _password.value.isEmpty() || _rePassword.value.isEmpty()
+            _telp.value.isEmpty() || _alamat.value.isEmpty() || _password.value.isEmpty() ||
+            _rePassword.value.isEmpty()
         ) {
-
             Toast.makeText(context, "Semua data harus terisi", Toast.LENGTH_SHORT).show()
-        }
+            isValid = false
+            return isValid
 
-        else if(!_email.value.contains("@")) {
+        } else if (!_email.value.contains("@")) {
             Toast.makeText(context, "Email anda tidak valid", Toast.LENGTH_SHORT).show()
-        }
+            isValid = false
+            return isValid
 
-        else {
+        } else {
             if (_password.value != _rePassword.value) {
                 Toast.makeText(context, "Masukkan password yang sama", Toast.LENGTH_SHORT)
                     .show()
-                return
-            }
-
-            viewModelScope.launch {
-                onBoardRepository.getRole.collect { role ->
-                    userRole = role
-                }
-            }
-            val user = UserData(
-                nama = _nama.value,
-                username = _usernmae.value,
-                email = _email.value,
-                telp = _telp.value,
-                password = _password.value,
-                role = userRole,
-                saldo = 1500000
-            )
-
-            userRepository.registerUser(
-                userData = user,
-                context = context,
-                showDialog = _isShowDialog
-            )
-
-            if (_isShowDialog.value) {
-                setDialog(true)
+                isValid = false
+                return isValid
             }
         }
+        isValid = true
+        return isValid
+    }
+
+    fun onSubmit(): Flow<Resource<String>> {
+
+        var userRole: String = ""
+
+        viewModelScope.launch {
+            onBoardRepository.getRole.collect { role ->
+                userRole = role
+            }
+        }
+        val user = UserData(
+            nama = _nama.value,
+            username = _usernmae.value,
+            email = _email.value,
+            telp = _telp.value,
+            alamat = _alamat.value,
+            password = _password.value,
+            role = userRole,
+            saldo = 1500000
+        )
+
+        return userRepository.registerUser(
+            userData = user,
+            showDialog = _isShowDialog
+        )
     }
 
     fun onTogglePassword() {

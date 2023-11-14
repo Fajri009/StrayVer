@@ -5,6 +5,7 @@ data class UserData(
     val username: String,
     val email: String,
     val telp: String,
+    val alamat: String,
     val password: String,
     val role: String,
     val saldo: Long

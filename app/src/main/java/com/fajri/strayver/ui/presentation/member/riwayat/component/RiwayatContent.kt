@@ -27,9 +27,11 @@ import com.fajri.strayver.ui.theme.Type
 fun RiwayatContent() {
     Column(
         Modifier
+            .padding(top = 120.dp)
             .fillMaxSize()
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(Shades50)
+
     ) {
         Row(
             Modifier

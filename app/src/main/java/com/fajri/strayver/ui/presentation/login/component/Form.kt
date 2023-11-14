@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.login.component
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomCheckBox
 import com.fajri.strayver.ui.presentation.component.CustomTextField
@@ -29,14 +32,16 @@ import com.fajri.strayver.ui.theme.Primary800
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @Composable
-fun Form(viewModel: LoginViewModel, navController: NavController) {
-    var showPassword by remember {
-        mutableStateOf(false)
-    }
+fun Form(viewModel: LoginViewModel, navController: NavController,scope: CoroutineScope) {
+
 
     val context= LocalContext.current
+    val userRole= viewModel.userRole.collectAsState(initial = "")
 
     Text(
         text = "Email",
@@ -105,7 +110,35 @@ fun Form(viewModel: LoginViewModel, navController: NavController) {
     CustomButton(
         text = "Login",
         onClick = {
-            viewModel.onSubmit(context, navController)
+            if (!viewModel.isNotValid()) {
+                scope.launch {
+                    viewModel.onSubmit().collect {
+                        when(it) {
+                            is Resource.Loading -> {
+                                viewModel.setLoading(true)
+                            }
+                            is Resource.Success -> {
+                                when(userRole.value) {
+                                    "member" -> {
+                                        navController.popBackStack()
+                                        navController.navigate(Route.MEMBER_HOME)
+                                    }
+                                    "relawan" -> {
+                                        navController.popBackStack()
+                                        navController.navigate(Route.MEMBER_HOME)
+                                    }
+                                }
+                            }
+                            is Resource.Error -> {
+                                Toast.makeText(context, "Email atau password salah", Toast
+                                    .LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(context, "Email dan sandi tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            }
         },
         type = ButtonType.LARGE
     )

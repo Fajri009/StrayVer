@@ -79,7 +79,7 @@ fun ProyekCard(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height(6.dp))
-            CustomProgressBar(progress = 31f)
+            CustomProgressBar(progress = 0.31f)
 
             Spacer(modifier = Modifier.height(6.dp))
             Text(text = "Terkumpul:", style = Type.text2xsRegular(), color = Neutral600)

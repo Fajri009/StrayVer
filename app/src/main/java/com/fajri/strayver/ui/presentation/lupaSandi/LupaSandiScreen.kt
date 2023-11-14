@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.lupaSandi
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.data.Resource
+import com.fajri.strayver.ui.presentation.component.LoadingDialog
 import com.fajri.strayver.ui.presentation.lupaSandi.component.LupaSandiForm
 import com.fajri.strayver.ui.presentation.lupaSandi.component.LupaSandiHead
 import com.fajri.strayver.ui.presentation.lupaSandi.component.Popup
@@ -35,17 +39,24 @@ import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @Composable
 fun LupaSandi(
     navController: NavController,
-    viewModel: LupaSandiViewModel= hiltViewModel()
+    viewModel: LupaSandiViewModel = hiltViewModel()
 ) {
 
-    val context= LocalContext.current
+    val context = LocalContext.current
+    val scope= rememberCoroutineScope()
 
     if (viewModel.isShowDialog.value) {
         Popup(navController = navController)
+    }
+
+    if (viewModel.isLoading.value) {
+        LoadingDialog()
     }
 
     Box(
@@ -61,7 +72,7 @@ fun LupaSandi(
         Column(Modifier.align(Alignment.TopStart)) {
             Spacer(modifier = Modifier.height(30.dp))
             LupaSandiHead(navController = navController)
-            LupaSandiForm(viewModel, context)
+            LupaSandiForm(viewModel, context, scope)
         }
     }
 }

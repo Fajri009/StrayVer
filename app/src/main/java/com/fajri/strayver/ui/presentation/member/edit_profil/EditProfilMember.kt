@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -20,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
@@ -78,6 +82,32 @@ fun EditProfilMemberScreen() {
             Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = 115.dp)
+        )
+
+        EditButton(
+            Modifier
+                .align(Alignment.TopCenter)
+                .offset(y = 200.dp, x = 50.dp)
+                .size(30.dp)
+
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun EditButton(modifier: Modifier= Modifier) {
+    Card(
+        modifier = modifier,
+        shape = CircleShape,
+        colors = CardDefaults.cardColors(containerColor = Shades50),
+        onClick = {},
+        elevation = CardDefaults.cardElevation(6.dp)
+    ) {
+        AsyncImage(
+            model = R.drawable.ic_edit,
+            contentDescription = "",
+            contentScale = ContentScale.FillBounds
         )
     }
 }
