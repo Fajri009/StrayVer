@@ -19,5 +19,6 @@ object Route {
     const val TAMBAH_DONASI= "TambahDonasi"
     const val RELAWAN_RIWAYAT= "RelawanRiwayat"
     const val RELAWAN_PROFIL= "RelawanProfil"
+    const val RELAWAN_EDIT_PROFIL= "RelawanEditProfil"
     const val DETAIL_RIWAYAT= "DetailRiwayat"
 }
