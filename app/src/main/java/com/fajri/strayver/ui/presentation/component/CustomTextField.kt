@@ -36,10 +36,12 @@ fun CustomTextField(
     isPassword: Boolean = false,
     isNumeric: Boolean= false,
     maxLine: Int = 1,
-    minLine: Int = 1
+    minLine: Int = 1,
+    onIconClick: () -> Unit= {},
+    modifier: Modifier= Modifier.fillMaxWidth()
 ) {
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         value = text,
         onValueChange = {
             onValueChange(it)
@@ -58,10 +60,18 @@ fun CustomTextField(
                             tint = Primary900
                         )
                     }
-                } else {
                     IconButton(onClick = { onPasswordToggle(!showPassword) }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
+                            contentDescription = "hide",
+                            Modifier.size(25.dp),
+                            tint = Primary900
+                        )
+                    }
+                } else {
+                    IconButton(onClick = { onIconClick() }) {
+                        Icon(
+                            imageVector = trailingIcon,
                             contentDescription = "hide",
                             Modifier.size(25.dp),
                             tint = Primary900
@@ -76,7 +86,8 @@ fun CustomTextField(
             unfocusedIndicatorColor = Primary400,
             focusedIndicatorColor = Primary800,
             cursorColor = Primary900,
-            textColor = Color.Black
+            textColor = Color.Black,
+            placeholderColor = Primary800
         ),
         label = {
             label?.let {

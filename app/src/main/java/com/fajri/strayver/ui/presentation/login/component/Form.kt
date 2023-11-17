@@ -130,6 +130,7 @@ fun Form(viewModel: LoginViewModel, navController: NavController,scope: Coroutin
                                 }
                             }
                             is Resource.Error -> {
+                                viewModel.setLoading(false)
                                 Toast.makeText(context, "Email atau password salah", Toast
                                     .LENGTH_SHORT).show()
                             }

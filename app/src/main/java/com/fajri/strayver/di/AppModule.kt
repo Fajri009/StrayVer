@@ -1,6 +1,7 @@
 package com.fajri.strayver.di
 
 import android.content.Context
+import com.fajri.strayver.data.repository.DatabaseRepository
 import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.data.repository.OnBoardRepository
 import dagger.Module
@@ -21,5 +22,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth()= UserRepository()
+
+    @Provides
+    @Singleton
+    fun provideFirebaseDatabase()= DatabaseRepository()
 
 }
