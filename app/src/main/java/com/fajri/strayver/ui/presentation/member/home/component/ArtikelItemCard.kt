@@ -46,7 +46,7 @@ fun ArtikelItemCard(artikel: Artikel) {
                     AsyncImage(
                         model = artikel.posterAvatar,
                         contentDescription = "",
-                        Modifier.clip(CircleShape).sizeIn(maxWidth = 40.dp, maxHeight = 40.dp),
+                        Modifier.clip(CircleShape).sizeIn(maxWidth = 36.dp, maxHeight = 36.dp),
                         contentScale = ContentScale.Crop
                     )
                     Text(text = artikel.posterName, style = Type.textXsRegular())
@@ -64,7 +64,7 @@ fun ArtikelItemCard(artikel: Artikel) {
                 model = artikel.artikelPhoto,
                 contentDescription = "",
                 modifier = Modifier
-                    .sizeIn(maxWidth = 90.dp, maxHeight = 90.dp)
+                    .sizeIn(maxWidth = 100.dp, maxHeight = 100.dp)
                     .clip(RoundedCornerShape(10.dp)),
                 contentScale = ContentScale.Crop
             )

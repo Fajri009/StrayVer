@@ -56,7 +56,7 @@ class UserRepository() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     user = it.user!!
-                    Log.i("isinya user", "getUserData: $user")
+                    Log.i("isinya user", "getUserData: ${user!!.uid}")
                     trySend(Resource.Success("Berhasil Login"))
 
                 }

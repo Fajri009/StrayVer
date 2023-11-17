@@ -101,9 +101,10 @@ fun CustomTextField(
         keyboardOptions =
         if (isPassword) {
             KeyboardOptions(keyboardType = KeyboardType.Password)
-        } else if (isNumeric) {
-            KeyboardOptions(keyboardType = KeyboardType.Number)
         }
+//        else if (isNumeric) {
+//            KeyboardOptions(keyboardType = KeyboardType.Number)
+//        }
         else {
             KeyboardOptions(keyboardType = KeyboardType.Text)
         },
