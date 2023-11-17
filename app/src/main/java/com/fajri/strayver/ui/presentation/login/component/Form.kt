@@ -125,7 +125,7 @@ fun Form(viewModel: LoginViewModel, navController: NavController,scope: Coroutin
                                     }
                                     "relawan" -> {
                                         navController.popBackStack()
-                                        navController.navigate(Route.MEMBER_HOME)
+                                        navController.navigate(Route.RELAWAN_HOME)
                                     }
                                 }
                             }
@@ -133,6 +133,8 @@ fun Form(viewModel: LoginViewModel, navController: NavController,scope: Coroutin
                                 Toast.makeText(context, "Email atau password salah", Toast
                                     .LENGTH_SHORT).show()
                             }
+
+                            else -> {}
                         }
                     }
                 }

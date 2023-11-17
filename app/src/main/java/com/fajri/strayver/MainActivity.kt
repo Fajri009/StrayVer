@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
             Log.i("inforole", "onCreate: $role")
 
             Surface(
-                modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 40.dp))
+                modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 23.dp))
             ) {
                 CustomScaffold(
                     navController = navController,
