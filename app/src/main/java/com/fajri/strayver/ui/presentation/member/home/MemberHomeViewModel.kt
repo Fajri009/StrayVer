@@ -1,6 +1,8 @@
 package com.fajri.strayver.ui.presentation.member.home
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -26,7 +28,7 @@ class MemberHomeViewModel @Inject constructor(
     private val _artikelLoading= mutableStateOf(false)
     val artikelLoading: State<Boolean> = _artikelLoading
 
-    fun getArtikel() {
+    fun getArtikel(context: Context) {
         viewModelScope.launch {
             databaseRepository.getArtikel().collect {
                 when(it) {
@@ -38,7 +40,7 @@ class MemberHomeViewModel @Inject constructor(
                         _artikelLoading.value= false
                     }
                     is Resource.Error -> {
-                        val dor= "dada"
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

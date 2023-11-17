@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -57,9 +58,10 @@ fun MemberHomeScreen(
 
     val artikel by viewModel.artikel
     val artikelLoading by viewModel.artikelLoading
+    val context= LocalContext.current
 
     LaunchedEffect(key1 = true) {
-        viewModel.getArtikel()
+        viewModel.getArtikel(context)
     }
 
     LazyColumn(Modifier.padding(bottom = 56.dp)) {
