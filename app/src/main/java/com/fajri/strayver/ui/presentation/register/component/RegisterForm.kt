@@ -165,6 +165,7 @@ fun RegisterForm(
                                         viewModel.setDialog(true)
                                     }
                                     is Resource.Error -> {
+                                        viewModel.setLoading(false)
                                         Toast.makeText(context, it.message, Toast
                                             .LENGTH_SHORT).show()
                                     }

@@ -36,10 +36,12 @@ fun CustomTextField(
     isPassword: Boolean = false,
     isNumeric: Boolean= false,
     maxLine: Int = 1,
-    minLine: Int = 1
+    minLine: Int = 1,
+    onIconClick: () -> Unit= {},
+    modifier: Modifier= Modifier.fillMaxWidth()
 ) {
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         value = text,
         onValueChange = {
             onValueChange(it)

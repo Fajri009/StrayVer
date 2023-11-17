@@ -59,6 +59,7 @@ fun LupaSandiForm(viewModel: LupaSandiViewModel, context: Context, scope: Corout
                                     viewModel.setDialog(true)
                                 }
                                 is Resource.Error -> {
+                                    viewModel.setLoading(false)
                                     Toast.makeText(context, it.message.toString(), Toast
                                         .LENGTH_SHORT).show()
                                 }

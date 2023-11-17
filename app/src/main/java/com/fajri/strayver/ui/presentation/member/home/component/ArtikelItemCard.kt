@@ -22,11 +22,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.model.Artikel
 import com.fajri.strayver.ui.theme.Neutral500
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun ArtikelItemCard() {
+fun ArtikelItemCard(artikel: Artikel) {
     Card(
         Modifier
             .padding(vertical = 8.dp, horizontal = 20.dp).clickable {  },
@@ -43,23 +44,24 @@ fun ArtikelItemCard() {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     AsyncImage(
-                        model = R.drawable.avatar,
+                        model = artikel.posterAvatar,
                         contentDescription = "",
-                        Modifier.clip(CircleShape).sizeIn(maxWidth = 40.dp)
+                        Modifier.clip(CircleShape).sizeIn(maxWidth = 40.dp, maxHeight = 40.dp),
+                        contentScale = ContentScale.Crop
                     )
-                    Text(text = "Sasha Brauss", style = Type.textXsRegular())
+                    Text(text = artikel.posterName, style = Type.textXsRegular())
                 }
                 Text(
-                    text = "Rescue Puluhan Kucing yang ditinggal pemiliknya",
+                    text = artikel.title,
                     style = Type.textSmSemiBold(),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(text = "2 jam yang lalu", style = Type.text2xsRegular(), color = Neutral500)
+                Text(text = artikel.waktu, style = Type.text2xsRegular(), color = Neutral500)
             }
 
             AsyncImage(
-                model = R.drawable.kucing_kumpul,
+                model = artikel.artikelPhoto,
                 contentDescription = "",
                 modifier = Modifier
                     .sizeIn(maxWidth = 90.dp, maxHeight = 90.dp)

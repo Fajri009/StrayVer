@@ -5,12 +5,15 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.util.Route
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Date
 import javax.inject.Inject
 
+@HiltViewModel
 class BuatProyekViewModel @Inject constructor(
-//    private val navController: NavController
+    private val userRepository: UserRepository
 ): ViewModel() {
     private val _namaProyek: MutableState<String> = mutableStateOf("")
     val namaProyek: State<String> = _namaProyek
@@ -31,5 +34,9 @@ class BuatProyekViewModel @Inject constructor(
 
     fun onChangeJumlahMaks(value: String) {
         _jumlahMaks.value = value
+    }
+
+    fun buatProyek() {
+//        val proyek
     }
 }

@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.home.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import com.fajri.strayver.ui.presentation.member.home.MemberHomeViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Type
+import java.util.UUID
 
 @Composable
 fun Greet(modifier: Modifier= Modifier, viewModel: MemberHomeViewModel) {
@@ -33,13 +35,17 @@ fun Greet(modifier: Modifier= Modifier, viewModel: MemberHomeViewModel) {
             contentDescription = "",
             contentScale = ContentScale.FillBounds
         )
-        Column(Modifier.align(Alignment.CenterStart).padding(start = 24.dp)) {
+        Column(
+            Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 24.dp)) {
             Text(text = "Hi, Daniswari", style = Type.displayXsSemiBold(), color = Neutral50)
             Text(
                 text = "Siap untuk berdonasi hari ini?",
                 style = Type.textXsMedium(),
                 color = Neutral50
             )
+            Log.i("id",  UUID.randomUUID().toString())
         }
     }
 }
