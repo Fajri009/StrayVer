@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 class DatabaseRepository {
-    //    private var db = FirebaseDatabase
-//        .getInstance("https://strayver-6c1c0-default-rtdb.asia-southeast1.firebasedatabase.app")
     private var db: DatabaseReference =
         FirebaseDatabase
             .getInstance("https://strayver-6c1c0-default-rtdb.asia-southeast1.firebasedatabase.app")
