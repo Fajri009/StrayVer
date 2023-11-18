@@ -28,6 +28,8 @@ class MemberHomeViewModel @Inject constructor(
     private val _artikelLoading= mutableStateOf(false)
     val artikelLoading: State<Boolean> = _artikelLoading
 
+
+
     fun getArtikel(context: Context) {
         viewModelScope.launch {
             databaseRepository.getArtikel().collect {
@@ -41,6 +43,7 @@ class MemberHomeViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                        _artikelLoading.value= false
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.login.component
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,11 +38,13 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
-fun Form(viewModel: LoginViewModel, navController: NavController,scope: CoroutineScope) {
+fun Form(
+    viewModel: LoginViewModel, navController: NavController, scope: CoroutineScope
+) {
 
 
-    val context= LocalContext.current
-    val userRole= viewModel.userRole.collectAsState(initial = "")
+    val context = LocalContext.current
+    val userRole = viewModel.userRole.collectAsState(initial = "")
 
     Text(
         text = "Email",
@@ -65,7 +68,10 @@ fun Form(viewModel: LoginViewModel, navController: NavController,scope: Coroutin
         trailingIcon = Icons.Filled.Visibility,
         isPassword = true,
         showPassword = viewModel.showPassword.value,
-        onPasswordToggle = { viewModel.showPassword(!viewModel.showPassword.value) },
+        onPasswordToggle = {
+            viewModel.showPassword(!viewModel.showPassword.value)
+            Toast.makeText(context, "awdadada", Toast.LENGTH_SHORT).show()
+        },
         onValueChange = {
             viewModel.onChangePassword(it)
         }
@@ -85,7 +91,7 @@ fun Form(viewModel: LoginViewModel, navController: NavController,scope: Coroutin
                 onClick = {
                     viewModel.onChecked()
                 },
-                isClicked= viewModel.isChecked.value
+                isClicked = viewModel.isChecked.value
             )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
@@ -113,32 +119,38 @@ fun Form(viewModel: LoginViewModel, navController: NavController,scope: Coroutin
             if (!viewModel.isNotValid()) {
                 scope.launch {
                     viewModel.onSubmit().collect {
-                        when(it) {
+                        when (it) {
                             is Resource.Loading -> {
                                 viewModel.setLoading(true)
                             }
+
                             is Resource.Success -> {
-                                when(userRole.value) {
+                                when (userRole.value) {
                                     "member" -> {
                                         navController.popBackStack()
                                         navController.navigate(Route.MEMBER_HOME)
                                     }
+
                                     "relawan" -> {
                                         navController.popBackStack()
                                         navController.navigate(Route.RELAWAN_HOME)
                                     }
                                 }
                             }
+
                             is Resource.Error -> {
                                 viewModel.setLoading(false)
-                                Toast.makeText(context, "Email atau password salah", Toast
-                                    .LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context, it.message, Toast
+                                        .LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
                 }
             } else {
-                Toast.makeText(context, "Email dan sandi tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Email dan sandi tidak boleh kosong", Toast.LENGTH_SHORT)
+                    .show()
             }
         },
         type = ButtonType.LARGE

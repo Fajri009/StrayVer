@@ -24,7 +24,6 @@ class DatabaseRepository {
         callbackFlow {
             trySend(Resource.Loading())
 
-            Log.i("hitung", "onDataChange: ")
 
             db.child("Artikel").addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
