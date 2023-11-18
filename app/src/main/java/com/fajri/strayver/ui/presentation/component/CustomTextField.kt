@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -56,7 +57,7 @@ fun CustomTextField(
                         Icon(
                             imageVector = trailingIcon,
                             contentDescription = "show",
-                            Modifier.size(25.dp),
+                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
                             tint = Primary900
                         )
                     }
@@ -64,7 +65,7 @@ fun CustomTextField(
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
                             contentDescription = "hide",
-                            Modifier.size(25.dp),
+                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
                             tint = Primary900
                         )
                     }

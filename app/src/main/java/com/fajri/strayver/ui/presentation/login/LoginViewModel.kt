@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.data.repository.OnBoardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,7 @@ class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository,
 ) : ViewModel() {
 
-    var userRole = repository.getRole
+    val userRole= repository.getRole
 
     private val _email: MutableState<String> = mutableStateOf("")
     val email: State<String> = _email

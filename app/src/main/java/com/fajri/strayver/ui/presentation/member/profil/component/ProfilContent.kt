@@ -11,30 +11,36 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.R
+import com.fajri.strayver.model.UserData
+import com.fajri.strayver.ui.presentation.member.profil.MemberProfilViewModel
 import com.fajri.strayver.ui.theme.Shades50
 
 @Composable
-fun ProfilContent() {
+fun ProfilContent(userData: UserData, navController: NavController, viewModel: MemberProfilViewModel) {
     LazyColumn(
         Modifier
             .fillMaxSize()
             .padding(top = 180.dp)
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(Shades50)
-            .padding(top = 80.dp, start = 20.dp, end = 20.dp, bottom = 80.dp)
+            .padding(horizontal = 20.dp)
     ) {
         item {
-            InfoItem(value = "Daniswari Yurin Azzahra", title = "Nama", icon = R.drawable.ic_user)
+            Spacer(modifier = Modifier.height(60.dp))
+            InfoItem(value = userData.nama, title = "Nama", icon = R.drawable.ic_user)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            InfoItem(value = "Daniswari", title = "Username", icon = R.drawable.ic_card)
+            InfoItem(value = userData.username, title = "Username", icon = R.drawable.ic_card)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
             InfoItem(
-                value = "Anabul Foundation merupakan komunitas relawan yang bergerak untuk menyelamatkan hewan-hewan terlantar dimana sudah berdiri sejak tahun 2010.\n",
+                value =
+                if (userData.deskripsi != "") userData.deskripsi
+                else "None",
                 title = "Deskripsi",
                 icon = R.drawable.ic_info,
                 isOverflow = true
@@ -42,29 +48,29 @@ fun ProfilContent() {
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            InfoItem(value = "danis@gmail.com", title = "Email", icon = R.drawable.ic_email)
+            InfoItem(value = userData.email, title = "Email", icon = R.drawable.ic_email)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
             InfoItem(
-                value = "Jl Veteran no 8, Ketawanggede, Malang",
+                value = userData.alamat,
                 title = "Alamat",
                 icon = R.drawable.ic_location
             )
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            InfoItem(value = "089126321041", title = "Nomer Telepon", icon = R.drawable.ic_phone)
+            InfoItem(value = userData.telp, title = "Nomer Telepon", icon = R.drawable.ic_phone)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            InfoItem(value = "Member", title = "Role", icon = R.drawable.ic_role)
+            InfoItem(value = userData.role, title = "Role", icon = R.drawable.ic_role)
         }
 
         item {
             Spacer(modifier = Modifier.height(32.dp))
-            OpsiButton()
-            Spacer(modifier = Modifier.height(16.dp))
+            OpsiButton(navController, viewModel)
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }

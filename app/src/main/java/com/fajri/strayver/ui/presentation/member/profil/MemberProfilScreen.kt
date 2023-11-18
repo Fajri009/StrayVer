@@ -9,10 +9,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.ProfilePicture
@@ -23,7 +28,18 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberProfilScreen() {
+fun MemberProfilScreen(
+    viewModel: MemberProfilViewModel= hiltViewModel(),
+    navController: NavController
+) {
+
+    val userData by viewModel.userData
+    val isLoading by viewModel.isLoading
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUser()
+    }
+    
     Box(
         Modifier
             .fillMaxSize()
@@ -42,11 +58,12 @@ fun MemberProfilScreen() {
                 text = "Profil",
                 style = Type.textLgBold(),
                 color = Primary700,
+                textAlign = TextAlign.Center
             )
         }
 
         Column(Modifier.align(Alignment.TopStart)) {
-            ProfilContent()
+            ProfilContent(userData.item!!, navController, viewModel)
         }
 
         ProfilePicture(

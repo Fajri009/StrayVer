@@ -145,7 +145,6 @@ class RegisterViewModel @Inject constructor(
 
         return userRepository.registerUser(
             userData = user,
-            showDialog = _isShowDialog
         )
     }
 

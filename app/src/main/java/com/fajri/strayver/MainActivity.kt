@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -50,9 +52,11 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val backStackEntry by navController.currentBackStackEntryAsState()
             val currPage = backStackEntry?.destination?.route
-            val role = "member"
+            val userRole by viewModel.userRole
 
-            Log.i("inforole", "onCreate: $role")
+            LaunchedEffect(key1 = true) {
+                viewModel.getRole()
+            }
 
             Surface(
                 modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 40.dp))
@@ -60,7 +64,7 @@ class MainActivity : ComponentActivity() {
                 CustomScaffold(
                     navController = navController,
                     showBottomBar =
-                    if (role == "member") {
+                    if (userRole == "member") {
                         currPage in memberScreen
                     } else {
                         currPage in relawanScreen

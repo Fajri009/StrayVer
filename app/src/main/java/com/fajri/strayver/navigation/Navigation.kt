@@ -61,7 +61,7 @@ fun Navigation(navController: NavHostController) {
             MemberRiwayatScreen()
         }
         composable(Route.MEMBER_PROFIL) {
-            MemberProfilScreen()
+            MemberProfilScreen(navController = navController)
         }
         composable(Route.MEMBER_EDIT_PROFIL) {
             EditProfilMemberScreen()

@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
 import com.fajri.strayver.data.Resource
+import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.model.UserData
 import com.fajri.strayver.util.Route
 import com.google.firebase.Firebase
@@ -13,7 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -56,12 +59,11 @@ class UserRepository() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     user = it.user!!
-                    Log.i("isinya user", "getUserData: ${user!!.uid}")
                     trySend(Resource.Success("Berhasil Login"))
 
                 }
                 .addOnFailureListener {
-                    trySend(Resource.Error(message = "Email atau password salah"))
+                    trySend(Resource.Error(message = it.message.toString()))
                 }
             awaitClose {
                 close()
@@ -70,8 +72,6 @@ class UserRepository() {
 
     fun registerUser(
         userData: UserData,
-//        context: Context,
-        showDialog: MutableState<Boolean>
     ) =
         callbackFlow<Resource<String>> {
             trySend(Resource.Loading())
@@ -100,4 +100,45 @@ class UserRepository() {
                 close()
             }
         }
+
+    fun getUserRole(): Flow<Resource<String>> =
+        callbackFlow {
+
+            user?.let {
+                userDb.child(it.uid).child("role").get().addOnSuccessListener {
+                    trySend(Resource.Success(data = it.value.toString()))
+                }
+            }
+
+            awaitClose {
+                close()
+            }
+        }
+
+    fun getUserById(id: String): Flow<Resource<UserModelResponse>> =
+        callbackFlow {
+            trySend(Resource.Loading())
+
+            userDb.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.children.map {
+                        UserModelResponse(it.getValue(UserData::class.java), it.key)
+                    }.filter { it.key == user!!.uid }
+
+                    trySend(Resource.Success(user[0]))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(message = error.message.toString()))
+                }
+            })
+            awaitClose {
+                close()
+            }
+        }
+
+    fun logout() {
+        auth.signOut()
+        user = null
+    }
 }
