@@ -134,8 +134,6 @@ fun Form(viewModel: LoginViewModel, navController: NavController,scope: Coroutin
                                 Toast.makeText(context, "Email atau password salah", Toast
                                     .LENGTH_SHORT).show()
                             }
-
-                            else -> {}
                         }
                     }
                 }

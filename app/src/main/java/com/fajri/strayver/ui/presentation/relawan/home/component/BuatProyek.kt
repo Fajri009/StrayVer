@@ -33,18 +33,14 @@ fun BuatProyek(modifier: Modifier = Modifier, navController: NavController) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             TemplateBuatProyek(
-                judul = "Proyek \nDonasi Dana",
-                image = R.drawable.money,
-                color1 = Color(0xFFEE7180),
-                color2 = Color(0xFFFDECEE),
-                onClick = {navController.navigate(Route.BUAT_PROYEK)}
+                type = "Dana",
+                onClick = {},
+                navController = navController
             )
             TemplateBuatProyek(
-                judul = "Proyek \nDonasi Barang",
-                image = R.drawable.barang,
-                color1 = Color(0xFF02C0E5),
-                color2 = Color(0xFFD9F9FF),
-                onClick = {navController.navigate(Route.BUAT_PROYEK)}
+                type = "Barang",
+                onClick = {},
+                navController = navController
             )
         }
     }

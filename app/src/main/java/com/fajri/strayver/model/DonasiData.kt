@@ -1,7 +1,8 @@
 package com.fajri.strayver.model
 
 data class DonasiData(
-    val namaProyek: String,
-    val deskripsi: String,
-    val jumlahMaks: Int
+    val id: String= "",
+    val namaProyek: String= "",
+    val deskripsi: String= "",
+    val maks: Int = 0
 )

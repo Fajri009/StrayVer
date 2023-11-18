@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.relawan.buatProyek.component
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.BuatProyekViewModel
@@ -21,9 +23,11 @@ import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
-fun BuatProyekContent(viewModel: BuatProyekViewModel, ) {
+fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, context: Context, donasiType: String) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -33,7 +37,7 @@ fun BuatProyekContent(viewModel: BuatProyekViewModel, ) {
     ) {
         item {
             Text(
-                text = "Donasi Dana",
+                text = "Donasi $donasiType" ,
                 color = Neutral900,
                 style = Type.textLgSemiBold()
             )
@@ -80,16 +84,26 @@ fun BuatProyekContent(viewModel: BuatProyekViewModel, ) {
 
         item {
             Text(
-                text = "Jumlah Maksimal Dana Donasi",
+                text = "Jumlah Maksimal Dana $donasiType",
                 color = Color.Black,
                 style = Type.textSmMedium()
             )
             CustomTextField(
-                text = viewModel.jumlahMaks.value,
+                text =
+                    if (viewModel.jumlahMaks.value.toString() == "null") {
+                        ""
+                    } else {
+                        viewModel.jumlahMaks.value.toString()
+                    },
                 placeholder = "",
                 onValueChange = {
-                    viewModel.onChangeJumlahMaks(it)
-                }
+                    if (it == "") {
+                        viewModel.onChangeJumlahMaks(null)
+                    } else {
+                        viewModel.onChangeJumlahMaks(it.toLong())
+                    }
+                },
+                isNumeric = true
             )
             Spacer(modifier = Modifier.height(10.dp))
         }
@@ -108,7 +122,29 @@ fun BuatProyekContent(viewModel: BuatProyekViewModel, ) {
         }
 
         item {
-            CustomButton(onClick = { /*TODO*/ }, text = "Kirim", type = ButtonType.LARGE)
+            CustomButton(
+                onClick = {
+                    if (viewModel.isValid(context)) {
+                        scope.launch {
+                            viewModel.buatProyek().collect {
+                                when(it) {
+                                    is Resource.Loading -> {
+                                        viewModel.setLoading(true)
+                                    }
+                                    is Resource.Success -> {
+                                        viewModel.setDialog(true)
+                                    }
+                                    is Resource.Error -> {
+                                        viewModel.setLoading(false)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                text = "Kirim",
+                type = ButtonType.LARGE
+            )
         }
     }
 }

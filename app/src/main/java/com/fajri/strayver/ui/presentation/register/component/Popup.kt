@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +27,12 @@ import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
-fun RegisterPopup(navController: NavController) {
+fun Popup(
+    navController: NavController,
+    type: String,
+    judul: String,
+    pesan: String
+) {
     Dialog(onDismissRequest = { /*TODO*/ }) {
         Dialog(onDismissRequest = { }) {
             Column(
@@ -44,17 +48,20 @@ fun RegisterPopup(navController: NavController) {
                     Modifier.size(150.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                Text(text = "Sukses", style = Type.textLgSemiBold(), color = Primary900)
+                Text(text = judul, style = Type.textLgSemiBold(), color = Primary900)
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "Selamat, akunmu sudah terdaftar.",
+                    text = pesan,
                     style = Type.textXsRegular(),
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 CustomButton(
                     onClick = {
-                        navController.navigate(Route.LOGIN)
+                        when (type) {
+                            "Register" -> navController.navigate(Route.LOGIN)
+                            "Buat Proyek" -> navController.navigate(Route.RELAWAN_HOME)
+                        }
                     },
                     text = "Baik",
                     type = ButtonType.MEDIUM

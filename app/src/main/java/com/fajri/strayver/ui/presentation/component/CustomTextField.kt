@@ -31,6 +31,7 @@ fun CustomTextField(
     trailingIcon: ImageVector? = null,
     showPassword: Boolean = false,
     onValueChange: (String) -> Unit = {},
+//    onValueIntChange:
     onPasswordToggle: (Boolean) -> Unit = {},
     label: String? = null,
     isPassword: Boolean = false,
@@ -102,9 +103,9 @@ fun CustomTextField(
         if (isPassword) {
             KeyboardOptions(keyboardType = KeyboardType.Password)
         }
-//        else if (isNumeric) {
-//            KeyboardOptions(keyboardType = KeyboardType.Number)
-//        }
+        else if (isNumeric) {
+            KeyboardOptions(keyboardType = KeyboardType.Number)
+        }
         else {
             KeyboardOptions(keyboardType = KeyboardType.Text)
         },
