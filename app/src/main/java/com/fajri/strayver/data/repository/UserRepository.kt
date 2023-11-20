@@ -135,6 +135,24 @@ class UserRepository() {
             }
         }
 
+    fun uodateUserProfile(userData: UserData): Flow<Resource<String>> =
+        callbackFlow {
+            trySend(Resource.Loading())
+
+            userDb.child(user!!.uid).setValue(userData)
+                .addOnSuccessListener {
+                    trySend(Resource.Success("Berhasil mengubah data"))
+                }
+                .addOnFailureListener {
+                    trySend(Resource.Error("Gagal mengubah data\n${it.message}"))
+                }
+
+            awaitClose {
+                close()
+            }
+
+        }
+
     fun logout() {
         auth.signOut()
         user = null

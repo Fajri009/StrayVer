@@ -25,7 +25,7 @@ import com.fajri.strayver.ui.theme.Type
 import java.util.UUID
 
 @Composable
-fun Greet(modifier: Modifier= Modifier, viewModel: MemberHomeViewModel) {
+fun Greet(modifier: Modifier= Modifier, nama: String) {
 
     Box(
         modifier= modifier
@@ -39,13 +39,12 @@ fun Greet(modifier: Modifier= Modifier, viewModel: MemberHomeViewModel) {
             Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 24.dp)) {
-            Text(text = "Hi, Daniswari", style = Type.displayXsSemiBold(), color = Neutral50)
+            Text(text = "Hi, $nama", style = Type.displayXsSemiBold(), color = Neutral50)
             Text(
                 text = "Siap untuk berdonasi hari ini?",
                 style = Type.textXsMedium(),
                 color = Neutral50
             )
-            Log.i("id",  UUID.randomUUID().toString())
         }
     }
 }

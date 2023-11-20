@@ -15,13 +15,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.fajri.strayver.MainViewModel
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun SaldoCard(modifier: Modifier= Modifier) {
+fun SaldoCard(modifier: Modifier= Modifier, saldo: String) {
+
     Card(
         colors = CardDefaults.cardColors(containerColor = Neutral50),
         elevation = CardDefaults.cardElevation(12.dp),
@@ -39,7 +41,7 @@ fun SaldoCard(modifier: Modifier= Modifier) {
             Spacer(modifier = Modifier.width(6.dp))
             Column() {
                 Text(text = "Saldo", style = Type.textXsMedium())
-                Text(text = "Rp 1.500.000", style = Type.textSmSemiBold(), color = Neutral700)
+                Text(text = "Rp $saldo", style = Type.textSmSemiBold(), color = Neutral700)
             }
         }
     }

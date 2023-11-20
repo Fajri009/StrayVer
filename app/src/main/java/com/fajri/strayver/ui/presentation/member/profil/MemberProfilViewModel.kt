@@ -38,7 +38,6 @@ class MemberProfilViewModel @Inject constructor(
                     is Resource.Error -> {
                         UserModelResponse(item = null, key = null)
                         _isLoading.value= false
-
                     }
                 }
             }
@@ -46,6 +45,6 @@ class MemberProfilViewModel @Inject constructor(
     }
 
     fun logout() {
-
+        userRepository.logout()
     }
 }

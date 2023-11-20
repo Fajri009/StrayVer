@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fajri.strayver.navigation.Navigation
@@ -53,11 +54,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val backStackEntry by navController.currentBackStackEntryAsState()
             val currPage = backStackEntry?.destination?.route
-            val userRole by viewModel.userRole
-
-            LaunchedEffect(key1 = true) {
-                viewModel.getRole()
-            }
+            val userRole= viewModel.userRole.collectAsStateWithLifecycle(initialValue = "")
 
             Surface(
                 modifier = Modifier.windowInsetsPadding(WindowInsets(bottom = 40.dp))
@@ -65,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 CustomScaffold(
                     navController = navController,
                     showBottomBar =
-                    if (userRole == "member") {
+                    if (userRole.value == "member") {
                         currPage in memberScreen
                     } else {
                         currPage in relawanScreen
