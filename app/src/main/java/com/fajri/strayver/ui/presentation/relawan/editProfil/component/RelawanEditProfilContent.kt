@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,13 +17,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
+import com.fajri.strayver.ui.presentation.relawan.editProfil.RelawanEditViewModel
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
-fun RelawanEditProfilContent(navController: NavController) {
+fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEditViewModel) {
+
+
     LazyColumn(
         Modifier
             .fillMaxSize()
@@ -35,43 +38,93 @@ fun RelawanEditProfilContent(navController: NavController) {
 
         item {
             Text(text = "Nama Relawan / Komunitas", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.nama.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onChangeName(it)
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
         item {
             Text(text = "Username", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.username.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onChangeUsername(it)
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
         item {
             Text(text = "Deskripsi", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "", minLine = 6, maxLine = 6)
+            CustomTextField(
+                text = viewModel.deskripsi.value,
+                placeholder = "",
+                minLine = 6,
+                maxLine = 6,
+                onValueChange = {
+                    viewModel.onChangeDeskripsi(it)
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
         item {
             Text(text = "Email", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.email.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onChangeEmail(it)
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
         item {
             Text(text = "Alamat", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.alamat.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onChangeAlamat(it)
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
         item {
             Text(text = "Nomer Telepon", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.noTelp.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onChangeTelp(it)
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
         item {
             Text(text = "Password", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "", isPassword = true, trailingIcon = Icons.Default.VisibilityOff)
+            CustomTextField(
+                text = viewModel.password.value,
+                placeholder = "",
+                isPassword = true,
+                trailingIcon = Icons.Default.Visibility,
+                showPassword = viewModel.isReVisible.value,
+                onPasswordToggle = {
+                    viewModel.onTogglePassword(it)
+                },
+                onValueChange = {
+                    viewModel.onChangePassword(it)
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 

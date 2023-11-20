@@ -33,12 +33,10 @@ class UserRepository() {
         callbackFlow {
             trySend(Resource.Loading())
 
-
             auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         trySend(Resource.Success("Password Berhasil diubah"))
-
                     }
                 }
                 .addOnFailureListener {
@@ -115,7 +113,7 @@ class UserRepository() {
             }
         }
 
-    fun getUserById(id: String): Flow<Resource<UserModelResponse>> =
+    fun getUserById(): Flow<Resource<UserModelResponse>> =
         callbackFlow {
             trySend(Resource.Loading())
 

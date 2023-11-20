@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
 
 @Composable
 fun DonasiTerbaru(modifier: Modifier, navController: NavController) {
@@ -20,8 +21,29 @@ fun DonasiTerbaru(modifier: Modifier, navController: NavController) {
             style = Type.textMdSemiBold(),
         )
         Spacer(modifier = Modifier.height(10.dp))
-        DonasiTerbaruItem(R.drawable.terbaru2, "Dibutuhkan kandang hewan (kucing atau anjing)", 0.5f, "10 barang", {})
-        DonasiTerbaruItem(R.drawable.terbaru, "Selamatkan ratusan kucing kelaparan di Kecamatan Tou", 0.3f, "Rp 3.258.500", {navController.navigate(Route.TAMBAH_DONASI)})
-        DonasiTerbaruItem(R.drawable.terbaru, "Selamatkan ratusan kucing kelaparan di Kecamatan Tou", 0.3f, "Rp 3.258.500", {navController.navigate(Route.TAMBAH_DONASI)})
+        DonasiTerbaruItem(
+            tipeDonasi = TipeDonasi.BARANG,
+            image = R.drawable.terbaru2,
+            judul = "Dibutuhkan kandang hewan (kucing atau anjing)",
+            progress = 0.5f,
+            jumlah = "10",
+            navController = navController
+        )
+        DonasiTerbaruItem(
+            tipeDonasi = TipeDonasi.DANA,
+            image = R.drawable.terbaru,
+            judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
+            progress = 0.3f,
+            jumlah = "3.258.500",
+            navController = navController
+        )
+        DonasiTerbaruItem(
+            tipeDonasi = TipeDonasi.DANA,
+            image = R.drawable.terbaru,
+            judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
+            progress = 0.3f,
+            jumlah = "3.258.500",
+            navController = navController
+        )
     }
 }

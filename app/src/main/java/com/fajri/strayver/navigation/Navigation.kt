@@ -33,7 +33,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.RELAWAN_HOME){
+    NavHost(navController = navController, startDestination = Route.LOGIN){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -53,13 +53,13 @@ fun Navigation(navController: NavHostController) {
             MemberHomeScreen(navController = navController)
         }
         composable(Route.MEMBER_DONASI) {
-            MemberDonasiScreen(navController)
+            MemberDonasiScreen(navController = navController)
         }
         composable(Route.DETAIL_DONASI) {
-            DetailDonasiScreen(navController)
+            DetailDonasiScreen(navController = navController)
         }
         composable(Route.KIRIM_DONASI) {
-            KirimDonasiScreen(navController)
+            KirimDonasiScreen(navController = navController)
         }
         composable(Route.MEMBER_RIWAYAT) {
             MemberRiwayatScreen()
@@ -74,7 +74,7 @@ fun Navigation(navController: NavHostController) {
             EditProfilMemberScreen()
         }
         composable(Route.RELAWAN_HOME) {
-            RelawanHomeScreen(navController)
+            RelawanHomeScreen(navController = navController)
         }
         composable(
             Route.BUAT_PROYEK + "?type={type}",
@@ -86,23 +86,23 @@ fun Navigation(navController: NavHostController) {
         ) {
             val tipeDonasi = it.arguments?.getString("type")
             tipeDonasi?.let {
-                BuatProyekScreen(navController, donasiType = tipeDonasi)
+                BuatProyekScreen(navController = navController, donasiType = tipeDonasi)
             }
         }
         composable(Route.RELAWAN_DONASI) {
-            RelawanDonasiScreen(navController)
+            RelawanDonasiScreen(navController = navController)
         }
         composable(Route.TAMBAH_DONASI) {
-            TambahDonasiScreen(navController)
+            TambahDonasiScreen(navController = navController)
         }
         composable(Route.RELAWAN_RIWAYAT) {
             RelawanRiwayatScreen()
         }
         composable(Route.RELAWAN_PROFIL) {
-            RelawanProfilScreen(navController)
+            RelawanProfilScreen(navController = navController)
         }
         composable(Route.RELAWAN_EDIT_PROFIL) {
-            RelawanEditProfilScreen(navController)
+            RelawanEditProfilScreen(navController = navController)
         }
     }
 }

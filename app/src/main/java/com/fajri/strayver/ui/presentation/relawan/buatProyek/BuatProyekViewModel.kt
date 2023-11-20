@@ -6,17 +6,23 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
+import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
+import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.model.Donasi
+import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class BuatProyekViewModel @Inject constructor(
+    private val userRepository: UserRepository,
     private val donasiRepository: DonasiRepository
 ): ViewModel() {
     private val _namaProyek: MutableState<String> = mutableStateOf("")
@@ -33,6 +39,9 @@ class BuatProyekViewModel @Inject constructor(
 
     private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
+
+    private val _userData= mutableStateOf(UserModelResponse())
+    val userData: State<UserModelResponse> = _userData
 
     var donasiType = ""
 

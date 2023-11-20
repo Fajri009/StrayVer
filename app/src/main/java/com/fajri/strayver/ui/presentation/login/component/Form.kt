@@ -70,7 +70,6 @@ fun Form(
         showPassword = viewModel.showPassword.value,
         onPasswordToggle = {
             viewModel.showPassword(!viewModel.showPassword.value)
-            Toast.makeText(context, "awdadada", Toast.LENGTH_SHORT).show()
         },
         onValueChange = {
             viewModel.onChangePassword(it)
