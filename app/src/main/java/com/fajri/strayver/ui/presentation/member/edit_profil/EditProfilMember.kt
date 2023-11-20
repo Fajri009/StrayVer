@@ -20,21 +20,42 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.ui.presentation.component.LoadingDialog
 import com.fajri.strayver.ui.presentation.member.edit_profil.component.EditProfilContent
 import com.fajri.strayver.ui.presentation.component.ProfilePicture
+import com.fajri.strayver.ui.presentation.member.edit_profil.component.EditProfilMemberViewModel
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
-fun EditProfilMemberScreen() {
+fun EditProfilMemberScreen(navController: NavController, viewModel: EditProfilMemberViewModel=
+    hiltViewModel()) {
+
+    val userData by viewModel.userData
+    val scope= rememberCoroutineScope()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUserData()
+    }
+
+    if (viewModel.isLoading.value) {
+        LoadingDialog()
+    }
+
     Box(
         Modifier
             .fillMaxSize()
@@ -53,7 +74,10 @@ fun EditProfilMemberScreen() {
         ) {
 
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(Route.MEMBER_PROFIL)
+                },
                 modifier = Modifier.size(16.dp)
             ) {
                 Icon(
@@ -75,7 +99,7 @@ fun EditProfilMemberScreen() {
         }
 
         Column(Modifier.align(Alignment.TopStart)) {
-            EditProfilContent()
+            EditProfilContent(viewModel, scope, navController)
         }
 
         ProfilePicture(
@@ -96,7 +120,7 @@ fun EditProfilMemberScreen() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun EditButton(modifier: Modifier= Modifier) {
+private fun EditButton(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = CircleShape,

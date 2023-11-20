@@ -64,7 +64,7 @@ fun Navigation(navController: NavHostController) {
             MemberProfilScreen(navController = navController)
         }
         composable(Route.MEMBER_EDIT_PROFIL) {
-            EditProfilMemberScreen()
+            EditProfilMemberScreen(navController)
         }
         composable(Route.RELAWAN_HOME) {
             RelawanHomeScreen(navController)

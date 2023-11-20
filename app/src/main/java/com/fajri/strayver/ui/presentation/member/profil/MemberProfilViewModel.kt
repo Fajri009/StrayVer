@@ -26,7 +26,7 @@ class MemberProfilViewModel @Inject constructor(
     val isLoading: State<Boolean> = _isLoading
     fun getUser() {
         viewModelScope.launch {
-            userRepository.getUserById("dawdawda").collect {
+            userRepository.getUserById().collect {
                 when(it) {
                     is Resource.Loading -> {
                         _isLoading.value= true
@@ -38,7 +38,6 @@ class MemberProfilViewModel @Inject constructor(
                     is Resource.Error -> {
                         UserModelResponse(item = null, key = null)
                         _isLoading.value= false
-
                     }
                 }
             }
@@ -46,6 +45,6 @@ class MemberProfilViewModel @Inject constructor(
     }
 
     fun logout() {
-
+        userRepository.logout()
     }
 }

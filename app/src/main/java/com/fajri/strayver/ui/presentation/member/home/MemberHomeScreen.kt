@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.fajri.strayver.MainViewModel
 import com.fajri.strayver.R
 import com.fajri.strayver.data.model.ArtikelModelResponse
 import com.fajri.strayver.ui.presentation.member.home.component.ArtikelItemCard
@@ -48,20 +49,23 @@ import com.fajri.strayver.ui.theme.Neutral500
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.formatLongWithDots
 import com.valentinilk.shimmer.shimmer
 
 @Composable
 fun MemberHomeScreen(
-    viewModel: MemberHomeViewModel = hiltViewModel(),
+    memberViewModel: MemberHomeViewModel = hiltViewModel(),
     navController: NavController
 ) {
 
-    val artikel by viewModel.artikel
-    val artikelLoading by viewModel.artikelLoading
+    val artikel by memberViewModel.artikel
+    val artikelLoading by memberViewModel.artikelLoading
     val context= LocalContext.current
+    val userData by memberViewModel.userData
 
     LaunchedEffect(key1 = true) {
-        viewModel.getArtikel(context)
+        memberViewModel.getArtikel(context)
+        memberViewModel.getUser()
     }
 
     LazyColumn(Modifier.padding(bottom = 56.dp)) {
@@ -73,12 +77,13 @@ fun MemberHomeScreen(
                         .height(178.dp)
                         .clip(RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp))
                         .background(Primary700),
-                    viewModel
+                    userData.item!!.nama
                 )
                 SaldoCard(
                     modifier = Modifier
                         .align(Alignment.TopCenter)
-                        .offset(y = 145.dp)
+                        .offset(y = 145.dp),
+                    formatLongWithDots(userData.item!!.saldo)
                 )
             }
         }
