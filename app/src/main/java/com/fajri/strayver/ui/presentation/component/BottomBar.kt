@@ -43,7 +43,7 @@ fun BottomBar(navController: NavController) {
         BottomBarData(
             icon = painterResource(id = R.drawable.riwayat),
             title = "Riwayat",
-            relawanRoute = Route.RELAWAN_TRANSAKSI,
+            relawanRoute = Route.RELAWAN_RIWAYAT,
             memberRoute = Route.MEMBER_RIWAYAT
         ),
         BottomBarData(
@@ -51,7 +51,8 @@ fun BottomBar(navController: NavController) {
             title = "Profil",
             relawanRoute = Route.RELAWAN_PROFIL,
             memberRoute = Route.MEMBER_PROFIL,
-            altRoute = Route.MEMBER_EDIT_PROFIL
+            altRoute = Route.MEMBER_EDIT_PROFIL,
+            altRoute2 = Route.RELAWAN_EDIT_PROFIL
         ),
     )
 
@@ -74,13 +75,13 @@ fun BottomBar(navController: NavController) {
                         contentDescription = it.title,
                         tint =
                         if (currPage!!.contains("Member")) {
-                            if (currPage == it.memberRoute || currPage == it.altRoute) {
+                            if (currPage == it.memberRoute || currPage == it.altRoute || currPage == it.altRoute2) {
                                 Primary700
                             } else {
                                 Neutral300
                             }
                         } else if (currPage.contains("Relawan")) {
-                            if (currPage == it.memberRoute || currPage == it.altRoute) {
+                            if (currPage == it.relawanRoute || currPage == it.altRoute || currPage == it.altRoute2) {
                                 Primary700
                             } else {
                                 Neutral300
@@ -96,13 +97,13 @@ fun BottomBar(navController: NavController) {
                         style = Type.text2xsRegular(),
                         color =
                         if (currPage!!.contains("Member")) {
-                            if (currPage == it.memberRoute || currPage == it.altRoute) {
+                            if (currPage == it.memberRoute || currPage == it.altRoute || currPage == it.altRoute2) {
                                 Primary700
                             } else {
                                 Neutral300
                             }
                         } else if (currPage.contains("Relawan")) {
-                            if (currPage == it.memberRoute || currPage == it.altRoute) {
+                            if (currPage == it.relawanRoute || currPage == it.altRoute || currPage == it.altRoute2) {
                                 Primary700
                             } else {
                                 Neutral300

@@ -1,9 +1,12 @@
 package com.fajri.strayver.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.fajri.strayver.ui.presentation.login.LoginScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
@@ -16,12 +19,13 @@ import com.fajri.strayver.ui.presentation.member.kirim_donasi.KirimDonasiScreen
 import com.fajri.strayver.ui.presentation.member.profil.MemberProfilScreen
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.BuatProyekScreen
-import com.fajri.strayver.ui.presentation.relawan.detailTransaksi.DetailTransaksi
+import com.fajri.strayver.ui.presentation.relawan.detailRiwayat.DetailRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiScreen
+import com.fajri.strayver.ui.presentation.relawan.editProfil.RelawanEditProfilScreen
 import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeScreen
 import com.fajri.strayver.ui.presentation.relawan.profil.RelawanProfilScreen
+import com.fajri.strayver.ui.presentation.relawan.riwayat.RelawanRiwayatScreen
 import com.fajri.strayver.ui.presentation.relawan.tambahDonasi.TambahDonasiScreen
-import com.fajri.strayver.ui.presentation.relawan.transaksi.RelawanTransaksiScreen
 import com.fajri.strayver.ui.presentation.splash.SplashScreen
 import com.fajri.strayver.util.Route
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -29,7 +33,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.SPLASH){
+    NavHost(navController = navController, startDestination = Route.RELAWAN_HOME){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -60,6 +64,9 @@ fun Navigation(navController: NavHostController) {
         composable(Route.MEMBER_RIWAYAT) {
             MemberRiwayatScreen()
         }
+        composable(Route.DETAIL_RIWAYAT) {
+            DetailRiwayatScreen()
+        }
         composable(Route.MEMBER_PROFIL) {
             MemberProfilScreen(navController = navController)
         }
@@ -69,23 +76,33 @@ fun Navigation(navController: NavHostController) {
         composable(Route.RELAWAN_HOME) {
             RelawanHomeScreen(navController)
         }
+        composable(
+            Route.BUAT_PROYEK + "?type={type}",
+            arguments = listOf(
+                navArgument(name = "type") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val tipeDonasi = it.arguments?.getString("type")
+            tipeDonasi?.let {
+                BuatProyekScreen(navController, donasiType = tipeDonasi)
+            }
+        }
         composable(Route.RELAWAN_DONASI) {
-            RelawanDonasiScreen()
+            RelawanDonasiScreen(navController)
         }
         composable(Route.TAMBAH_DONASI) {
             TambahDonasiScreen(navController)
         }
-        composable(Route.DETAIL_TRANSAKSI) {
-            DetailTransaksi()
-        }
-        composable(Route.RELAWAN_TRANSAKSI) {
-            RelawanTransaksiScreen()
+        composable(Route.RELAWAN_RIWAYAT) {
+            RelawanRiwayatScreen()
         }
         composable(Route.RELAWAN_PROFIL) {
-            RelawanProfilScreen()
+            RelawanProfilScreen(navController)
         }
-        composable(Route.BUAT_PROYEK) {
-            BuatProyekScreen(navController)
+        composable(Route.RELAWAN_EDIT_PROFIL) {
+            RelawanEditProfilScreen(navController)
         }
     }
 }

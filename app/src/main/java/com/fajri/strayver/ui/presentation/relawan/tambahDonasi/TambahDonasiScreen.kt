@@ -40,7 +40,6 @@ fun TambahDonasiScreen(navController: NavController) {
         IconButton(
             onClick = {
                 navController.popBackStack()
-                navController.navigate(Route.RELAWAN_HOME)
             },
             modifier = Modifier.padding(start = 10.dp, top = 50.dp)
         ) {

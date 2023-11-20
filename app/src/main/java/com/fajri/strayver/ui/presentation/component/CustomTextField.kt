@@ -32,6 +32,7 @@ fun CustomTextField(
     trailingIcon: ImageVector? = null,
     showPassword: Boolean = false,
     onValueChange: (String) -> Unit = {},
+//    onValueIntChange:
     onPasswordToggle: (Boolean) -> Unit = {},
     label: String? = null,
     isPassword: Boolean = false,
@@ -61,20 +62,12 @@ fun CustomTextField(
                             tint = Primary900
                         )
                     }
+                } else {
                     IconButton(onClick = { onPasswordToggle(!showPassword) }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
                             contentDescription = "hide",
                             Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
-                            tint = Primary900
-                        )
-                    }
-                } else {
-                    IconButton(onClick = { onIconClick() }) {
-                        Icon(
-                            imageVector = trailingIcon,
-                            contentDescription = "hide",
-                            Modifier.size(25.dp),
                             tint = Primary900
                         )
                     }
@@ -88,7 +81,9 @@ fun CustomTextField(
             focusedIndicatorColor = Primary800,
             cursorColor = Primary900,
             textColor = Color.Black,
-            placeholderColor = Primary800
+            placeholderColor = Primary800,
+            focusedLabelColor = Primary800,
+            unfocusedLabelColor = Primary800
         ),
         label = {
             label?.let {
@@ -109,9 +104,9 @@ fun CustomTextField(
         if (isPassword) {
             KeyboardOptions(keyboardType = KeyboardType.Password)
         }
-//        else if (isNumeric) {
-//            KeyboardOptions(keyboardType = KeyboardType.Number)
-//        }
+        else if (isNumeric) {
+            KeyboardOptions(keyboardType = KeyboardType.Number)
+        }
         else {
             KeyboardOptions(keyboardType = KeyboardType.Text)
         },

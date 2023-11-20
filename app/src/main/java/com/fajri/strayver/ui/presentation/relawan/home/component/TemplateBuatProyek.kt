@@ -21,36 +21,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemplateBuatProyek(
-    judul: String,
-    image: Int,
-    color1: Color,
-    color2: Color,
-    onClick: () -> Unit
+    type: String,
+    onClick: () -> Unit,
+    navController: NavController
 ) {
     Card(
         modifier = Modifier
             .width(165.dp)
             .height(170.dp),
-        onClick = { onClick() },
+        onClick = { navController.navigate(Route.BUAT_PROYEK + "?type=${type}") },
         elevation = CardDefaults.cardElevation(5.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Brush.verticalGradient(listOf(color1, color2)))
+                .background(
+                    when (type) {
+                        TipeDonasi.DANA -> Brush.verticalGradient(listOf(Color(0xFFEE7180), Color(0xFFFDECEE)))
+                        TipeDonasi.BARANG -> Brush.verticalGradient(listOf(Color(0xFF02C0E5), Color(0xFFD9F9FF)))
+                        else -> { Brush.verticalGradient(listOf(Color.White, Color.Black)) }
+                    }
+                )
                 .padding(top = 10.dp),
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 10.dp),
-                text = judul,
+                text = "Proyek Donasi $type",
                 style = Type.textSmSemiBold(),
                 color = Shades50,
             )
@@ -68,7 +76,12 @@ fun TemplateBuatProyek(
                     )
                 }
                 AsyncImage(
-                    model = image,
+                    model =
+                        when (type) {
+                            TipeDonasi.DANA -> R.drawable.money
+                            TipeDonasi.BARANG -> R.drawable.barang
+                            else -> {}
+                        },
                     contentDescription = "",
                     modifier = Modifier
                         .size(120.dp)

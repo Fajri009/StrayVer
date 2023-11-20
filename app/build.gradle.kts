@@ -106,6 +106,6 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.android.gms:play-services-auth:20.4.1")
 
-    // SHimmer
+    // Shimmer
     implementation("com.valentinilk.shimmer:compose-shimmer:1.0.5")
 }
