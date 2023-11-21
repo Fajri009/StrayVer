@@ -135,7 +135,7 @@ class UserRepository() {
             }
         }
 
-    fun uodateUserProfile(userData: UserData): Flow<Resource<String>> =
+    fun updateUserProfile(userData: UserData): Flow<Resource<String>> =
         callbackFlow {
             trySend(Resource.Loading())
 

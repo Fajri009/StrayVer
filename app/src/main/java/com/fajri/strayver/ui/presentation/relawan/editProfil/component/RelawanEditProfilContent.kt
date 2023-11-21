@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.data.Resource
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.relawan.editProfil.RelawanEditViewModel
@@ -22,9 +23,11 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
-fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEditViewModel) {
+fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEditViewModel, scope: CoroutineScope) {
 
 
     LazyColumn(
@@ -132,7 +135,21 @@ fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEdi
             Spacer(modifier = Modifier.height(16.dp))
             CustomButton(
                 onClick = {
-                    navController.navigate(Route.RELAWAN_PROFIL)
+                    scope.launch {
+                        viewModel.updateProfil().collect {
+                            when (it) {
+                                is Resource.Loading -> {
+
+                                }
+                                is Resource.Success -> {
+                                    navController.navigate(Route.RELAWAN_PROFIL)
+                                }
+                                is Resource.Error -> {
+                                    
+                                }
+                            }
+                        }
+                    }
                 },
                 text = "Simpan",
                 type = ButtonType.LARGE

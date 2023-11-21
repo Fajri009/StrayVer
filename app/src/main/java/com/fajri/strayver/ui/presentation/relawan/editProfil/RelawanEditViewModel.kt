@@ -11,6 +11,7 @@ import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -105,5 +106,19 @@ class RelawanEditViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateProfil(): Flow<Resource<String>> {
+        val user = UserData (
+            nama = _nama.value,
+            username = _username.value,
+            email = _email.value,
+            deskripsi = _deskripsi.value,
+            telp = _noTelp.value,
+            alamat = _alamat.value,
+            password = _password.value,
+        )
+
+        return userRepository.updateUserProfile(user)
     }
 }

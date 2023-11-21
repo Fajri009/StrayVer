@@ -117,6 +117,6 @@ class EditProfilMemberViewModel @Inject constructor(
             saldo = _userData.value.saldo
         )
 
-        return userRepository.uodateUserProfile(user)
+        return userRepository.updateUserProfile(user)
     }
 }
