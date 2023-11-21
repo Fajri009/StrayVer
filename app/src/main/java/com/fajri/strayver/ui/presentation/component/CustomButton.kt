@@ -2,6 +2,7 @@ package com.fajri.strayver.ui.presentation.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -63,8 +64,8 @@ private fun ButtonMedium(
         colors = ButtonDefaults.buttonColors(containerColor = Primary700),
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
-            .width(155.dp)
             .height(48.dp)
+            .sizeIn(minWidth = 155.dp)
     ) {
         Text(
             text = text,

@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.kirim_donasi
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,12 +21,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomButton
+import com.fajri.strayver.ui.presentation.component.LoadingDialog
 import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.FormBarang
+import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.KirimDonasiViewModel
 import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.MetodePembayaran
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary700
@@ -35,18 +40,26 @@ import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
-fun KirimDonasiScreen(navController: NavController) {
+fun KirimDonasiScreen(
+    navController: NavController,
+    viewModel: KirimDonasiViewModel = hiltViewModel()
+) {
+
+    if (viewModel.isLoading.value) {
+        LoadingDialog()
+    }
 
     val type = "barang"
+    val context = LocalContext.current
 
     when (type) {
-        "dana" -> KirimDana(navController)
-        "barang" -> KirimBarang(navController)
+        "dana" -> KirimDana(navController, context, viewModel)
+        "barang" -> KirimBarang(navController, context, viewModel)
     }
 }
 
 @Composable
-private fun KirimDana(navController: NavController) {
+private fun KirimDana(navController: NavController, context: Context, viewModel: KirimDonasiViewModel) {
     Box(
         Modifier
             .fillMaxSize()
@@ -99,7 +112,7 @@ private fun KirimDana(navController: NavController) {
 }
 
 @Composable
-private fun KirimBarang(navController: NavController) {
+private fun KirimBarang(navController: NavController, context: Context, viewModel: KirimDonasiViewModel) {
     Box(
         Modifier
             .fillMaxSize()
@@ -132,6 +145,8 @@ private fun KirimBarang(navController: NavController) {
             Spacer(modifier = Modifier.height(40.dp))
             FormBarang(
                 navController = navController,
+                context = context,
+                viewModel= viewModel,
                 Modifier
                     .padding(top = 60.dp)
                     .fillMaxSize()

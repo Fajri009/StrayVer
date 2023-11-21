@@ -6,19 +6,28 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.repository.DonasiRepository
+import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.model.Donasi
+import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class BuatProyekViewModel @Inject constructor(
-    private val donasiRepository: DonasiRepository
+    private val donasiRepository: DonasiRepository,
+    private val userRepository: UserRepository
 ): ViewModel() {
+
+    private val _userData = mutableStateOf(UserData())
+    val userData: State<UserData> = _userData
+
     private val _namaProyek: MutableState<String> = mutableStateOf("")
     val namaProyek: State<String> = _namaProyek
 
@@ -67,6 +76,26 @@ class BuatProyekViewModel @Inject constructor(
         return isValid
     }
 
+    fun getUserData() {
+
+        viewModelScope.launch {
+            userRepository.getUserById().collect {
+                when(it) {
+                    is Resource.Success -> {
+                        _userData.value= it.data!!.item!!
+                        setLoading(false)
+                    }
+                    is Resource.Error -> {
+                        setLoading(false)
+                    }
+                    is Resource.Loading -> {
+                        setLoading(true)
+                    }
+                }
+            }
+        }
+    }
+
     fun buatProyek(): Flow<Resource<String>> {
         val id= UUID.randomUUID().toString()
         val donasi = Donasi(
@@ -75,10 +104,10 @@ class BuatProyekViewModel @Inject constructor(
             donasiGoal = _jumlahMaks.value!!,
             donasiGain = 0,
             deskripsi = _deskripsi.value,
-            alamat = "",
+            alamat = userData.value.alamat,
             gambar = "",
             relawanAvatar = "",
-            relawanNama = "",
+            relawanNama = userData.value.nama,
             waktu = LocalDateTime.now().toString(),
             userId = "",
             category = donasiType,
