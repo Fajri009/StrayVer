@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomTextField
@@ -22,7 +23,7 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberRiwayatScreen() {
+fun MemberRiwayatScreen(viewModel: MemberRiwayatViewModel= hiltViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -45,9 +46,11 @@ fun MemberRiwayatScreen() {
                 onValueChange = {
 
                 },
-                modifier = Modifier.padding(horizontal = 20.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
             )
-            RiwayatContent()
+            RiwayatContent(viewModel)
         }
     }
 }
