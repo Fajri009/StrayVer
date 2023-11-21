@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.fajri.strayver.ui.presentation.login.LoginScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
+import com.fajri.strayver.ui.presentation.member.artikel_detail.ArtikelDetail
 import com.fajri.strayver.ui.presentation.member.detail_donasi.DetailDonasiScreen
 import com.fajri.strayver.ui.presentation.member.donasi.MemberDonasiScreen
 import com.fajri.strayver.ui.presentation.member.edit_profil.EditProfilMemberScreen
@@ -29,7 +30,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.MEMBER_HOME){
+    NavHost(navController = navController, startDestination = Route.ARTIKEL_DETAIL){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -47,6 +48,9 @@ fun Navigation(navController: NavHostController) {
         }
         composable(Route.MEMBER_HOME) {
             MemberHomeScreen(navController = navController)
+        }
+        composable(Route.ARTIKEL_DETAIL) {
+            ArtikelDetail(navController)
         }
         composable(Route.MEMBER_DONASI) {
             MemberDonasiScreen(navController)
