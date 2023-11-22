@@ -1,7 +1,6 @@
 package com.fajri.strayver.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -10,6 +9,7 @@ import androidx.navigation.navArgument
 import com.fajri.strayver.ui.presentation.login.LoginScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
+import com.fajri.strayver.ui.presentation.member.artikel_detail.ArtikelDetail
 import com.fajri.strayver.ui.presentation.member.detail_donasi.DetailDonasiScreen
 import com.fajri.strayver.ui.presentation.member.donasi.MemberDonasiScreen
 import com.fajri.strayver.ui.presentation.member.edit_profil.EditProfilMemberScreen
@@ -33,7 +33,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.KIRIM_DONASI){
+    NavHost(navController = navController, startDestination = Route.SPLASH){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -53,13 +53,16 @@ fun Navigation(navController: NavHostController) {
             MemberHomeScreen(navController = navController)
         }
         composable(Route.MEMBER_DONASI) {
-            MemberDonasiScreen(navController = navController)
+            MemberDonasiScreen(navController)
         }
         composable(Route.DETAIL_DONASI) {
-            DetailDonasiScreen(navController = navController)
+            DetailDonasiScreen(navController)
         }
         composable(Route.KIRIM_DONASI) {
-            KirimDonasiScreen(navController = navController)
+            KirimDonasiScreen(navController)
+        }
+        composable(Route.ARTIKEL_DETAIL) {
+            ArtikelDetail(navController = navController)
         }
         composable(Route.MEMBER_RIWAYAT) {
             MemberRiwayatScreen()
