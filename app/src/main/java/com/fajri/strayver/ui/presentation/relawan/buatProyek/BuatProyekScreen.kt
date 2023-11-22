@@ -58,7 +58,9 @@ fun BuatProyekScreen(
             contentScale = ContentScale.FillWidth
         )
 
-        Column {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
             Spacer(modifier = Modifier.height(20.dp))
             BuatProyekHead(navController)
             BuatProyekForm(viewModel, scope, context, donasiType)

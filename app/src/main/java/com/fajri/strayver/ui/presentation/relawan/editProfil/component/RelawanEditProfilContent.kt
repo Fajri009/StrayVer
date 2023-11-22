@@ -1,5 +1,7 @@
 package com.fajri.strayver.ui.presentation.relawan.editProfil.component
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,7 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEditViewModel, scope: CoroutineScope) {
+fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEditViewModel, scope: CoroutineScope, context: Context) {
 
 
     LazyColumn(
@@ -139,13 +141,17 @@ fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEdi
                         viewModel.updateProfil().collect {
                             when (it) {
                                 is Resource.Loading -> {
-
+                                    viewModel.onChangeLoadingState(true)
                                 }
                                 is Resource.Success -> {
+                                    viewModel.getUserData()
+                                    viewModel.onChangeLoadingState(false)
+                                    Toast.makeText(context, "Data akun berhasil diubah", Toast.LENGTH_SHORT).show()
                                     navController.navigate(Route.RELAWAN_PROFIL)
                                 }
                                 is Resource.Error -> {
-                                    
+                                    viewModel.onChangeLoadingState(false)
+                                    Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }

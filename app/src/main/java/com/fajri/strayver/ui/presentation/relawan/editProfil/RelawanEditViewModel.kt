@@ -82,7 +82,11 @@ class RelawanEditViewModel @Inject constructor(
         _isReVisible.value = value
     }
 
-    fun getUser() {
+    fun onChangeLoadingState(value: Boolean) {
+        _isLoading.value = value
+    }
+
+    fun getUserData() {
         viewModelScope.launch {
             userRepository.getUserById().collect {
                 when (it) {

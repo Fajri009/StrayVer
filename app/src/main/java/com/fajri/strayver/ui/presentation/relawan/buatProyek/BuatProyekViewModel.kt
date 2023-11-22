@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.relawan.buatProyek
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -8,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
-import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.model.Donasi
@@ -22,9 +22,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BuatProyekViewModel @Inject constructor(
-    private val userRepository: UserRepository,
     private val donasiRepository: DonasiRepository
 ): ViewModel() {
+    private val _userData = mutableStateOf(UserData())
+    val userData: State<UserData> = _userData
+
     private val _namaProyek: MutableState<String> = mutableStateOf("")
     val namaProyek: State<String> = _namaProyek
 
@@ -34,14 +36,14 @@ class BuatProyekViewModel @Inject constructor(
     private val _jumlahMaks: MutableState<Long?> = mutableStateOf(null)
     val jumlahMaks: State<Long?> = _jumlahMaks
 
+    private val _imageUri: MutableState<Uri?> = mutableStateOf(null)
+    val imageUri: State<Uri?> = _imageUri
+
     private val _isShowDialog: MutableState<Boolean> = mutableStateOf(false)
     val isShowDialog: State<Boolean> = _isShowDialog
 
     private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
-
-    private val _userData= mutableStateOf(UserModelResponse())
-    val userData: State<UserModelResponse> = _userData
 
     var donasiType = ""
 
@@ -57,6 +59,10 @@ class BuatProyekViewModel @Inject constructor(
         _jumlahMaks.value = value
     }
 
+    fun setImageUri(value: Uri) {
+        _imageUri.value = value
+    }
+
     fun setLoading(state: Boolean) {
         _isLoading.value = state
     }
@@ -68,7 +74,7 @@ class BuatProyekViewModel @Inject constructor(
     fun isValid(context: Context): Boolean {
         var isValid: Boolean = true
 
-        if (_namaProyek.value.isEmpty() || _deskripsi.value.isEmpty() || _jumlahMaks.value.toString().isEmpty()) {
+        if (_namaProyek.value.isEmpty() || _deskripsi.value.isEmpty() || _jumlahMaks.value?.toString().isNullOrEmpty() || _imageUri.value.toString().isEmpty()) {
             Toast.makeText(context, "Semua data harus diisi", Toast.LENGTH_SHORT).show()
             isValid = false
         }
@@ -78,16 +84,17 @@ class BuatProyekViewModel @Inject constructor(
 
     fun buatProyek(): Flow<Resource<String>> {
         val id= UUID.randomUUID().toString()
+
         val donasi = Donasi(
             donasiId = id,
             title = _namaProyek.value,
             donasiGoal = _jumlahMaks.value!!,
             donasiGain = 0,
             deskripsi = _deskripsi.value,
-            alamat = "",
+            alamat = _userData.value.alamat,
             gambar = "",
             relawanAvatar = "",
-            relawanNama = "",
+            relawanNama = _userData.value.nama,
             waktu = LocalDateTime.now().toString(),
             userId = "",
             category = donasiType,

@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -40,12 +41,14 @@ import com.fajri.strayver.ui.theme.Type
 @Composable
 fun RelawanEditProfilScreen(
     navController: NavController,
-    viewModel: RelawanEditViewModel = hiltViewModel()
+    viewModel: RelawanEditViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
 
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = true) {
-        viewModel.getUser()
+        viewModel.getUserData()
     }
 
     Box(
@@ -93,7 +96,7 @@ fun RelawanEditProfilScreen(
         }
 
         Column(Modifier.align(Alignment.TopStart)) {
-            RelawanEditProfilContent(navController, viewModel, scope)
+            RelawanEditProfilContent(navController, viewModel, scope, context)
         }
 
         RelawanProfilPicture(
