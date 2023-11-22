@@ -1,6 +1,7 @@
 package com.fajri.strayver.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -32,7 +33,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.RELAWAN_HOME){
+    NavHost(navController = navController, startDestination = Route.KIRIM_DONASI){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
