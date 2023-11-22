@@ -22,27 +22,19 @@ fun DonasiTerbaru(modifier: Modifier, navController: NavController) {
         )
         Spacer(modifier = Modifier.height(10.dp))
         DonasiTerbaruItem(
-            tipeDonasi = TipeDonasi.BARANG,
+            tipeDonasi = TipeDonasi.DANA,
             image = R.drawable.terbaru2,
             judul = "Dibutuhkan kandang hewan (kucing atau anjing)",
             progress = 0.5f,
+            jumlah = "3.258.500",
+            navController = navController
+        )
+        DonasiTerbaruItem(
+            tipeDonasi = TipeDonasi.BARANG,
+            image = R.drawable.terbaru,
+            judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
+            progress = 0.3f,
             jumlah = "10",
-            navController = navController
-        )
-        DonasiTerbaruItem(
-            tipeDonasi = TipeDonasi.DANA,
-            image = R.drawable.terbaru,
-            judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
-            progress = 0.3f,
-            jumlah = "3.258.500",
-            navController = navController
-        )
-        DonasiTerbaruItem(
-            tipeDonasi = TipeDonasi.DANA,
-            image = R.drawable.terbaru,
-            judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
-            progress = 0.3f,
-            jumlah = "3.258.500",
             navController = navController
         )
     }
