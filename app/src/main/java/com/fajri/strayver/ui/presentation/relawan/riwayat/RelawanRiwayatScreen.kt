@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.relawan.riwayat.component.RelawanRiwayatContent
@@ -18,7 +19,7 @@ import com.fajri.strayver.ui.presentation.relawan.riwayat.component.RelawanRiway
 import com.fajri.strayver.ui.theme.Primary700
 
 @Composable
-fun RelawanRiwayatScreen() {
+fun RelawanRiwayatScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +33,7 @@ fun RelawanRiwayatScreen() {
         Column {
             RelawanRiwayatHead()
             Spacer(modifier = Modifier.height(22.dp))
-            RelawanRiwayatContent()
+            RelawanRiwayatContent(navController)
         }
     }
 }

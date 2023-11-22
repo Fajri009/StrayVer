@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary100
@@ -27,7 +28,7 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun RelawanRiwayatContent() {
+fun RelawanRiwayatContent(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,7 +87,7 @@ fun RelawanRiwayatContent() {
                         style = Type.text2xsSemiBold()
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    RelawanRiwayatKategoriData1()
+                    RelawanRiwayatKategoriData1(navController)
                 }
             }
 
@@ -105,7 +106,7 @@ fun RelawanRiwayatContent() {
                         style = Type.text2xsSemiBold()
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    RelawanRiwayatKategoriData1()
+                    RelawanRiwayatKategoriData1(navController)
                 }
             }
 

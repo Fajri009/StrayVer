@@ -7,13 +7,14 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Primary100
 import com.fajri.strayver.util.DonaturProgres
 import com.fajri.strayver.util.TipeDonasi
 
 @Composable
-fun RelawanRiwayatKategoriData1() {
+fun RelawanRiwayatKategoriData1(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -23,9 +24,10 @@ fun RelawanRiwayatKategoriData1() {
             tipe = TipeDonasi.DANA,
             companyIcon = R.drawable.freya,
             companyName = "Freya_Jayawardana",
-            progres = "",
+            progres = DonaturProgres.PROSES,
             judul = "Selamatkan ratusan kucing kelaparan",
-            jumlah = "Rp 50.000"
+            jumlah = "Rp 50.000",
+            navController = navController
         )
         RelawanRiwayatCard(
             tipe = TipeDonasi.BARANG,
@@ -33,7 +35,8 @@ fun RelawanRiwayatKategoriData1() {
             companyName = "Louis_Tomlinson",
             progres = DonaturProgres.PROSES,
             judul = "Dibutuhkan Kandang Hewan (Kucing atau ...",
-            jumlah = "3 pcs"
+            jumlah = "3 pcs",
+            navController = navController
         )
         RelawanRiwayatCard(
             tipe = TipeDonasi.DANA,
@@ -41,7 +44,8 @@ fun RelawanRiwayatKategoriData1() {
             companyName = "Oh_Haewon",
             progres = "",
             judul = "Selamatkan ratusan kucing kelaparan",
-            jumlah = "Rp 50.000"
+            jumlah = "Rp 50.000",
+            navController = navController
         )
         RelawanRiwayatCard(
             tipe = TipeDonasi.BARANG,
@@ -49,7 +53,8 @@ fun RelawanRiwayatKategoriData1() {
             companyName = "Bruno_Fernandes",
             progres = DonaturProgres.SELESAI,
             judul = "Dibutuhkan Kandang Hewan (Kucing atau ...",
-            jumlah = "5 pcs"
+            jumlah = "5 pcs",
+            navController = navController
         )
     }
     Divider(

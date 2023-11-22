@@ -99,7 +99,7 @@ fun Navigation(navController: NavHostController) {
             TambahDonasiScreen(navController = navController)
         }
         composable(Route.RELAWAN_RIWAYAT) {
-            RelawanRiwayatScreen()
+            RelawanRiwayatScreen(navController = navController)
         }
         composable(Route.RELAWAN_PROFIL) {
             RelawanProfilScreen(navController = navController)
