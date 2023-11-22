@@ -1,12 +1,12 @@
 package com.fajri.strayver.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.fajri.strayver.model.Artikel
 import com.fajri.strayver.ui.presentation.login.LoginScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
@@ -90,23 +90,23 @@ fun Navigation(navController: NavHostController) {
         ) {
             val tipeDonasi = it.arguments?.getString("type")
             tipeDonasi?.let {
-                BuatProyekScreen(navController, donasiType = tipeDonasi)
+                BuatProyekScreen(navController = navController, donasiType = tipeDonasi)
             }
         }
         composable(Route.RELAWAN_DONASI) {
-            RelawanDonasiScreen(navController)
+            RelawanDonasiScreen(navController = navController)
         }
         composable(Route.TAMBAH_DONASI) {
-            TambahDonasiScreen(navController)
+            TambahDonasiScreen(navController = navController)
         }
         composable(Route.RELAWAN_RIWAYAT) {
             RelawanRiwayatScreen()
         }
         composable(Route.RELAWAN_PROFIL) {
-            RelawanProfilScreen(navController)
+            RelawanProfilScreen(navController = navController)
         }
         composable(Route.RELAWAN_EDIT_PROFIL) {
-            RelawanEditProfilScreen(navController)
+            RelawanEditProfilScreen(navController = navController)
         }
     }
 }

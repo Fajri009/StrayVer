@@ -83,4 +83,5 @@ fun RelawanDonasiCard(
             }
         }
     }
+    Spacer(modifier = Modifier.height(10.dp))
 }

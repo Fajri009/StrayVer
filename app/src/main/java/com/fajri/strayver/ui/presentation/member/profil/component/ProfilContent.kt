@@ -53,7 +53,7 @@ fun ProfilContent(userData: UserData, navController: NavController, viewModel: M
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            InfoItem(value = userData.role, title = "Role", icon = R.drawable.ic_role)
+            InfoItem(value = "Member", title = "Role", icon = R.drawable.ic_role)
         }
 
         item {

@@ -1,37 +1,36 @@
-package com.fajri.strayver.ui.presentation.member.edit_profil.component
+package com.fajri.strayver.ui.presentation.relawan.editProfil
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
-import com.fajri.strayver.data.repository.OnBoardRepository
+import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditProfilMemberViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val repository: OnBoardRepository
-) : ViewModel() {
+class RelawanEditViewModel @Inject constructor(
+    private val userRepository: UserRepository
+): ViewModel() {
 
-    private val _isLoading = mutableStateOf(false)
+    private val _isLoading= mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
-    private val _userData = mutableStateOf<UserData>(UserData())
+    private val _userData = mutableStateOf(UserData())
     val userData: State<UserData> = _userData
 
     private val _nama: MutableState<String> = mutableStateOf("")
     val nama: State<String> = _nama
 
-    private val _usernmae: MutableState<String> = mutableStateOf("")
-    val username: State<String> = _usernmae
+    private val _username: MutableState<String> = mutableStateOf("")
+    val username: State<String> = _username
 
     private val _deskripsi: MutableState<String> = mutableStateOf("")
     val deskripsi: State<String> = _deskripsi
@@ -39,21 +38,24 @@ class EditProfilMemberViewModel @Inject constructor(
     private val _email: MutableState<String> = mutableStateOf("")
     val email: State<String> = _email
 
-    private val _telp: MutableState<String> = mutableStateOf("")
-    val telp: State<String> = _telp
-
     private val _alamat: MutableState<String> = mutableStateOf("")
     val alamat: State<String> = _alamat
+
+    private val _noTelp: MutableState<String> = mutableStateOf("")
+    val noTelp: State<String> = _noTelp
 
     private val _password: MutableState<String> = mutableStateOf("")
     val password: State<String> = _password
 
-    fun onChangeNama(value: String) {
+    private val _isReVisible: MutableState<Boolean> = mutableStateOf(false)
+    val isReVisible: State<Boolean> = _isReVisible
+
+    fun onChangeName(value: String) {
         _nama.value = value
     }
 
     fun onChangeUsername(value: String) {
-        _usernmae.value = value
+        _username.value = value
     }
 
     fun onChangeDeskripsi(value: String) {
@@ -64,57 +66,61 @@ class EditProfilMemberViewModel @Inject constructor(
         _email.value = value
     }
 
-    fun onChangeTelp(value: String) {
-        _telp.value = value
-    }
-
     fun onChangeAlamat(value: String) {
         _alamat.value = value
     }
 
-    fun onChangePassword(value: String) {
+    fun onChangeTelp(value: String) {
+        _noTelp.value = value
+    }
+
+    fun onChangePassword(value:String) {
         _password.value = value
     }
 
-    fun onChangeLoadingState(state: Boolean) {
-        _isLoading.value= state
+    fun onTogglePassword(value: Boolean) {
+        _isReVisible.value = value
+    }
+
+    fun onChangeLoadingState(value: Boolean) {
+        _isLoading.value = value
     }
 
     fun getUserData() {
         viewModelScope.launch {
             userRepository.getUserById().collect {
                 when (it) {
-                    is Resource.Loading -> _isLoading.value = true
+                    is Resource.Loading -> {
+                        _isLoading.value= true
+                    }
                     is Resource.Success -> {
                         _userData.value = it.data!!.item!!
                         _nama.value= _userData.value.nama
-                        _usernmae.value= _userData.value.username
-                        _deskripsi.value= _userData.value.deskripsi
-                        _email.value= _userData.value.email
-                        _alamat.value= _userData.value.alamat
-                        _telp.value= _userData.value.telp
-                        _password.value= _userData.value.password
-                        _isLoading.value = false
+                        _username.value = _userData.value.username
+                        _deskripsi.value = _userData.value.deskripsi
+                        _email.value = _userData.value.email
+                        _alamat.value = _userData.value.alamat
+                        _noTelp.value = _userData.value.telp
+                        _password.value = _userData.value.password
+                        _isLoading.value= false
                     }
-
-                    is Resource.Error -> _isLoading.value = false
+                    is Resource.Error -> {
+                        UserModelResponse(item = null, key = null)
+                    }
                 }
             }
         }
     }
 
     fun updateProfil(): Flow<Resource<String>> {
-
-        val user = UserData(
+        val user = UserData (
             nama = _nama.value,
-            username = _usernmae.value,
-            deskripsi= _deskripsi.value,
+            username = _username.value,
             email = _email.value,
-            telp = _telp.value,
+            deskripsi = _deskripsi.value,
+            telp = _noTelp.value,
             alamat = _alamat.value,
             password = _password.value,
-            role = _userData.value.role,
-            saldo = _userData.value.saldo
         )
 
         return userRepository.updateUserProfile(user)

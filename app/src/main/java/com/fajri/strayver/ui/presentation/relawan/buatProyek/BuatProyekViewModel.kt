@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.relawan.buatProyek
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -21,10 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BuatProyekViewModel @Inject constructor(
-    private val donasiRepository: DonasiRepository,
-    private val userRepository: UserRepository
+    private val donasiRepository: DonasiRepository
 ): ViewModel() {
-
     private val _userData = mutableStateOf(UserData())
     val userData: State<UserData> = _userData
 
@@ -36,6 +35,9 @@ class BuatProyekViewModel @Inject constructor(
 
     private val _jumlahMaks: MutableState<Long?> = mutableStateOf(null)
     val jumlahMaks: State<Long?> = _jumlahMaks
+
+    private val _imageUri: MutableState<Uri?> = mutableStateOf(null)
+    val imageUri: State<Uri?> = _imageUri
 
     private val _isShowDialog: MutableState<Boolean> = mutableStateOf(false)
     val isShowDialog: State<Boolean> = _isShowDialog
@@ -57,6 +59,10 @@ class BuatProyekViewModel @Inject constructor(
         _jumlahMaks.value = value
     }
 
+    fun setImageUri(value: Uri) {
+        _imageUri.value = value
+    }
+
     fun setLoading(state: Boolean) {
         _isLoading.value = state
     }
@@ -68,7 +74,7 @@ class BuatProyekViewModel @Inject constructor(
     fun isValid(context: Context): Boolean {
         var isValid: Boolean = true
 
-        if (_namaProyek.value.isEmpty() || _deskripsi.value.isEmpty() || _jumlahMaks.value.toString().isEmpty()) {
+        if (_namaProyek.value.isEmpty() || _deskripsi.value.isEmpty() || _jumlahMaks.value?.toString().isNullOrEmpty() || _imageUri.value.toString().isEmpty()) {
             Toast.makeText(context, "Semua data harus diisi", Toast.LENGTH_SHORT).show()
             isValid = false
         }
@@ -76,38 +82,19 @@ class BuatProyekViewModel @Inject constructor(
         return isValid
     }
 
-    fun getUserData() {
-
-        viewModelScope.launch {
-            userRepository.getUserById().collect {
-                when(it) {
-                    is Resource.Success -> {
-                        _userData.value= it.data!!.item!!
-                        setLoading(false)
-                    }
-                    is Resource.Error -> {
-                        setLoading(false)
-                    }
-                    is Resource.Loading -> {
-                        setLoading(true)
-                    }
-                }
-            }
-        }
-    }
-
     fun buatProyek(): Flow<Resource<String>> {
         val id= UUID.randomUUID().toString()
+
         val donasi = Donasi(
             donasiId = id,
             title = _namaProyek.value,
             donasiGoal = _jumlahMaks.value!!,
             donasiGain = 0,
             deskripsi = _deskripsi.value,
-            alamat = userData.value.alamat,
+            alamat = _userData.value.alamat,
             gambar = "",
             relawanAvatar = "",
-            relawanNama = userData.value.nama,
+            relawanNama = _userData.value.nama,
             waktu = LocalDateTime.now().toString(),
             userId = "",
             category = donasiType,

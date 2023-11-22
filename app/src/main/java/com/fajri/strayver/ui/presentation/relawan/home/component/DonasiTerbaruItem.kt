@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
@@ -24,19 +25,22 @@ import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DonasiTerbaruItem(
+    tipeDonasi: String,
     image: Int,
     judul: String,
     progress: Float,
-    terkumpul: String,
-    onClick: () -> Unit
+    jumlah: String,
+    navController: NavController
 ) {
     Card(
         onClick = {
-            onClick()
+            navController.navigate(Route.TAMBAH_DONASI + "?type=${tipeDonasi}")
         },
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
@@ -67,7 +71,12 @@ fun DonasiTerbaruItem(
                     color = Neutral600
                 )
                 Text(
-                    text = terkumpul,
+                    text =
+                        when (tipeDonasi) {
+                            TipeDonasi.BARANG -> "$jumlah barang"
+                            TipeDonasi.DANA -> "Rp $jumlah"
+                            else -> {""}
+                        },
                     style = Type.textXsSemiBold(),
                     color = Secondary900
                 )

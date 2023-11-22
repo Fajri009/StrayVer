@@ -2,6 +2,7 @@ package com.fajri.strayver.ui.presentation.relawan.riwayat.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CompanyTag
@@ -29,6 +31,7 @@ import com.fajri.strayver.ui.theme.Secondary50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.ui.theme.Warning900
 import com.fajri.strayver.util.DonaturProgres
+import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
 
 @Composable
@@ -38,11 +41,15 @@ fun RelawanRiwayatCard(
     companyName: String,
     progres: String,
     judul: String,
-    jumlah: String
+    jumlah: String,
+    navController: NavController
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                navController.navigate(Route.DETAIL_RIWAYAT)
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(

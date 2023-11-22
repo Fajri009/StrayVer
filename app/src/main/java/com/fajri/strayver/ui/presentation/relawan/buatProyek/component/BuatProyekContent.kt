@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.relawan.buatProyek.component
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.fajri.strayver.data.Resource
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
+import com.fajri.strayver.ui.presentation.component.PickImage
+import com.fajri.strayver.ui.presentation.component.PickImageBuatProyek
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.BuatProyekViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral700
@@ -114,10 +117,7 @@ fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, contex
                 color = Color.Black,
                 style = Type.textSmMedium()
             )
-            CustomTextField(
-                text = "",
-                placeholder = ""
-            )
+            PickImageBuatProyek(viewModel = viewModel)
             Spacer(modifier = Modifier.height(20.dp))
         }
 
@@ -136,6 +136,7 @@ fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, contex
                                     }
                                     is Resource.Error -> {
                                         viewModel.setLoading(false)
+                                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                                     }
                                 }
                             }

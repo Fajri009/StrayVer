@@ -20,12 +20,10 @@ class DonasiRepository {
             .getInstance("https://strayver-6c1c0-default-rtdb.asia-southeast1.firebasedatabase.app")
             .reference
             .child("Donasi")
-    private val donasiStorage= Firebase.storage.reference.child("iamges/")
+    private val donasiStorage= Firebase.storage.reference.child("images/")
 
     fun notEmpty(context: Context) {
         var notEmpty: Boolean?
-
-
     }
     fun createProyekDonasi(
         donasiData: Donasi,
@@ -38,12 +36,10 @@ class DonasiRepository {
                 .setValue(donasiData)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        Log.i("cok dapet", "createProyekDonasi: ")
                         trySend(Resource.Success(data = "Berhasil Membuat Proyek Donasi"))
                     }
                 }
                 .addOnFailureListener {
-                    Log.i("cok asu", "createProyekDonasi: gagal")
                     trySend(Resource.Error(message = "Proses Registrasi Gagal\n${it.message}"))
                 }
             awaitClose {

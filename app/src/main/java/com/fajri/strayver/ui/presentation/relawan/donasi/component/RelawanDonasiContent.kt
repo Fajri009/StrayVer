@@ -74,10 +74,20 @@ fun RelawanDonasiContent(navController: NavController) {
                 image = R.drawable.terbaru,
                 companyName = "Anabul Foundation",
                 companyIcon = R.drawable.anabul_foundation,
-                judul = "Dibutuhkan kandang hewan (kucing atau anjing)",
+                judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
                 progress = 0.3f,
                 terkumpul = "10 barang",
                 onClick = {navController.navigate(Route.TAMBAH_DONASI)})
+            RelawanDonasiCard(
+                image = R.drawable.terbaru2,
+                companyName = "Anabul Foundation",
+                companyIcon = R.drawable.anabul_foundation,
+                judul = "Dibutuhkan kandang hewan (kucing atau anjing)",
+                progress = 0.5f,
+                terkumpul = "Rp 3.258.500"
+            ) {
+
+            }
         }
     }
 }

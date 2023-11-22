@@ -34,12 +34,10 @@ fun BuatProyek(modifier: Modifier = Modifier, navController: NavController) {
         ) {
             TemplateBuatProyek(
                 type = "Dana",
-                onClick = {},
                 navController = navController
             )
             TemplateBuatProyek(
                 type = "Barang",
-                onClick = {},
                 navController = navController
             )
         }
