@@ -1,15 +1,16 @@
 package com.fajri.strayver.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.fajri.strayver.model.Artikel
 import com.fajri.strayver.ui.presentation.login.LoginScreen
 import com.fajri.strayver.ui.presentation.member.home.MemberHomeScreen
 import com.fajri.strayver.ui.presentation.lupaSandi.LupaSandi
+import com.fajri.strayver.ui.presentation.member.artikel_detail.ArtikelDetail
 import com.fajri.strayver.ui.presentation.member.detail_donasi.DetailDonasiScreen
 import com.fajri.strayver.ui.presentation.member.donasi.MemberDonasiScreen
 import com.fajri.strayver.ui.presentation.member.edit_profil.EditProfilMemberScreen
@@ -52,6 +53,9 @@ fun Navigation(navController: NavHostController) {
         composable(Route.MEMBER_HOME) {
             MemberHomeScreen(navController = navController)
         }
+        composable(Route.ARTIKEL_DETAIL) {
+            ArtikelDetail(navController = navController)
+        }
         composable(Route.MEMBER_DONASI) {
             MemberDonasiScreen(navController)
         }
@@ -62,10 +66,10 @@ fun Navigation(navController: NavHostController) {
             KirimDonasiScreen(navController)
         }
         composable(Route.MEMBER_RIWAYAT) {
-            MemberRiwayatScreen()
+            MemberRiwayatScreen(navController = navController)
         }
         composable(Route.DETAIL_RIWAYAT) {
-            DetailRiwayatScreen()
+            DetailRiwayatScreen(navController)
         }
         composable(Route.MEMBER_PROFIL) {
             MemberProfilScreen(navController = navController)

@@ -17,6 +17,7 @@ import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.component.PickImage
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
+import com.fajri.strayver.util.Route
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -72,6 +73,7 @@ fun FormBarang(
         }
 
         item {
+            Spacer(modifier = Modifier.height(8.dp))
             CustomButton(onClick = {
                 scope.launch {
                     viewModel.onUploadFile(context).collect {
@@ -81,8 +83,9 @@ fun FormBarang(
                             }
                             is Resource.Success -> {
                                 viewModel.setLoading(false)
-                                Toast.makeText(context, it.data, Toast
-                                    .LENGTH_SHORT).show()
+//                                Toast.makeText(context, it.data, Toast
+//                                    .LENGTH_SHORT).show()
+                                navController.navigate(Route.MEMBER_RIWAYAT)
                             }
                             is Resource.Error -> {
                                 viewModel.setLoading(false)

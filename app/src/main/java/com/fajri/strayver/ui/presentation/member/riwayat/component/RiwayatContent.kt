@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatViewModel
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary100
@@ -45,7 +46,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RiwayatContent(viewModel: MemberRiwayatViewModel) {
+fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavController) {
 
     val tabTitle = listOf("Dana", "Barang")
     var type by remember {
@@ -95,6 +96,6 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel) {
             }
         }
         Spacer(modifier = Modifier.height(18.dp))
-        RiwayatItem(type = type.lowercase())
+        RiwayatItem(type = type.lowercase(), navController)
     }
 }

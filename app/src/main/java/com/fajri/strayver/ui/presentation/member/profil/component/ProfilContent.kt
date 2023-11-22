@@ -37,17 +37,6 @@ fun ProfilContent(userData: UserData, navController: NavController, viewModel: M
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            InfoItem(
-                value =
-                if (userData.deskripsi != "") userData.deskripsi
-                else "None",
-                title = "Deskripsi",
-                icon = R.drawable.ic_info,
-                isOverflow = true
-            )
-        }
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
             InfoItem(value = userData.email, title = "Email", icon = R.drawable.ic_email)
         }
         item {
