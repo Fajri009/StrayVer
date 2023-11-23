@@ -25,7 +25,7 @@ fun ProfilePicture(modifier: Modifier= Modifier) {
         shape = CircleShape
     ) {
         AsyncImage(
-            model = R.drawable.danis,
+            model = R.drawable.avatar,
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier

@@ -14,21 +14,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CompanyTag
 import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
-fun RiwayatItem(type: String) {
+fun RiwayatItem(type: String, navController: NavController) {
     Row(
         Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 8.dp)
             .clickable {
-
+                navController.navigate(Route.DETAIL_RIWAYAT)
             },
         horizontalArrangement = Arrangement.spacedBy(27.dp),
         verticalAlignment = Alignment.CenterVertically

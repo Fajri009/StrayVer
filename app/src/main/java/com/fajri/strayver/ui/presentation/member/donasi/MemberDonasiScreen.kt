@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
@@ -28,7 +29,7 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberDonasiScreen(navController: NavController) {
+fun MemberDonasiScreen(navController: NavController, viewModel: MemberDonasiViewModel= hiltViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -55,10 +56,12 @@ fun MemberDonasiScreen(navController: NavController) {
                 onValueChange = {
 
                 },
-                modifier = Modifier.padding(horizontal = 20.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(28.dp))
-            DonasiContent(navController = navController)
+            DonasiContent(navController = navController, viewModel)
         }
     }
 }

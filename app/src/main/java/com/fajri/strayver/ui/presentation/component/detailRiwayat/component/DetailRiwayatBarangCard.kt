@@ -250,17 +250,17 @@ fun DetailRiwayatBarangCard(
             }
         }
 
-        when (status) {
-            DonaturProgres.PROSES -> {
-                Spacer(modifier = Modifier.height(25.dp))
-                CustomButton(
-                    onClick = {
-
-                    },
-                    text = "Diterima",
-                    type = ButtonType.LARGE
-                )
-            }
-        }
+//        when (status) {
+//            DonaturProgres.PROSES -> {
+//                Spacer(modifier = Modifier.height(25.dp))
+//                CustomButton(
+//                    onClick = {
+//
+//                    },
+//                    text = "Diterima",
+//                    type = ButtonType.LARGE
+//                )
+//            }
+//        }
     }
 }

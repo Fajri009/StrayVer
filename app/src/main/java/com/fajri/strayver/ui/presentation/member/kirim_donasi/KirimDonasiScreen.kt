@@ -106,7 +106,8 @@ private fun KirimDana(navController: NavController, context: Context, viewModel:
                 .align(Alignment.BottomCenter)
                 .padding(horizontal = 20.dp, vertical = 40.dp)
         ) {
-            CustomButton(onClick = { /*TODO*/ }, text = "Kirim", type = ButtonType.LARGE)
+            CustomButton(onClick = { navController.navigate(Route.MEMBER_RIWAYAT) }, text = "Kirim", type =
+            ButtonType.LARGE)
         }
     }
 }

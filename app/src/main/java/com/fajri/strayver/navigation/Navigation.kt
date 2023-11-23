@@ -1,6 +1,7 @@
 package com.fajri.strayver.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -52,6 +53,9 @@ fun Navigation(navController: NavHostController) {
         composable(Route.MEMBER_HOME) {
             MemberHomeScreen(navController = navController)
         }
+        composable(Route.ARTIKEL_DETAIL) {
+            ArtikelDetail(navController = navController)
+        }
         composable(Route.MEMBER_DONASI) {
             MemberDonasiScreen(navController)
         }
@@ -61,14 +65,11 @@ fun Navigation(navController: NavHostController) {
         composable(Route.KIRIM_DONASI) {
             KirimDonasiScreen(navController)
         }
-        composable(Route.ARTIKEL_DETAIL) {
-            ArtikelDetail(navController = navController)
-        }
         composable(Route.MEMBER_RIWAYAT) {
-            MemberRiwayatScreen()
+            MemberRiwayatScreen(navController = navController)
         }
         composable(Route.DETAIL_RIWAYAT) {
-            DetailRiwayatScreen()
+            DetailRiwayatScreen(navController)
         }
         composable(Route.MEMBER_PROFIL) {
             MemberProfilScreen(navController = navController)
@@ -77,7 +78,7 @@ fun Navigation(navController: NavHostController) {
             EditProfilMemberScreen(navController)
         }
         composable(Route.RELAWAN_HOME) {
-            RelawanHomeScreen(navController = navController)
+            RelawanHomeScreen(navController)
         }
         composable(
             Route.BUAT_PROYEK + "?type={type}",
@@ -99,7 +100,7 @@ fun Navigation(navController: NavHostController) {
             TambahDonasiScreen(navController = navController)
         }
         composable(Route.RELAWAN_RIWAYAT) {
-            RelawanRiwayatScreen(navController = navController)
+            RelawanRiwayatScreen(navController)
         }
         composable(Route.RELAWAN_PROFIL) {
             RelawanProfilScreen(navController = navController)

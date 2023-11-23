@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -28,9 +29,13 @@ fun BuatProyekScreen(
     viewModel: BuatProyekViewModel = hiltViewModel(),
     donasiType: String
 ) {
-    val scope= rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = true, block = {
+        viewModel.getUser()
+    })
 
     viewModel.donasiType = donasiType
 

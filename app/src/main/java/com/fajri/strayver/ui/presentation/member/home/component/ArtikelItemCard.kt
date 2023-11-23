@@ -20,17 +20,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.model.Artikel
 import com.fajri.strayver.ui.theme.Neutral500
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
-fun ArtikelItemCard(artikel: Artikel) {
+fun ArtikelItemCard(artikel: Artikel, navController: NavController) {
     Card(
         Modifier
-            .padding(vertical = 8.dp, horizontal = 20.dp).clickable {  },
+            .padding(vertical = 8.dp, horizontal = 20.dp)
+            .clickable {
+                navController.navigate(Route.ARTIKEL_DETAIL)
+            },
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
@@ -46,7 +51,9 @@ fun ArtikelItemCard(artikel: Artikel) {
                     AsyncImage(
                         model = artikel.posterAvatar,
                         contentDescription = "",
-                        Modifier.clip(CircleShape).sizeIn(maxWidth = 36.dp, maxHeight = 36.dp),
+                        Modifier
+                            .clip(CircleShape)
+                            .sizeIn(maxWidth = 36.dp, maxHeight = 36.dp),
                         contentScale = ContentScale.Crop
                     )
                     Text(text = artikel.posterName, style = Type.textXsRegular())

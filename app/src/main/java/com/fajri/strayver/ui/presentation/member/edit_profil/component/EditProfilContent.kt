@@ -65,20 +65,6 @@ fun EditProfilContent(viewModel: EditProfilMemberViewModel, scope: CoroutineScop
         }
 
         item {
-            Text(text = "Bio", style = Type.textSmMedium())
-            CustomTextField(
-                text = viewModel.deskripsi.value,
-                placeholder = "",
-                minLine = 6,
-                maxLine = 6,
-                onValueChange = {
-                    viewModel.onChangeDeskripsi(it)
-                }
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-
-        item {
             Text(text = "Email", style = Type.textSmMedium())
             CustomTextField(
                 text = viewModel.email.value,

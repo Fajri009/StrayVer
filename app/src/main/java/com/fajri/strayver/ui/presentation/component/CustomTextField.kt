@@ -11,6 +11,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -56,17 +57,27 @@ fun CustomTextField(
                 if (showPassword) {
                     IconButton(onClick = { onPasswordToggle(!showPassword) }) {
                         Icon(
-                            imageVector = trailingIcon,
+                            imageVector = Icons.Default.VisibilityOff,
                             contentDescription = "show",
                             Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
                             tint = Primary900
                         )
                     }
-                } else {
+                } else if(!showPassword) {
                     IconButton(onClick = { onPasswordToggle(!showPassword) }) {
                         Icon(
-                            imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = "hide",
+                            imageVector = trailingIcon,
+                            contentDescription = "",
+                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
+                            tint = Primary900
+                        )
+                    }
+                }
+                else {
+                    IconButton(onClick = { onPasswordToggle(!showPassword) }) {
+                        Icon(
+                            imageVector = Icons.Default.Visibility,
+                            contentDescription = "",
                             Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
                             tint = Primary900
                         )

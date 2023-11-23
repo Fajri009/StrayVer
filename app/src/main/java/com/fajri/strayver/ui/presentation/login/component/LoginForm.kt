@@ -138,6 +138,8 @@ fun LoginForm(
                                         .LENGTH_SHORT
                                 ).show()
                             }
+
+                            else -> {}
                         }
                     }
                 }
