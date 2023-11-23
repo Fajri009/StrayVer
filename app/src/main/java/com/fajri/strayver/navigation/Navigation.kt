@@ -33,7 +33,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.SPLASH){
+    NavHost(navController = navController, startDestination = Route.RELAWAN_HOME){
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
