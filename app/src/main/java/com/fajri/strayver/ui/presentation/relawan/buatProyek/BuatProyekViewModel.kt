@@ -116,7 +116,7 @@ class BuatProyekViewModel @Inject constructor(
             gambar = "",
             relawanAvatar = "",
             relawanNama = _userData.value.item!!.nama,
-            waktu = LocalDate.now().toString(),
+            waktu = System.currentTimeMillis(),
             userId = _userData.value.key!!,
             category = donasiType,
         )

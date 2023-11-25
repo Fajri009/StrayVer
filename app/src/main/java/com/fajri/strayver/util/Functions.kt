@@ -1,5 +1,8 @@
 package com.fajri.strayver.util
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 fun formatLongWithDots(value: Long): String {
     val stringValue = value.toString()
     val length = stringValue.length
@@ -20,4 +23,10 @@ fun formatLongWithDots(value: Long): String {
         }
     }
     return formatted.reverse().toString()
+}
+
+fun formatDate(date: String): LocalDate {
+    val dateFormat= DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val localDate= LocalDate.parse("$date", dateFormat)
+    return localDate
 }

@@ -19,8 +19,10 @@ import androidx.navigation.compose.rememberNavController
 import com.fajri.strayver.navigation.Navigation
 import com.fajri.strayver.ui.presentation.component.CustomScaffold
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.formatDate
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagerApi::class)
@@ -48,6 +50,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val now= LocalDate.now()
+        val date= formatDate(now.toString())
+
+        Log.i("teg", "onCreate: ${date.dayOfMonth}")
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {

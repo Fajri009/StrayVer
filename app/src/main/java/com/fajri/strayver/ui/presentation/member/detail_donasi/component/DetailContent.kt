@@ -14,14 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CustomButton
+import com.fajri.strayver.ui.presentation.member.detail_donasi.DetaiDonasiViewModel
 import com.fajri.strayver.ui.theme.Primary400
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
-fun DetailContent(navController: NavController) {
+fun DetailContent(navController: NavController, donasi: Donasi) {
     LazyColumn(
         Modifier
             .fillMaxSize()
@@ -31,7 +33,7 @@ fun DetailContent(navController: NavController) {
             .padding(20.dp),
     ) {
         item {
-            ContentHead()
+            ContentHead(donasi)
         }
 
         item {
@@ -45,7 +47,7 @@ fun DetailContent(navController: NavController) {
         }
 
         item {
-            ContentDescription()
+            ContentDescription(donasi)
             Spacer(modifier = Modifier.height(16.dp))
             CustomButton(
                 onClick = {

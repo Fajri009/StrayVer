@@ -59,8 +59,18 @@ fun Navigation(navController: NavHostController) {
         composable(Route.MEMBER_DONASI) {
             MemberDonasiScreen(navController)
         }
-        composable(Route.DETAIL_DONASI) {
-            DetailDonasiScreen(navController)
+        composable(
+            Route.DETAIL_DONASI + "?donasiId={id}",
+            arguments = listOf(
+                navArgument(name = "id") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val donasiId= it.arguments?.getString("id")
+            donasiId?.let {
+                DetailDonasiScreen(navController, donasiId)
+            }
         }
         composable(Route.KIRIM_DONASI) {
             KirimDonasiScreen(navController)

@@ -21,8 +21,8 @@ class RelawanHomeViewModel @Inject constructor(
     private val _userData = mutableStateOf(UserModelResponse())
     val userData: State<UserModelResponse> = _userData
 
-    private val _donasiData = mutableStateOf(DonasiModelResponse())
-    val donasiData: State<DonasiModelResponse> = _donasiData
+    private val _donasiData = mutableStateOf<List<DonasiModelResponse>>(emptyList())
+    val donasiData: State<List<DonasiModelResponse>> = _donasiData
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
@@ -49,7 +49,21 @@ class RelawanHomeViewModel @Inject constructor(
 
     fun getDonasi() {
         viewModelScope.launch {
-
+            donasiRepository.getAllDonasi().collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _isLoading.value = true
+                    }
+                    is Resource.Success -> {
+                        _donasiData.value = it.data!!
+                        _isLoading.value = false
+                    }
+                    is Resource.Error -> {
+                        DonasiModelResponse(item = null, key = null)
+                        _isLoading.value = false
+                    }
+                }
+            }
         }
     }
 }

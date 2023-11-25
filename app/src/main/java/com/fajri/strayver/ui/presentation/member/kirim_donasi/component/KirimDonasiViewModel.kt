@@ -28,6 +28,6 @@ class KirimDonasiViewModel @Inject constructor(
         _isLoading.value= state
     }
 
-    fun onUploadFile(context: Context) = donasiRepository.kirimDonasi(context, _imageUri.value!!)
+    fun onUploadFile(context: Context){}
 
 }

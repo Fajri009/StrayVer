@@ -99,20 +99,6 @@ class UserRepository() {
             }
         }
 
-    fun getUserRole(): Flow<Resource<String>> =
-        callbackFlow {
-
-            user?.let {
-                userDb.child(it.uid).child("role").get().addOnSuccessListener {
-                    trySend(Resource.Success(data = it.value.toString()))
-                }
-            }
-
-            awaitClose {
-                close()
-            }
-        }
-
     fun getUserById(): Flow<Resource<UserModelResponse>> =
         callbackFlow {
             trySend(Resource.Loading())

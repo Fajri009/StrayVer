@@ -28,14 +28,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
-fun ProyekCard(navController: NavController) {
+fun ProyekCard(navController: NavController, donasi: Donasi) {
+
+    val formattedGoal= formatLongWithDots(donasi.donasiGoal!!)
+    val formattedGain= formatLongWithDots(donasi.donasiGain)
     Card(
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -43,7 +48,7 @@ fun ProyekCard(navController: NavController) {
         modifier = Modifier
             .sizeIn(maxWidth = 200.dp)
             .clickable {
-                navController.navigate(Route.DETAIL_DONASI)
+                navController.navigate(Route.DETAIL_DONASI + "?donasiId=${donasi.donasiId}")
             }
     ) {
 
@@ -66,24 +71,29 @@ fun ProyekCard(navController: NavController) {
                     model = R.drawable.anabul_foundation,
                     contentDescription = "",
                     modifier = Modifier
-                        .size(16.dp)
+                        .size(width= 16.dp, height = 16.dp)
                         .clip(RoundedCornerShape(20.dp))
                 )
-                Text(text = "Anabul Foundation", style = Type.text2xsRegular(), color = Neutral600)
+                Text(text = donasi.relawanNama, style = Type.text2xsRegular(), color = Neutral600)
             }
             Spacer(modifier = Modifier.height(6.dp))
-            Text(text = "Selamatkan ratusan kucing kelaparan",
+            Text(text = donasi.title,
                 style = Type.textXsSemiBold(),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(6.dp))
-            CustomProgressBar(progress = 0.31f)
+            CustomProgressBar(progress = (donasi.donasiGain / donasi.donasiGoal!!).toFloat())
 
             Spacer(modifier = Modifier.height(6.dp))
             Text(text = "Terkumpul:", style = Type.text2xsRegular(), color = Neutral600)
-            Text(text = "Rp 3.258.500", style = Type.textXsSemiBold(), color = Secondary900)
+            if (donasi.category == "Barang") {
+                Text(text = "$formattedGain barang", style = Type.textXsSemiBold(), color =
+                Secondary900)
+            } else {
+                Text(text = "Rp${formattedGain}", style = Type.textXsSemiBold(), color = Secondary900)
+            }
         }
     }
 }
