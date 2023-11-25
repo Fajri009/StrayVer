@@ -62,7 +62,7 @@ class DonasiRepository {
                                             donasiGain = donasiGain,
                                             deskripsi = deskripsi,
                                             alamat = alamat,
-                                            gambar = it.toString(),
+                                            gambar = imageUrl.toString(),
                                             relawanAvatar = "",
                                             relawanNama = relawanNama,
                                             waktu = waktu,

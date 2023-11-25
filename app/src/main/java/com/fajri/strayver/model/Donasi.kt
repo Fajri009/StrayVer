@@ -1,5 +1,7 @@
 package com.fajri.strayver.model
 
+import java.time.LocalDate
+
 data class Donasi(
     val donasiId: String= "",
     val title: String= "",

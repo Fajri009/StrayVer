@@ -9,12 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fajri.strayver.R
+import com.fajri.strayver.model.DonasiData
+import com.fajri.strayver.model.UserData
 import com.fajri.strayver.ui.theme.Type
-import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
 
 @Composable
-fun DonasiTerbaru(modifier: Modifier, navController: NavController) {
+fun DonasiTerbaru(modifier: Modifier, navController: NavController, donasiData: DonasiData) {
     Column {
         Text(
             text = "Proyek Donasi Terbarumu",
@@ -29,13 +30,13 @@ fun DonasiTerbaru(modifier: Modifier, navController: NavController) {
             jumlah = "3.258.500",
             navController = navController
         )
-        DonasiTerbaruItem(
-            tipeDonasi = TipeDonasi.BARANG,
-            image = R.drawable.terbaru,
-            judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
-            progress = 0.3f,
-            jumlah = "10",
-            navController = navController
-        )
+//        DonasiTerbaruItem(
+//            tipeDonasi = TipeDonasi.BARANG,
+//            image = R.drawable.terbaru,
+//            judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
+//            progress = 0.3f,
+//            jumlah = "10",
+//            navController = navController
+//        )
     }
 }

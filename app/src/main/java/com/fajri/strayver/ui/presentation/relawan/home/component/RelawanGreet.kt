@@ -11,11 +11,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.model.UserData
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun RelawanGreet(modifier: Modifier = Modifier) {
+fun RelawanGreet(modifier: Modifier = Modifier, userData: UserData) {
     Box(
         modifier = modifier
     ) {
@@ -30,7 +31,7 @@ fun RelawanGreet(modifier: Modifier = Modifier) {
                 .padding(start = 24.dp)
         ) {
             Text(
-                text = "Hi, Anabul Foundation",
+                text = "Hi, ${userData.username}",
                 style = Type.displayXsSemiBold(),
                 color = Neutral50
             )

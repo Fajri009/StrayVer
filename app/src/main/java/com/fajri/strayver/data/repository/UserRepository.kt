@@ -61,7 +61,7 @@ class UserRepository() {
 
                 }
                 .addOnFailureListener {
-                    trySend(Resource.Error(message = it.message.toString()))
+                    trySend(Resource.Error(message = "Akun Anda Belum Terdaftar"))
                 }
             awaitClose {
                 close()

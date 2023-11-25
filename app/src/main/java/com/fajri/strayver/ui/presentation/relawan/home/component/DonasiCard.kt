@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.fajri.strayver.model.UserData
 import com.fajri.strayver.ui.theme.Neutral300
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral900
@@ -30,7 +31,7 @@ import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun DonasiCard(modifier: Modifier = Modifier) {
+fun DonasiCard(modifier: Modifier = Modifier, userData: UserData) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(Neutral50),
@@ -68,7 +69,7 @@ fun DonasiCard(modifier: Modifier = Modifier) {
                         style = Type.text2xsRegular()
                     )
                     Text(
-                        text = "Rp 3.258.500",
+                        text = "Rp ${userData.totalDana}",
                         color = Neutral900,
                         style = Type.textSmSemiBold()
                     )
@@ -91,7 +92,7 @@ fun DonasiCard(modifier: Modifier = Modifier) {
                         style = Type.text2xsRegular()
                     )
                     Text(
-                        text = "3",
+                        text = userData.totalBarang.toString(),
                         color = Neutral900,
                         style = Type.textSmSemiBold()
                     )
