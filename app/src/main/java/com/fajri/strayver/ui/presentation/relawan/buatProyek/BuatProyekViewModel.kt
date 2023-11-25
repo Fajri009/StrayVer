@@ -18,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
@@ -117,7 +118,7 @@ class BuatProyekViewModel @Inject constructor(
             gambar = "",
             relawanAvatar = "",
             relawanNama = _userData.value.item!!.nama,
-            waktu = LocalDateTime.now().toString(),
+            waktu = LocalDate.now().toString(),
             userId = _userData.value.key!!,
             category = donasiType,
         )

@@ -75,26 +75,7 @@ fun FormBarang(
         item {
             Spacer(modifier = Modifier.height(8.dp))
             CustomButton(onClick = {
-                scope.launch {
-                    viewModel.onUploadFile(context).collect {
-                        when(it) {
-                            is Resource.Loading -> {
-                                viewModel.setLoading(true)
-                            }
-                            is Resource.Success -> {
-                                viewModel.setLoading(false)
-//                                Toast.makeText(context, it.data, Toast
-//                                    .LENGTH_SHORT).show()
-                                navController.navigate(Route.MEMBER_RIWAYAT)
-                            }
-                            is Resource.Error -> {
-                                viewModel.setLoading(false)
-                                Toast.makeText(context, it.message, Toast
-                                    .LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
+
             }, text = "Kirim", type = ButtonType.LARGE)
         }
     }

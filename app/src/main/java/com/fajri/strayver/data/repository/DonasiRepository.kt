@@ -4,10 +4,14 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.fajri.strayver.data.Resource
+import com.fajri.strayver.data.model.DonasiModelResponse
 import com.fajri.strayver.model.Donasi
 import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -96,31 +100,44 @@ class DonasiRepository {
             }
         }
 
-    fun kirimDonasi(context: Context, imageUri: Uri): Flow<Resource<String>> =
-        callbackFlow {
+    fun getAllDonasi() =
+        callbackFlow<Resource<List<DonasiModelResponse>>> {
             trySend(Resource.Loading())
 
-            val imageId = UUID.randomUUID()
-            val photoRef = donasiStorage.child("barang_donasi/$imageId")
-
-            val imageByteArray: ByteArray? = context.contentResolver
-                .openInputStream(imageUri)
-                .use {
-                    it?.readBytes()
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val donasi= snapshot.children.map {
+                        DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
+                    }
+                    trySend(Resource.Success(donasi))
                 }
 
-            try {
-                val uploadImage = photoRef.putBytes(imageByteArray!!)
-                    .addOnSuccessListener {
-                        imageAdress = it.uploadSessionUri.toString()
-                        trySend(Resource.Success(it.uploadSessionUri.toString()))
-                    }
-                    .addOnFailureListener {
-                        trySend(Resource.Error(it.message.toString()))
-                    }
-            } catch (e: Exception) {
-                trySend(Resource.Error(e.message.toString()))
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
+
+            awaitClose {
+                close()
             }
+        }
+
+    fun getDonasiById(id: String) =
+        callbackFlow<Resource<DonasiModelResponse>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val donasi= snapshot.children.map {
+                        DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
+                    }.filter { it.key == id }
+                    trySend(Resource.Success(donasi[0]))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
 
             awaitClose {
                 close()

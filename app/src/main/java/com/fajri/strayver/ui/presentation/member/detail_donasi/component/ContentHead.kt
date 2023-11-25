@@ -16,17 +16,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.formatDate
+import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
-fun ContentHead() {
+fun ContentHead(donasi: Donasi) {
+
+    val formattedGoal = formatLongWithDots(donasi.donasiGoal!!)
+    val formattedGain = formatLongWithDots(donasi.donasiGain)
+    val waktu= formatDate(donasi.waktu)
+
     Column {
         Text(
-            text = "Selamatkan ratusan kucing kelaparan di kecamatan Tou",
+            text = donasi.title,
             style = Type.textLgBold(),
             color = Primary900,
         )
@@ -38,12 +46,19 @@ fun ContentHead() {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(text = "Terkumpul :", style = Type.textXsRegular(), color = Neutral600)
                 Text(
-                    text = "dari Rp 10.000.000",
+                    text =
+                        if (donasi.category == "Dana") "dari Rp$formattedGoal"
+                        else "dari $formattedGoal barang",
                     style = Type.textXsRegular(),
                     color = Neutral600
                 )
             }
-            Text(text = "Rp 3.258.500", style = Type.textSmSemiBold(), color= Secondary900)
+            Text(
+                text =
+                if (donasi.category == "Dana") "Rp$formattedGain"
+                else "$formattedGain barang",
+                style = Type.textSmSemiBold(),
+                color = Secondary900)
 
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(11.dp)) {
@@ -56,8 +71,9 @@ fun ContentHead() {
                     contentScale = ContentScale.Crop
                 )
                 Column(verticalArrangement = Arrangement.Center) {
-                    Text(text = "Anabul Foundation", style = Type.textSmSemiBold())
-                    Text(text = "2 jam yang lalu", style = Type.textXsRegular(), color = Neutral600)
+                    Text(text = donasi.relawanNama, style = Type.textSmSemiBold())
+                    Text(text = "${waktu.dayOfMonth} jam yang lalu", style = Type.textXsRegular(), color =
+                    Neutral600)
                 }
             }
         }

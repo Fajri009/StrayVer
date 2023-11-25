@@ -66,6 +66,7 @@ fun MemberHomeScreen(
     LaunchedEffect(key1 = true) {
         memberViewModel.getArtikel(context)
         memberViewModel.getUser()
+        memberViewModel.getDonasi()
     }
 
     LazyColumn(Modifier.padding(bottom = 56.dp)) {
@@ -90,7 +91,7 @@ fun MemberHomeScreen(
 
         item {
             Spacer(modifier = Modifier.height(56.dp))
-            ProyekTerbaru(navController = navController)
+            ProyekTerbaru(navController = navController, memberViewModel)
         }
 
         item {

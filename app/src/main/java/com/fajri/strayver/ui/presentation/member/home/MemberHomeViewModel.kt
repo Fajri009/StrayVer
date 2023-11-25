@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.model.ArtikelModelResponse
+import com.fajri.strayver.data.model.DonasiModelResponse
 import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.data.repository.DatabaseRepository
+import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -20,8 +22,15 @@ import javax.inject.Inject
 @HiltViewModel
 class MemberHomeViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val databaseRepository: DatabaseRepository
+    private val databaseRepository: DatabaseRepository,
+    private val donasiRepository: DonasiRepository
 ) : ViewModel() {
+
+    private val _donasi = mutableStateOf<List<DonasiModelResponse>>(emptyList())
+    val donasi: State<List<DonasiModelResponse>> = _donasi
+
+    private val _donasiLoading= mutableStateOf(false)
+    val donasiLoading: State<Boolean> = _donasiLoading
 
     private val _artikel = mutableStateOf<List<ArtikelModelResponse>>(emptyList())
     val artikel: State<List<ArtikelModelResponse>> = _artikel
@@ -63,6 +72,25 @@ class MemberHomeViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         UserModelResponse(item = null, key = null)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getDonasi() {
+        viewModelScope.launch {
+            donasiRepository.getAllDonasi().collect {
+                when(it) {
+                    is Resource.Loading -> {
+                        _donasiLoading.value= true
+                    }
+                    is Resource.Success -> {
+                        _donasi.value= it.data!!
+                        _donasiLoading.value= false
+                    }
+                    is Resource.Error -> {
+                        _donasiLoading.value= false
                     }
                 }
             }
