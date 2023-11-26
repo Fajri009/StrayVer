@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
-import com.fajri.strayver.util.formatDate
 
 @Composable
 fun ContentDescription(donasi: Donasi) {

@@ -26,7 +26,7 @@ class DonasiRepository {
             .reference
             .child("Donasi")
     private val donasiStorage = Firebase.storage.reference.child("images/")
-    lateinit var imageAdress: String
+    var imageAdress: String? = null
 
     fun notEmpty(context: Context) {
         var notEmpty: Boolean?
@@ -53,28 +53,24 @@ class DonasiRepository {
                 val uploadImage = photoRef.putBytes(imageByteArray!!)
                     .addOnSuccessListener {
                         photoRef.downloadUrl.addOnSuccessListener {
-                            Log.i("cok", it.toString())
 
-                            val imageUrl: String? = it.toString()
-                            imageUrl?.let {
+                            imageAdress = it.toString()
+                            if (imageAdress != null) {
                                 val donasi=
-                                    donasiData.apply {
-                                        Donasi(
-                                            donasiId = donasiId,
-                                            title = title,
-                                            donasiGoal = donasiGoal,
-                                            donasiGain = donasiGain,
-                                            deskripsi = deskripsi,
-                                            alamat = alamat,
-                                            gambar = it.toString(),
-                                            relawanAvatar = "",
-                                            relawanNama = relawanNama,
-                                            waktu = waktu,
-                                            userId = userId,
-                                            category = category,
-                                        )
-                                    }
-
+                                    Donasi(
+                                        donasiId = donasiData.donasiId,
+                                        title = donasiData.title,
+                                        donasiGoal = donasiData.donasiGoal,
+                                        donasiGain = donasiData.donasiGain,
+                                        deskripsi = donasiData.deskripsi,
+                                        alamat = donasiData.alamat,
+                                        gambar = imageAdress!!,
+                                        relawanAvatar = "",
+                                        relawanNama = donasiData.relawanNama,
+                                        waktu = donasiData.waktu,
+                                        userId = donasiData.userId,
+                                        category = donasiData.category,
+                                    )
                                 db
                                     .child(donasiData.donasiId)
                                     .setValue(donasi)

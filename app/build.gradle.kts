@@ -71,6 +71,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation("io.mockk:mockk:1.13.8")
+
 
     //viewModel
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
