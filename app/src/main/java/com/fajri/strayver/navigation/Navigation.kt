@@ -34,7 +34,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 @ExperimentalPagerApi
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Route.SPLASH){
+    NavHost(navController = navController, startDestination = Route.MEMBER_HOME) {
         composable(Route.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -67,13 +67,38 @@ fun Navigation(navController: NavHostController) {
                 }
             )
         ) {
-            val donasiId= it.arguments?.getString("id")
+            val donasiId = it.arguments?.getString("id")
             donasiId?.let {
                 DetailDonasiScreen(navController, donasiId)
             }
         }
-        composable(Route.KIRIM_DONASI) {
-            KirimDonasiScreen(navController)
+        composable(
+            Route.KIRIM_DONASI + "?namaDonasi={namaDonasi}" + "?donasiId={id}" + "?type={type}" +
+            "?relawan={relawan}",
+            arguments = listOf(
+                navArgument(name = "namaDonasi") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "id") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "type") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "relawan") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val namaDonasi = it.arguments?.getString("namaDonasi")
+            val donasiId = it.arguments?.getString("id")
+            val donasiType = it.arguments?.getString("type")
+            val relawan = it.arguments?.getString("relawan")
+            KirimDonasiScreen(
+                navController = navController, namaDonasi= namaDonasi!!, donasiId = donasiId!!,
+                donasiType =
+                donasiType!!, relawan = relawan!!
+            )
         }
         composable(Route.MEMBER_RIWAYAT) {
             MemberRiwayatScreen(navController = navController)

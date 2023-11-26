@@ -51,7 +51,11 @@ fun DetailContent(navController: NavController, donasi: Donasi) {
             Spacer(modifier = Modifier.height(16.dp))
             CustomButton(
                 onClick = {
-                    navController.navigate(Route.KIRIM_DONASI)
+                    navController.navigate(
+                        Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
+                                "?donasiId=${donasi.donasiId}" +
+                                "?type=${donasi.category}" + "?relawan=${donasi.relawanNama}"
+                    )
                 },
                 text = "Donasi",
                 type = ButtonType.LARGE

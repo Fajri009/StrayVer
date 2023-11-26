@@ -107,13 +107,13 @@ class UserRepository() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.children.map {
                         UserModelResponse(it.getValue(UserData::class.java), it.key)
-                    }.filter { it.key == user!!.uid }
+                    }.filter { it.key == "mZGTEHDnt9TkbKABK2USbTZqxVy2" }
 
                     trySend(Resource.Success(user[0]))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    trySend(Resource.Error(message = error.message.toString()))
+                    trySend(Resource.Error(message = error.message))
                 }
             })
             awaitClose {

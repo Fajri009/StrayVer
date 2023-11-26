@@ -139,4 +139,21 @@ class DonasiRepository {
                 close()
             }
         }
+
+    fun updateDonasiGain(donasiId: String, value: Long) =
+        callbackFlow<Resource<String>> {
+            trySend(Resource.Loading())
+
+            db.child(donasiId).child("donasiGain").setValue(value)
+                .addOnSuccessListener {
+                    trySend(Resource.Success(data = "Berhasil melakukan donasii"))
+                }
+                .addOnFailureListener {
+                    trySend(Resource.Error("Berhasil Membuat Proyek Donasi"))
+                }
+
+            awaitClose {
+                close()
+            }
+        }
 }
