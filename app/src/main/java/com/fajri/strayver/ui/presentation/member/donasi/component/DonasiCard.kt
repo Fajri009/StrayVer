@@ -29,6 +29,7 @@ import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
 fun DonasiCard(
@@ -44,7 +45,7 @@ fun DonasiCard(
             .clickable {
                 navController.navigate(Route.DETAIL_DONASI + "?donasiId=${dataDonasi.donasiId}")
             },
-        elevation = CardDefaults.cardElevation(6.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
@@ -80,7 +81,7 @@ fun DonasiCard(
                     Text(text = "Terkumpul :", style = Type.text2xsRegular(), color = Neutral600)
                     if (dataDonasi.category.equals(TipeDonasi.DANA)) {
                         Text(
-                            text = "Rp ${dataDonasi.donasiGain}",
+                            text = "Rp ${formatLongWithDots(dataDonasi.donasiGain)}",
                             style = Type.textXsSemiBold(),
                             color = Secondary900
                         )

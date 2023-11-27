@@ -64,4 +64,19 @@ class MemberDonasiViewModel @Inject constructor(
             }
         }
     }
+
+    fun searchQuery() {
+        viewModelScope.launch {
+            donasiRepository.donasiSearchQuery(_search.value).collect {
+                when(it) {
+                    is Resource.Error -> setLoading(false)
+                    is Resource.Loading -> setLoading(true)
+                    is Resource.Success -> {
+                        _donasi.value= it.data!!
+                        setLoading(false)
+                    }
+                }
+            }
+        }
+    }
 }
