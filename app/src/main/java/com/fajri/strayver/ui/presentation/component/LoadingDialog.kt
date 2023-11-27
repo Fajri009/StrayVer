@@ -1,17 +1,14 @@
 package com.fajri.strayver.ui.presentation.component
 
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.VectorConverter
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,17 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
-import com.fajri.strayver.util.ButtonType
-import com.fajri.strayver.util.Route
 
 @Composable
 fun LoadingDialog() {
@@ -53,20 +46,20 @@ fun LoadingDialog() {
     )
 
     Dialog(onDismissRequest = { }) {
-        Column(
+        Row(
             Modifier
-                .clip(RoundedCornerShape(30.dp))
+                .clip(RoundedCornerShape(20.dp))
                 .background(Neutral50)
-                .padding(20.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(vertical = 12.dp, horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             AsyncImage(
                 model = R.drawable.ic_loading,
                 contentDescription = "",
-                Modifier.size(60.dp).rotate(angle))
+                Modifier.size(50.dp).rotate(angle))
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = "Loading...", style = Type.displayXsSemiBold(), color = Primary900)
+            Text(text = "Loading...", style = Type.textLgSemiBold(), color = Primary900)
         }
     }
 }
