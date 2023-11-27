@@ -42,6 +42,7 @@ fun ProyekCard(navController: NavController, donasi: Donasi) {
 
     val formattedGoal= formatLongWithDots(donasi.donasiGoal!!)
     val formattedGain= formatLongWithDots(donasi.donasiGain)
+    val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal.toFloat()
     Card(
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -81,12 +82,12 @@ fun ProyekCard(navController: NavController, donasi: Donasi) {
             Spacer(modifier = Modifier.height(6.dp))
             Text(text = donasi.title,
                 style = Type.textXsSemiBold(),
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(6.dp))
-            CustomProgressBar(progress = (donasi.donasiGain / donasi.donasiGoal!!).toFloat())
+            CustomProgressBar(progress = progress)
 
             Spacer(modifier = Modifier.height(6.dp))
             Text(text = "Terkumpul:", style = Type.text2xsRegular(), color = Neutral600)

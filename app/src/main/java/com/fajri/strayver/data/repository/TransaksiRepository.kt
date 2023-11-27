@@ -20,7 +20,7 @@ class TransaksiRepository {
     private val transaksiStorage = Firebase.storage.reference.child("images/")
     var imageAdress: String? = null
 
-    fun addTransaksi(transaksiData: Transaksi, context: Context, imageUri: Uri) =
+    fun addTransaksiBarang(transaksiData: Transaksi, context: Context, imageUri: Uri) =
         callbackFlow<Resource<String>> {
             trySend(Resource.Loading())
 
@@ -77,6 +77,23 @@ class TransaksiRepository {
             } catch (e: Exception) {
                 trySend(Resource.Error(e.message.toString()))
             }
+            awaitClose {
+                close()
+            }
+        }
+
+    fun addTransaksiDana(transaksiData: Transaksi)=
+        callbackFlow<Resource<String>> {
+            trySend(Resource.Loading())
+
+            db.child(transaksiData.transaksiId).setValue(transaksiData)
+                .addOnSuccessListener {
+                    trySend(Resource.Success("Berhasil mengirimkan dana"))
+                }
+                .addOnFailureListener {
+                    trySend(Resource.Error(it.message.toString()))
+                }
+
             awaitClose {
                 close()
             }

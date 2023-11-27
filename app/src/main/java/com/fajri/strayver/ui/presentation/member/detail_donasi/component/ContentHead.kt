@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.detail_donasi.component
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.TipeDonasi
 import com.fajri.strayver.util.formatLongWithDots
 import com.fajri.strayver.util.toDateString
 
@@ -31,6 +33,7 @@ fun ContentHead(donasi: Donasi) {
     val formattedGoal = formatLongWithDots(donasi.donasiGoal!!)
     val formattedGain = formatLongWithDots(donasi.donasiGain)
     val localDate = donasi.waktu.toDateString()
+    val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal.toFloat()
 
     Column {
         Text(
@@ -39,19 +42,20 @@ fun ContentHead(donasi: Donasi) {
             color = Primary900,
         )
         Spacer(modifier = Modifier.height(12.dp))
+        Log.i("anjing", "ContentHead: $progress")
 
         Column(Modifier.fillMaxWidth()) {
             CustomProgressBar(
                 progress =
-                if (donasi.donasiGain == 0L) 0f
-                else (donasi.donasiGain / donasi.donasiGoal!!).toFloat()
+                if (donasi.donasiGain.toFloat() == 0.0f) 0.0f
+                else progress
             )
             Spacer(modifier = Modifier.height(2.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(text = "Terkumpul :", style = Type.textXsRegular(), color = Neutral600)
                 Text(
                     text =
-                    if (donasi.category == "Dana") "dari Rp$formattedGoal"
+                    if (donasi.category == TipeDonasi.DANA) "dari Rp$formattedGoal"
                     else "dari $formattedGoal barang",
                     style = Type.textXsRegular(),
                     color = Neutral600
@@ -59,7 +63,7 @@ fun ContentHead(donasi: Donasi) {
             }
             Text(
                 text =
-                if (donasi.category == "Dana") "Rp$formattedGain"
+                if (donasi.category == TipeDonasi.DANA) "Rp$formattedGain"
                 else "$formattedGain barang",
                 style = Type.textSmSemiBold(),
                 color = Secondary900

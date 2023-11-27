@@ -19,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +51,8 @@ fun KirimDonasiScreen(
     donasiType: String,
     relawan: String,
 ) {
+
+    viewModel.context= LocalContext.current
 
     if (viewModel.isLoading.value) {
         LoadingDialog()
@@ -141,7 +144,10 @@ private fun KirimDana(
                 .padding(horizontal = 20.dp, vertical = 40.dp)
         ) {
             CustomButton(
-                onClick = { },
+                onClick = {
+                    viewModel.donasiDanaSubmit(namaDonasi= namaDonasi, donasiId=
+                    donasiId, donasiType= donasiType, relawan= relawan)
+                },
                 text = "Kirim",
                 type = ButtonType.LARGE
             )

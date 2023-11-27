@@ -15,18 +15,14 @@ import com.fajri.strayver.ui.theme.Type
 fun ContentDescription(donasi: Donasi) {
 
 
-    Column {
+    Column() {
         Text(text = "Deskripsi :", style = Type.textMdSemiBold(), color = Primary900)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text ="${donasi.deskripsi}", style = Type.textSmRegular())
 
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Alamat Tujuan :", style = Type.textMdSemiBold(), color = Primary900)
+        Text(text = "Alamat :", style = Type.textMdSemiBold(), color = Primary900)
         Text(text = donasi.alamat, style = Type.textSmRegular())
-        
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Ketentuan", style = Type.textMdSemiBold(), color = Primary900)
-        Text(text = " 1.\tKirim ke alamat di atas melalui ekspedisi pilihanmu\n" +
-                "2.\tMasukkan nomor resi dan bla bla bla", style = Type.textSmRegular())
     }
 }

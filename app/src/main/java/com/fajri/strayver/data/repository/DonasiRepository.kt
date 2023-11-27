@@ -27,6 +27,7 @@ class DonasiRepository {
             .child("Donasi")
     private val donasiStorage = Firebase.storage.reference.child("images/")
     var imageAdress: String? = null
+    var currentDonasi: DonasiModelResponse? = null
 
     fun notEmpty(context: Context) {
         var notEmpty: Boolean?
@@ -56,7 +57,7 @@ class DonasiRepository {
 
                             imageAdress = it.toString()
                             if (imageAdress != null) {
-                                val donasi=
+                                val donasi =
                                     Donasi(
                                         donasiId = donasiData.donasiId,
                                         title = donasiData.title,
@@ -102,7 +103,7 @@ class DonasiRepository {
 
             db.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val donasi= snapshot.children.map {
+                    val donasi = snapshot.children.map {
                         DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
                     }
                     trySend(Resource.Success(donasi))
@@ -124,9 +125,10 @@ class DonasiRepository {
 
             db.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val donasi= snapshot.children.map {
+                    val donasi = snapshot.children.map {
                         DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
                     }.filter { it.key == id }
+                    currentDonasi = donasi[0]
                     trySend(Resource.Success(donasi[0]))
                 }
 
@@ -144,7 +146,8 @@ class DonasiRepository {
         callbackFlow<Resource<String>> {
             trySend(Resource.Loading())
 
-            db.child(donasiId).child("donasiGain").setValue(value)
+            db.child(donasiId).child("donasiGain")
+                .setValue(currentDonasi!!.item!!.donasiGain + value)
                 .addOnSuccessListener {
                     trySend(Resource.Success(data = "Berhasil melakukan donasii"))
                 }
