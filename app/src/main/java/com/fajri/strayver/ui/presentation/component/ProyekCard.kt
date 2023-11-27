@@ -1,4 +1,4 @@
-package com.fajri.strayver.ui.presentation.member.home.component
+package com.fajri.strayver.ui.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

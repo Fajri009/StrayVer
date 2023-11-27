@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomTextField
+import com.fajri.strayver.ui.presentation.component.LoadingDialog
 import com.fajri.strayver.ui.presentation.member.donasi.component.DonasiCard
 import com.fajri.strayver.ui.presentation.member.donasi.component.DonasiContent
 import com.fajri.strayver.ui.theme.Neutral50
@@ -29,7 +30,15 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberDonasiScreen(navController: NavController, viewModel: MemberDonasiViewModel= hiltViewModel()) {
+fun MemberDonasiScreen(
+    navController: NavController,
+    viewModel: MemberDonasiViewModel = hiltViewModel()
+) {
+
+    if (viewModel.isLoading.value) {
+        LoadingDialog()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -50,11 +59,11 @@ fun MemberDonasiScreen(navController: NavController, viewModel: MemberDonasiView
             )
             Spacer(modifier = Modifier.height(8.dp))
             CustomTextField(
-                text = "",
+                text = viewModel.search.value,
                 placeholder = "Search",
                 trailingIcon = Icons.Default.Search,
                 onValueChange = {
-
+                    viewModel.onChangeSearch(it)
                 },
                 modifier = Modifier
                     .padding(horizontal = 20.dp)

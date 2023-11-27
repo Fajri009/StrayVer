@@ -63,7 +63,7 @@ class UserRepository() {
 
                 }
                 .addOnFailureListener {
-                    trySend(Resource.Error(message = it.message.toString()))
+                    trySend(Resource.Error(message = "Email atau password salah"))
                 }
             awaitClose {
                 close()

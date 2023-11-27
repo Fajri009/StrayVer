@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
@@ -22,6 +23,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,9 +41,18 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.TipeDonasi
 
 @Composable
 fun DonasiContent(navController: NavController, viewModel: MemberDonasiViewModel) {
+
+    val tabTitle = listOf(TipeDonasi.DANA, TipeDonasi.BARANG)
+    val dataDonasi by viewModel.donasi
+    
+    LaunchedEffect(key1 = viewModel.type.value, block = {
+        viewModel.getDonasiByCategory()
+    })
+    
     Column(
         Modifier
             .fillMaxSize()
@@ -49,11 +60,6 @@ fun DonasiContent(navController: NavController, viewModel: MemberDonasiViewModel
             .background(Color.White)
             .padding(top = 0.dp)
     ) {
-        val tabTitle = listOf("Dana", "Barang")
-        var type by remember {
-            mutableStateOf("Dana")
-        }
-
         Column(
             Modifier
                 .fillMaxSize()
@@ -81,7 +87,7 @@ fun DonasiContent(navController: NavController, viewModel: MemberDonasiViewModel
                         selected = index == viewModel.currTabIndex.value,
                         onClick = {
                             viewModel.setIndex(index)
-                            type = tab
+                            viewModel.setType(tab)
                         },
                         text = {
                             Text(
@@ -97,17 +103,8 @@ fun DonasiContent(navController: NavController, viewModel: MemberDonasiViewModel
             }
             Spacer(modifier = Modifier.height(18.dp))
             LazyColumn(Modifier.fillMaxSize()) {
-                items(3) {
-                    DonasiCard(
-                        type = "Dana",
-                        img = R.drawable.kucing_makan,
-                        title = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
-                        companyName = "Anabul Foundation",
-                        companyIcon = R.drawable.anabul_foundation,
-                        progress = .45f,
-                        value = 3258000,
-                        navController
-                    )
+                items(dataDonasi) { donasi ->
+                    DonasiCard(donasi.item!!, navController)
                 }
             }
         }
