@@ -3,7 +3,6 @@ package com.fajri.strayver.ui.presentation.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +18,7 @@ import com.fajri.strayver.ui.theme.Type
 @Composable
 fun CompanyTag(
     companyName: String,
-    companyIcon: Int,
+    companyIcon: String,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(6.dp),

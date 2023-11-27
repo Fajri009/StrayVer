@@ -23,7 +23,7 @@ fun RelawanProfilPicture(modifier: Modifier = Modifier) {
         shape = CircleShape
     ) {
         AsyncImage(
-            model = R.drawable.anabul_foundation,
+            model = R.drawable.profile,
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier

@@ -79,7 +79,7 @@ fun RelawanHomeScreen(
                     Spacer(modifier = Modifier.height(30.dp))
 
                     Text(
-                        text = "Proyek Donasi Terbarumu",
+                        text = "Proyek Terbarumu",
                         style = Type.textMdSemiBold(),
                     )
                     Spacer(modifier = Modifier.height(10.dp))

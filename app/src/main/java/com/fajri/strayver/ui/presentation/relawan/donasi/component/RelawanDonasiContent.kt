@@ -1,93 +1,118 @@
 package com.fajri.strayver.ui.presentation.relawan.donasi.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.fajri.strayver.R
+import com.fajri.strayver.data.model.DonasiModelResponse
+import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary100
+import com.fajri.strayver.ui.theme.Primary700
+import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 
 @Composable
-fun RelawanDonasiContent(navController: NavController) {
+fun RelawanDonasiContent(navController: NavController, viewModel: RelawanDonasiViewModel = hiltViewModel()) {
+    val tabTitle = listOf("Dana", "Barang")
+
+    val donasiData by viewModel.donasiData
+
+    var type by remember {
+        mutableStateOf("Dana")
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getDonasi()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Neutral50, RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Shades50, RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-                .padding(top = 15.dp, bottom = 10.dp),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            Text(
-                modifier = Modifier
-                    .clickable {  },
-                text = "Dana",
-                color = Neutral800,
-                style = Type.textSmMedium(),
-                textAlign = TextAlign.Center
-            )
-            Text(
-                modifier = Modifier
-                    .clickable {  },
-                text = "Barang",
-                color = Neutral800,
-                style = Type.textSmMedium(),
-                textAlign = TextAlign.Center
-            )
-        }
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth(),
-            color = Primary100
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp)
+                .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+                .background(Shades50)
         ) {
-            RelawanDonasiCard(
-                image = R.drawable.terbaru,
-                companyName = "Anabul Foundation",
-                companyIcon = R.drawable.anabul_foundation,
-                judul = "Selamatkan ratusan kucing kelaparan di Kecamatan Tou",
-                progress = 0.3f,
-                terkumpul = "10 barang",
-                onClick = {navController.navigate(Route.TAMBAH_DONASI)})
-            RelawanDonasiCard(
-                image = R.drawable.terbaru2,
-                companyName = "Anabul Foundation",
-                companyIcon = R.drawable.anabul_foundation,
-                judul = "Dibutuhkan kandang hewan (kucing atau anjing)",
-                progress = 0.5f,
-                terkumpul = "Rp 3.258.500"
+            TabRow(
+                selectedTabIndex = viewModel.currentTabIndex.value,
+                modifier = Modifier.fillMaxWidth(),
+                indicator = {
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier
+                            .tabIndicatorOffset(it[viewModel.currentTabIndex.value])
+                            .padding(horizontal = 65.dp)
+                            .clip(CircleShape),
+                        color = Primary700,
+                        height = 4.dp
+                    )
+                }
             ) {
+                tabTitle.forEachIndexed { index, tab ->
+                    Tab(
+                        selected = index == viewModel.currentTabIndex.value,
+                        onClick = {
+                            viewModel.setIndex(index)
+                            type = tab
+                        },
+                        text = {
+                            Text(
+                                text = tab,
+                                style =
+                                    if (index == viewModel.currentTabIndex.value) Type.textSmSemiBold()
+                                    else Type.textSmMedium()
+                            )
+                        },
+                        selectedContentColor = Primary900,
+                        unselectedContentColor = Neutral800
+                    )
+                }
+            }
 
+            Spacer(modifier = Modifier.height(15.dp))
+
+            LazyColumn(
+                modifier = Modifier.padding(horizontal = 20.dp)
+            ) {
+                items(donasiData) {
+                    RelawanDonasiCard(donasiData = it.item!!, navController = navController)
+                }
             }
         }
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }

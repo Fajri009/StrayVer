@@ -30,7 +30,7 @@ fun BuatProyek(modifier: Modifier = Modifier, navController: NavController) {
         Spacer(modifier = Modifier.height(10.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             TemplateBuatProyek(
                 type = "Dana",

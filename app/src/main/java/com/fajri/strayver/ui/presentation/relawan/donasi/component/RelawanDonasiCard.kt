@@ -1,13 +1,12 @@
 package com.fajri.strayver.ui.presentation.relawan.donasi.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -18,9 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.fajri.strayver.R
+import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CompanyTag
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
 import com.fajri.strayver.ui.theme.Neutral600
@@ -28,21 +29,17 @@ import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RelawanDonasiCard(
-    image: Int,
-    companyName: String,
-    companyIcon: Int,
-    judul: String,
-    progress: Float,
-    terkumpul: String,
-    onClick: () -> Unit
+    donasiData: Donasi,
+    navController: NavController
 ) {
     Card(
         onClick = {
-            onClick()
+            navController.navigate(Route.TAMBAH_DONASI)
         },
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
@@ -53,22 +50,25 @@ fun RelawanDonasiCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage (
-                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                model = image,
-                contentDescription = ""
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .size(100.dp),
+                model = donasiData.gambar,
+                contentDescription = "",
+                contentScale = ContentScale.FillWidth
             )
             Spacer(modifier = Modifier.width(20.dp))
             Column {
                 Row {
-                    CompanyTag(companyName = companyName, companyIcon = companyIcon)
+                    CompanyTag(companyName = donasiData.relawanNama, companyIcon = donasiData.relawanAvatar)
                 }
                 Text(
-                    text = judul,
+                    text = donasiData.title,
                     style = Type.textXsSemiBold(),
                     color = Neutral800
                 )
                 Spacer(modifier = Modifier.height(5.dp))
-                CustomProgressBar(progress = progress)
+                CustomProgressBar(progress = donasiData.donasiGain.toFloat() / donasiData.donasiGoal!!.toFloat())
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
                     text = "Terkumpul :",
@@ -76,7 +76,7 @@ fun RelawanDonasiCard(
                     color = Neutral600
                 )
                 Text(
-                    text = terkumpul,
+                    text = donasiData.donasiGain.toString(),
                     style = Type.textXsSemiBold(),
                     color = Secondary900
                 )
