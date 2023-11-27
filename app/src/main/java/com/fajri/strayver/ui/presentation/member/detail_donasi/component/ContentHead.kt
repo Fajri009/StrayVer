@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.detail_donasi.component
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,15 +23,17 @@ import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
-import com.fajri.strayver.util.formatDate
+import com.fajri.strayver.util.TipeDonasi
 import com.fajri.strayver.util.formatLongWithDots
+import com.fajri.strayver.util.toDateString
 
 @Composable
 fun ContentHead(donasi: Donasi) {
 
     val formattedGoal = formatLongWithDots(donasi.donasiGoal!!)
     val formattedGain = formatLongWithDots(donasi.donasiGain)
-//    val waktu= formatDate(donasi.waktu)
+    val localDate = donasi.waktu.toDateString()
+    val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal.toFloat()
 
     Column {
         Text(
@@ -39,26 +42,32 @@ fun ContentHead(donasi: Donasi) {
             color = Primary900,
         )
         Spacer(modifier = Modifier.height(12.dp))
+        Log.i("anjing", "ContentHead: $progress")
 
         Column(Modifier.fillMaxWidth()) {
-            CustomProgressBar(progress = .45f)
+            CustomProgressBar(
+                progress =
+                if (donasi.donasiGain.toFloat() == 0.0f) 0.0f
+                else progress
+            )
             Spacer(modifier = Modifier.height(2.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(text = "Terkumpul :", style = Type.textXsRegular(), color = Neutral600)
                 Text(
                     text =
-                        if (donasi.category == "Dana") "dari Rp$formattedGoal"
-                        else "dari $formattedGoal barang",
+                    if (donasi.category == TipeDonasi.DANA) "dari Rp$formattedGoal"
+                    else "dari $formattedGoal barang",
                     style = Type.textXsRegular(),
                     color = Neutral600
                 )
             }
             Text(
                 text =
-                if (donasi.category == "Dana") "Rp$formattedGain"
+                if (donasi.category == TipeDonasi.DANA) "Rp$formattedGain"
                 else "$formattedGain barang",
                 style = Type.textSmSemiBold(),
-                color = Secondary900)
+                color = Secondary900
+            )
 
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(11.dp)) {
@@ -72,8 +81,12 @@ fun ContentHead(donasi: Donasi) {
                 )
                 Column(verticalArrangement = Arrangement.Center) {
                     Text(text = donasi.relawanNama, style = Type.textSmSemiBold())
-                    Text(text = " jam yang lalu", style = Type.textXsRegular(), color =
-                    Neutral600)
+                    Text(
+                        text = "${localDate.toString()}",
+                        style = Type.textXsRegular(),
+                        color =
+                        Neutral600
+                    )
                 }
             }
         }

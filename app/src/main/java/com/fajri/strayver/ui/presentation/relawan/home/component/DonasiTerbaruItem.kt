@@ -68,7 +68,7 @@ fun DonasiTerbaruItem(
                         color = Neutral800
                     )
                     Spacer(modifier = Modifier.height(5.dp))
-                    CustomProgressBar(progress = (donasiData.donasiGain / donasiData.donasiGoal!!).toFloat())
+                    CustomProgressBar(progress = donasiData.donasiGain.toFloat() / donasiData.donasiGoal!!.toFloat())
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(
                         text = "Terkumpul :",

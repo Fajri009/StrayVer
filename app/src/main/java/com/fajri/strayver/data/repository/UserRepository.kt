@@ -9,6 +9,7 @@ import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.model.UserData
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.formatLongWithDots
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -28,6 +29,7 @@ class UserRepository() {
         .getInstance("https://strayver-6c1c0-default-rtdb.asia-southeast1.firebasedatabase.app")
         .getReference("Users")
     var user: FirebaseUser? = null
+    var currentUser: UserModelResponse? = null
 
     fun resetPassword(email: String): Flow<Resource<String>> =
         callbackFlow {
@@ -108,12 +110,12 @@ class UserRepository() {
                     val user = snapshot.children.map {
                         UserModelResponse(it.getValue(UserData::class.java), it.key)
                     }.filter { it.key == user!!.uid }
-
+                    currentUser = user[0]
                     trySend(Resource.Success(user[0]))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    trySend(Resource.Error(message = error.message.toString()))
+                    trySend(Resource.Error(message = error.message))
                 }
             })
             awaitClose {
@@ -136,7 +138,36 @@ class UserRepository() {
             awaitClose {
                 close()
             }
+        }
 
+    fun updateSaldo(value: Long) =
+        callbackFlow<Resource<String>> {
+            trySend(Resource.Loading())
+
+            if (currentUser?.item?.saldo!! < value) {
+                trySend(
+                    Resource.Error(
+                        "Saldo anda tidak cukup\nRp saldo anda: ${
+                            formatLongWithDots(
+                                currentUser?.item?.saldo!!
+                            )
+                        }"
+                    )
+                )
+            } else {
+                userDb.child(user!!.uid).child("saldo")
+                    .setValue(currentUser?.item?.saldo!! - value)
+                    .addOnSuccessListener {
+                        trySend(Resource.Success("Berhasil mengubah saldo"))
+                    }
+                    .addOnFailureListener {
+                        trySend(Resource.Error("Gagal mengubah saldo\n${it.message}"))
+                    }
+            }
+
+            awaitClose {
+                close()
+            }
         }
 
     fun logout() {

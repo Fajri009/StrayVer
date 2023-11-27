@@ -64,7 +64,7 @@ fun DonasiCard(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.weight(1f)
             ) {
-                CompanyTag(companyName = companyName, companyIcon = companyIcon)
+                CompanyTag(companyName = companyName, companyIcon = "companyIcon")
                 Text(
                     text = title,
                     style = Type.textSmSemiBold(),

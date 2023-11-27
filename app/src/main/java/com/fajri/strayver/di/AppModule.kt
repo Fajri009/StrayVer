@@ -5,6 +5,7 @@ import com.fajri.strayver.data.repository.DatabaseRepository
 import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.data.repository.OnBoardRepository
+import com.fajri.strayver.data.repository.TransaksiRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +32,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDonasiDatabase()= DonasiRepository()
+
+    @Provides
+    @Singleton
+    fun provideTransaksiDatabase()= TransaksiRepository()
 
 }

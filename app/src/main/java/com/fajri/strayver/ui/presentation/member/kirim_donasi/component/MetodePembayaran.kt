@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.model.MetodePembayaranData
 import com.fajri.strayver.ui.presentation.component.CustomRadioButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.theme.Neutral50
@@ -35,17 +36,27 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MetodePembayaran(navController: NavController, modifier: Modifier= Modifier) {
+fun MetodePembayaran(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    viewModel: KirimDonasiViewModel
+) {
+
+    val metodeList = listOf(
+        MetodePembayaranData(R.drawable.ic_wallet, "Saldo Strayver"),
+        MetodePembayaranData(R.drawable.ic_gopay, "Gopay"),
+        MetodePembayaranData(R.drawable.ic_dana, "Dana"),
+    )
     Column(
         modifier = modifier
     ) {
         Text(text = "Masukkan Nominal Donasi", style = Type.textSmSemiBold())
         CustomTextField(
-            text = "",
+            text = viewModel.dana.value,
             placeholder = "",
             isNumeric = true,
             onValueChange = {
-
+                viewModel.onDanaChange(it)
             }
         )
 
@@ -71,70 +82,34 @@ fun MetodePembayaran(navController: NavController, modifier: Modifier= Modifier)
                     .padding(horizontal = 32.dp, vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Row(
-                    Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
+
+                metodeList.forEach { data ->
                     Row(
+                        Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.clickable {
-
-                        }
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        AsyncImage(
-                            model = R.drawable.ic_wallet,
-                            contentDescription = "",
-                            modifier = Modifier.sizeIn(maxHeight = 22.dp, maxWidth = 22.dp)
-                        )
-                        Text(text = "Saldo Strayver", style = Type.textSmMedium())
-                    }
-                    CustomRadioButton()
-                }
-
-                Row(
-                    Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.clickable {
-
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.clickable {
+                                viewModel.setMotode(data.nama)
+                            }
+                        ) {
+                            AsyncImage(
+                                model = data.gambar,
+                                contentDescription = "",
+                                modifier = Modifier.sizeIn(maxHeight = 22.dp, maxWidth = 22.dp)
+                            )
+                            Text(text = data.nama, style = Type.textSmMedium())
                         }
-                    ) {
-                        AsyncImage(
-                            model = R.drawable.ic_gopay,
-                            contentDescription = "",
-                            modifier = Modifier.sizeIn(maxHeight = 22.dp, maxWidth = 22.dp)
+                        CustomRadioButton(
+                            onClick = {
+                                viewModel.setMotode(data.nama)
+                            },
+                            isSelected = data.nama == viewModel.metode.value
                         )
-                        Text(text = "Gopay", style = Type.textSmMedium())
                     }
-                    CustomRadioButton()
-                }
-
-                Row(
-                    Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier.clickable {
-
-                        }
-                    ) {
-                        AsyncImage(
-                            model = R.drawable.ic_dana,
-                            contentDescription = "",
-                            modifier = Modifier.sizeIn(maxHeight = 22.dp, maxWidth = 22.dp)
-                        )
-                        Text(text = "Dana", style = Type.textSmMedium())
-                    }
-                    CustomRadioButton()
                 }
             }
         }

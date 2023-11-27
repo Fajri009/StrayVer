@@ -1,7 +1,5 @@
 package com.fajri.strayver.model
 
-import java.time.LocalDate
-
 data class Donasi(
     val donasiId: String= "",
     val title: String= "",
@@ -12,7 +10,7 @@ data class Donasi(
     val gambar: String= "",
     val relawanAvatar: String= "",
     val relawanNama: String= "",
-    val waktu: Long = 0,
+    val waktu: Long= 0,
     val userId: String= "",
     val category: String= "",
 )

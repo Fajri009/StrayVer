@@ -26,7 +26,8 @@ class DonasiRepository {
             .reference
             .child("Donasi")
     private val donasiStorage = Firebase.storage.reference.child("images/")
-    lateinit var imageAdress: String
+    var imageAdress: String? = null
+    var currentDonasi: DonasiModelResponse? = null
 
     fun notEmpty(context: Context) {
         var notEmpty: Boolean?
@@ -53,28 +54,24 @@ class DonasiRepository {
                 val uploadImage = photoRef.putBytes(imageByteArray!!)
                     .addOnSuccessListener {
                         photoRef.downloadUrl.addOnSuccessListener {
-                            Log.i("cok", it.toString())
 
-                            val imageUrl: String? = it.toString()
-                            imageUrl?.let {
-                                val donasi=
-                                    donasiData.apply {
-                                        Donasi(
-                                            donasiId = donasiId,
-                                            title = title,
-                                            donasiGoal = donasiGoal,
-                                            donasiGain = donasiGain,
-                                            deskripsi = deskripsi,
-                                            alamat = alamat,
-                                            gambar = imageUrl.toString(),
-                                            relawanAvatar = "",
-                                            relawanNama = relawanNama,
-                                            waktu = waktu,
-                                            userId = userId,
-                                            category = category,
-                                        )
-                                    }
-
+                            imageAdress = it.toString()
+                            if (imageAdress != null) {
+                                val donasi =
+                                    Donasi(
+                                        donasiId = donasiData.donasiId,
+                                        title = donasiData.title,
+                                        donasiGoal = donasiData.donasiGoal,
+                                        donasiGain = donasiData.donasiGain,
+                                        deskripsi = donasiData.deskripsi,
+                                        alamat = donasiData.alamat,
+                                        gambar = imageAdress!!,
+                                        relawanAvatar = "",
+                                        relawanNama = donasiData.relawanNama,
+                                        waktu = donasiData.waktu,
+                                        userId = donasiData.userId,
+                                        category = donasiData.category,
+                                    )
                                 db
                                     .child(donasiData.donasiId)
                                     .setValue(donasi)
@@ -106,7 +103,7 @@ class DonasiRepository {
 
             db.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val donasi= snapshot.children.map {
+                    val donasi = snapshot.children.map {
                         DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
                     }
                     trySend(Resource.Success(donasi))
@@ -128,9 +125,10 @@ class DonasiRepository {
 
             db.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val donasi= snapshot.children.map {
+                    val donasi = snapshot.children.map {
                         DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
                     }.filter { it.key == id }
+                    currentDonasi = donasi[0]
                     trySend(Resource.Success(donasi[0]))
                 }
 
@@ -138,6 +136,24 @@ class DonasiRepository {
                     trySend(Resource.Error(error.toString()))
                 }
             })
+
+            awaitClose {
+                close()
+            }
+        }
+
+    fun updateDonasiGain(donasiId: String, value: Long) =
+        callbackFlow<Resource<String>> {
+            trySend(Resource.Loading())
+
+            db.child(donasiId).child("donasiGain")
+                .setValue(currentDonasi!!.item!!.donasiGain + value)
+                .addOnSuccessListener {
+                    trySend(Resource.Success(data = "Berhasil melakukan donasii"))
+                }
+                .addOnFailureListener {
+                    trySend(Resource.Error("Berhasil Membuat Proyek Donasi"))
+                }
 
             awaitClose {
                 close()

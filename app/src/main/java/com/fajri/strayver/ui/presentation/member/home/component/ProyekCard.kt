@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,21 +42,23 @@ fun ProyekCard(navController: NavController, donasi: Donasi) {
 
     val formattedGoal= formatLongWithDots(donasi.donasiGoal!!)
     val formattedGain= formatLongWithDots(donasi.donasiGain)
+    val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal.toFloat()
     Card(
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(6.dp),
         modifier = Modifier
-            .sizeIn(maxWidth = 200.dp)
+            .width(200.dp)
             .clickable {
                 navController.navigate(Route.DETAIL_DONASI + "?donasiId=${donasi.donasiId}")
             }
     ) {
 
         AsyncImage(
-            model = R.drawable.kucing_makan,
+            model = donasi.gambar,
             contentDescription = "",
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier.height(120.dp)
         )
         Column(
             Modifier
@@ -79,12 +82,12 @@ fun ProyekCard(navController: NavController, donasi: Donasi) {
             Spacer(modifier = Modifier.height(6.dp))
             Text(text = donasi.title,
                 style = Type.textXsSemiBold(),
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(6.dp))
-            CustomProgressBar(progress = (donasi.donasiGain / donasi.donasiGoal!!).toFloat())
+            CustomProgressBar(progress = progress)
 
             Spacer(modifier = Modifier.height(6.dp))
             Text(text = "Terkumpul:", style = Type.text2xsRegular(), color = Neutral600)

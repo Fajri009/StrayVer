@@ -61,6 +61,7 @@ fun Popup(
                         when (type) {
                             "Register" -> navController.navigate(Route.LOGIN)
                             "Buat Proyek" -> navController.navigate(Route.RELAWAN_HOME)
+                            "KirimDonasi" -> navController.navigate(Route.MEMBER_RIWAYAT)
                         }
                     },
                     text = "Baik",

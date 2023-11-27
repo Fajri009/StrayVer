@@ -11,12 +11,12 @@ import com.fajri.strayver.ui.theme.Primary700
 @Composable
 fun CustomRadioButton(
     isSelected: Boolean= false,
-    onClick: (Boolean) -> Unit= {}
+    onClick: () -> Unit= {},
 ) {
     RadioButton(
         selected = isSelected,
         onClick = {
-
+            onClick()
         },
         colors = RadioButtonDefaults.colors(
             selectedColor = Primary700,

@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.member.detail_donasi.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +25,7 @@ import com.fajri.strayver.util.Route
 
 @Composable
 fun DetailContent(navController: NavController, donasi: Donasi) {
-    LazyColumn(
+    Column(
         Modifier
             .fillMaxSize()
             .padding(top = 40.dp)
@@ -32,30 +33,28 @@ fun DetailContent(navController: NavController, donasi: Donasi) {
             .background(Shades50)
             .padding(20.dp),
     ) {
-        item {
-            ContentHead(donasi)
-        }
+        ContentHead(donasi)
 
-        item {
-            Spacer(modifier = Modifier.height(20.dp))
-            Divider(
-                Modifier
-                    .fillMaxWidth()
-                    .height(1.dp), color = Primary400
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Divider(
+            Modifier
+                .fillMaxWidth()
+                .height(1.dp), color = Primary400
+        )
+        Spacer(modifier = Modifier.height(20.dp))
 
-        item {
-            ContentDescription(donasi)
-            Spacer(modifier = Modifier.height(16.dp))
-            CustomButton(
-                onClick = {
-                    navController.navigate(Route.KIRIM_DONASI)
-                },
-                text = "Donasi",
-                type = ButtonType.LARGE
-            )
-        }
+        ContentDescription(donasi)
+        Spacer(modifier = Modifier.height(16.dp))
+        CustomButton(
+            onClick = {
+                navController.navigate(
+                    Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
+                            "?donasiId=${donasi.donasiId}" +
+                            "?type=${donasi.category}" + "?relawan=${donasi.relawanNama}"
+                )
+            },
+            text = "Donasi",
+            type = ButtonType.LARGE
+        )
     }
 }
