@@ -62,8 +62,8 @@ fun KirimDonasiScreen(
         Popup(
             navController = navController,
             type = "KirimDonasi",
-            judul = "Domasi Sukses",
-            pesan = "Terima kasih telah mendonasikan kepada kami"
+            judul = "Donasi Sukses",
+            pesan = "Terima kasih telah memberikan donasi kepada kami"
         )
     }
 

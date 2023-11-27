@@ -33,15 +33,14 @@ fun CustomTextField(
     trailingIcon: ImageVector? = null,
     showPassword: Boolean = false,
     onValueChange: (String) -> Unit = {},
-//    onValueIntChange:
     onPasswordToggle: (Boolean) -> Unit = {},
     label: String? = null,
     isPassword: Boolean = false,
-    isNumeric: Boolean= false,
+    isNumeric: Boolean = false,
     maxLine: Int = 1,
     minLine: Int = 1,
-    onIconClick: () -> Unit= {},
-    modifier: Modifier= Modifier.fillMaxWidth()
+    onIconClick: () -> Unit = {},
+    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -54,31 +53,38 @@ fun CustomTextField(
         },
         trailingIcon = {
             if (trailingIcon != null) {
-                if (showPassword) {
-                    IconButton(onClick = { onPasswordToggle(!showPassword) }) {
-                        Icon(
-                            imageVector = Icons.Default.VisibilityOff,
-                            contentDescription = "show",
-                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
-                            tint = Primary900
-                        )
+                if (isPassword) {
+                    if (!showPassword) {
+                        IconButton(onClick = { onPasswordToggle(!showPassword) }) {
+                            Icon(
+                                imageVector = Icons.Default.VisibilityOff,
+                                contentDescription = "show",
+                                Modifier
+                                    .size(25.dp)
+                                    .clickable { onPasswordToggle(!showPassword) },
+                                tint = Primary900
+                            )
+                        }
+                    } else {
+                        IconButton(onClick = { onPasswordToggle(!showPassword) }) {
+                            Icon(
+                                imageVector = Icons.Default.Visibility,
+                                contentDescription = "",
+                                Modifier
+                                    .size(25.dp)
+                                    .clickable { onPasswordToggle(!showPassword) },
+                                tint = Primary900
+                            )
+                        }
                     }
-                } else if(!showPassword) {
-                    IconButton(onClick = { onPasswordToggle(!showPassword) }) {
+                } else {
+                    IconButton(onClick = { onIconClick() }) {
                         Icon(
                             imageVector = trailingIcon,
                             contentDescription = "",
-                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
-                            tint = Primary900
-                        )
-                    }
-                }
-                else {
-                    IconButton(onClick = { onPasswordToggle(!showPassword) }) {
-                        Icon(
-                            imageVector = Icons.Default.Visibility,
-                            contentDescription = "",
-                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
+                            Modifier
+                                .size(25.dp)
+                                .clickable { onPasswordToggle(!showPassword) },
                             tint = Primary900
                         )
                     }
@@ -114,11 +120,9 @@ fun CustomTextField(
         keyboardOptions =
         if (isPassword) {
             KeyboardOptions(keyboardType = KeyboardType.Password)
-        }
-        else if (isNumeric) {
+        } else if (isNumeric) {
             KeyboardOptions(keyboardType = KeyboardType.Number)
-        }
-        else {
+        } else {
             KeyboardOptions(keyboardType = KeyboardType.Text)
         },
         maxLines = maxLine,

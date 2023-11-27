@@ -26,9 +26,10 @@ import com.fajri.strayver.ui.theme.Primary400
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
 
 @Composable
-fun DetailContent(navController: NavController, donasi: Donasi) {
+fun DetailContent(navController: NavController, donasi: Donasi, viewModel: DetaiDonasiViewModel) {
     Column(
         Modifier
             .fillMaxSize()
@@ -68,11 +69,15 @@ fun DetailContent(navController: NavController, donasi: Donasi) {
         ) {
             CustomButton(
                 onClick = {
-                    navController.navigate(
-                        Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
-                                "?donasiId=${donasi.donasiId}" +
-                                "?type=${donasi.category}" + "?relawan=${donasi.relawanNama}"
-                    )
+                    if (donasi.category == TipeDonasi.BARANG) {
+                        viewModel.setDialog(true)
+                    } else {
+                        navController.navigate(
+                            Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
+                                    "?donasiId=${donasi.donasiId}" +
+                                    "?type=${donasi.category}" + "?relawan=${donasi.relawanNama}"
+                        )
+                    }
                 },
                 text = "Donasi",
                 type = ButtonType.LARGE,

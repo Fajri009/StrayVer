@@ -22,6 +22,9 @@ class DetaiDonasiViewModel @Inject constructor(
     private val _isLoading= mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
+    private val _isShowDialog= mutableStateOf(false)
+    val isShowDialog: State<Boolean> = _isShowDialog
+
     fun getDonasiDetail(id: String) =
         viewModelScope.launch {
             donasiRepository.getDonasiById(id).collect {
@@ -38,5 +41,9 @@ class DetaiDonasiViewModel @Inject constructor(
 
     fun setLoading(state: Boolean) {
         _isLoading.value= state
+    }
+
+    fun setDialog(state: Boolean) {
+        _isShowDialog.value= state
     }
 }

@@ -29,6 +29,6 @@ fun NotFound() {
             contentDescription = "",
             modifier = Modifier.width(230.dp).height(170.dp)
         )
-        Text(text = "Pencarian Tidak Ditemukan", style = Type.textMdSemiBold(), color = Primary900)
+        Text(text = "Tidak ada donasi", style = Type.textMdSemiBold(), color = Primary900)
     }
 }
