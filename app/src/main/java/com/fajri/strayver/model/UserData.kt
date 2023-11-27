@@ -9,5 +9,7 @@ data class UserData(
     val alamat: String= "",
     val password: String= "",
     val role: String= "",
-    val saldo: Long= 0
+    val saldo: Long= 0,
+    val totalDana: Int = 0,
+    val totalBarang: Int = 0
 )

@@ -140,7 +140,7 @@ class RegisterViewModel @Inject constructor(
             alamat = _alamat.value,
             password = _password.value,
             role = userRole,
-            saldo = 1500000
+            saldo = 1500000,
         )
 
         return userRepository.registerUser(

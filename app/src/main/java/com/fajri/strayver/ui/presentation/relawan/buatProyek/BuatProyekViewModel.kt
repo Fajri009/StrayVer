@@ -16,10 +16,8 @@ import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
