@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
@@ -32,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.fajri.strayver.data.model.TransaksiModelResponse
 import com.fajri.strayver.ui.presentation.relawan.riwayat.RelawanRiwayatViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral800
@@ -44,13 +47,10 @@ import com.fajri.strayver.ui.theme.Type
 @Composable
 fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwayatViewModel = hiltViewModel()) {
     val tabTitle = listOf("Semua", "Dana", "Barang")
-
-    var type by remember {
-        mutableStateOf("Semua")
-    }
+    val transaksiData by viewModel.transaksiData
     
     LaunchedEffect(key1 = viewModel.tipeDonasi.value) {
-
+        viewModel.getDonasiByDonasiId()
     }
 
     Column(
@@ -95,46 +95,8 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
         }
 
         LazyColumn() {
-            item {
-                Column {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        modifier = Modifier
-                            .background(
-                                Primary100,
-                                RoundedCornerShape(topEnd = 10.dp, bottomEnd = 10.dp)
-                            )
-                            .padding(top = 2.dp, bottom = 2.dp, start = 20.dp, end = 20.dp),
-                        text = "21 September 2023",
-                        color = Primary900,
-                        style = Type.text2xsSemiBold()
-                    )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    RelawanRiwayatKategoriData1(navController)
-                }
-            }
-
-            item {
-                Column {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        modifier = Modifier
-                            .background(
-                                Primary100,
-                                RoundedCornerShape(topEnd = 10.dp, bottomEnd = 10.dp)
-                            )
-                            .padding(top = 2.dp, bottom = 2.dp, start = 20.dp, end = 20.dp),
-                        text = "21 September 2023",
-                        color = Primary900,
-                        style = Type.text2xsSemiBold()
-                    )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    RelawanRiwayatKategoriData1(navController)
-                }
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(55.dp))
+            items(transaksiData) {
+                RelawanRiwayatKategoriData(navController = navController, transaksiData = it.item!!)
             }
         }
     }

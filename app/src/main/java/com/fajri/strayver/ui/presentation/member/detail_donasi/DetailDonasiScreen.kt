@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.member.detail_donasi.component.DetailContent
+import com.fajri.strayver.ui.presentation.member.detail_donasi.component.KetentuanDialog
 import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Shades100
 import com.fajri.strayver.ui.theme.Shades50
@@ -46,7 +47,6 @@ fun DetailDonasiScreen(
     donasiId: String,
     viewModel: DetaiDonasiViewModel = hiltViewModel()
 ) {
-
     LaunchedEffect(key1 = true, block = {
         viewModel.getDonasiDetail(donasiId)
     })
@@ -57,6 +57,10 @@ fun DetailDonasiScreen(
         Color.Transparent,
         Color(red = 0f, green = 0f, blue = 0f, alpha = .55f)
     )
+
+    if (viewModel.isShowDialog.value) {
+        KetentuanDialog(navController = navController, donasi, viewModel)
+    }
 
     Box(
         modifier = Modifier
@@ -100,7 +104,7 @@ fun DetailDonasiScreen(
 
         Column(Modifier.align(Alignment.TopStart)) {
             Spacer(modifier = Modifier.height(180.dp))
-            DetailContent(navController, donasi)
+            DetailContent(navController, donasi, viewModel)
         }
     }
 }

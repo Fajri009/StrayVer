@@ -35,8 +35,8 @@ import com.fajri.strayver.util.TipeDonasi
 @Composable
 fun RelawanRiwayatCard(
     tipe: String,
-    companyIcon: Int,
-    companyName: String,
+    donaturIcon: Int,
+    donaturName: String,
     progres: String,
     judul: String,
     jumlah: String,
@@ -71,7 +71,7 @@ fun RelawanRiwayatCard(
         Spacer(modifier = Modifier.width(10.dp))
         Column{
             Row {
-                CompanyTag(companyName = companyName, companyIcon = "companyIcon")
+                CompanyTag(companyName = donaturName, companyIcon = "companyIcon")
                 Spacer(modifier = Modifier.width(5.dp))
                 when (progres) {
                     DonaturProgres.PROSES -> ProgresProses()

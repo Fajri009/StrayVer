@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,11 +31,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.ui.presentation.component.NotFound
+import com.fajri.strayver.ui.presentation.member.donasi.component.DonasiCard
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatViewModel
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary100
@@ -41,6 +46,7 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.TipeDonasi
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import java.util.Locale
 
@@ -48,10 +54,8 @@ import java.util.Locale
 @Composable
 fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavController) {
 
-    val tabTitle = listOf("Dana", "Barang")
-    var type by remember {
-        mutableStateOf("Dana")
-    }
+    val tabTitle = listOf("Semua",TipeDonasi.DANA, TipeDonasi.BARANG)
+    val transaksi by viewModel.transaksi
 
     Column(
         Modifier
@@ -65,15 +69,15 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
             selectedTabIndex = viewModel.currTabIndex.value,
             modifier = Modifier.fillMaxWidth(),
             indicator = {
-                TabRowDefaults.Indicator(
-                    modifier = Modifier
-                        .tabIndicatorOffset(it[viewModel.currTabIndex.value])
-                        .padding(horizontal = 65.dp)
-                        .clip(CircleShape),
-                    color = Primary700,
-                    height = 4.dp
-                )
-            }
+                    TabRowDefaults.Indicator(
+                        modifier = Modifier
+                            .tabIndicatorOffset(it[viewModel.currTabIndex.value])
+                            .padding(horizontal= 35.dp)
+                            .clip(CircleShape),
+                        color = Primary700,
+                        height = 4.dp
+                    )
+                }
 
         ) {
             tabTitle.forEachIndexed { index, tab ->
@@ -81,7 +85,7 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
                     selected = index == viewModel.currTabIndex.value,
                     onClick = {
                         viewModel.setIndex(index)
-                        type= tab
+                        viewModel.setType(tab)
                     },
                     text = {
                         Text(
@@ -96,6 +100,28 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
             }
         }
         Spacer(modifier = Modifier.height(18.dp))
-        RiwayatItem(type = type.lowercase(), navController)
+        LazyColumn() {
+            if (transaksi.isEmpty()) {
+                item {
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(1f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        NotFound(message = "Riawayat tidak ditemukan ")
+                    }
+                }
+            } else {
+                items(transaksi) { transaksi ->
+                    RiwayatItem(transaksi.item!!, navController = navController)
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(64.dp))
+                }
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ class MemberDonasiViewModel @Inject constructor(
     private val _currTabIndex= mutableIntStateOf(0)
     val currTabIndex: State<Int> = _currTabIndex
 
-    private val _type= mutableStateOf(TipeDonasi.DANA)
+    private val _type= mutableStateOf("Semua")
     val type: State<String> = _type
 
     private val _search= mutableStateOf("")
@@ -53,6 +53,21 @@ class MemberDonasiViewModel @Inject constructor(
     fun getDonasiByCategory() {
         viewModelScope.launch {
             donasiRepository.getDonasiByCategory(_type.value).collect {
+                when(it) {
+                    is Resource.Error -> setLoading(false)
+                    is Resource.Loading -> setLoading(true)
+                    is Resource.Success -> {
+                        _donasi.value= it.data!!
+                        setLoading(false)
+                    }
+                }
+            }
+        }
+    }
+
+    fun searchQuery() {
+        viewModelScope.launch {
+            donasiRepository.donasiSearchQuery(_search.value).collect {
                 when(it) {
                     is Resource.Error -> setLoading(false)
                     is Resource.Loading -> setLoading(true)

@@ -182,6 +182,28 @@ class DonasiRepository {
             }
         }
 
+    fun donasiSearchQuery(query: String) =
+        callbackFlow<Resource<List<DonasiModelResponse>>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val donasi = snapshot.children.map {
+                        DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
+                    }.filter { (it.item!!.title).lowercase().contains(query) }
+                    trySend(Resource.Success(donasi))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
+
+            awaitClose {
+                close()
+            }
+        }
+
     fun getDonasiByUserId(userId: String) =
         callbackFlow<Resource<List<DonasiModelResponse>>> {
             trySend(Resource.Loading())

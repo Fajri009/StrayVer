@@ -21,11 +21,12 @@ fun CustomButton(
     onClick: () -> Unit,
     text: String,
     type: String,
+    modifier: Modifier = Modifier
 ) {
     when (type) {
-        ButtonType.LARGE -> ButtonLarge(onClick = { onClick() }, text = text)
-        ButtonType.MEDIUM -> ButtonMedium(onClick = { onClick() }, text = text)
-        ButtonType.SMALL -> ButtonSmall(onClick = { onClick() }, text = text)
+        ButtonType.LARGE -> ButtonLarge(onClick = { onClick() }, text = text, modifier)
+        ButtonType.MEDIUM -> ButtonMedium(onClick = { onClick() }, text = text, modifier)
+        ButtonType.SMALL -> ButtonSmall(onClick = { onClick() }, text = text, modifier)
     }
 }
 
@@ -33,6 +34,7 @@ fun CustomButton(
 private fun ButtonLarge(
     onClick: () -> Unit,
     text: String,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = {
@@ -40,9 +42,9 @@ private fun ButtonLarge(
         },
         colors = ButtonDefaults.buttonColors(containerColor = Primary700),
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(48.dp)
+            .height(48.dp),
     ) {
         Text(
             text = text,
@@ -56,6 +58,7 @@ private fun ButtonLarge(
 private fun ButtonMedium(
     onClick: () -> Unit,
     text: String,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = {
@@ -63,7 +66,7 @@ private fun ButtonMedium(
         },
         colors = ButtonDefaults.buttonColors(containerColor = Primary700),
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier
+        modifier = modifier
             .height(48.dp)
             .sizeIn(minWidth = 155.dp)
     ) {
@@ -79,6 +82,7 @@ private fun ButtonMedium(
 private fun ButtonSmall(
     onClick: () -> Unit,
     text: String,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = {
@@ -86,7 +90,7 @@ private fun ButtonSmall(
         },
         colors = ButtonDefaults.buttonColors(containerColor = Primary700),
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier
+        modifier = modifier
             .width(55.dp)
             .height(30.dp)
     ) {

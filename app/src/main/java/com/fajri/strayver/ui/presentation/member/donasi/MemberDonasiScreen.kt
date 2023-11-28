@@ -35,10 +35,6 @@ fun MemberDonasiScreen(
     viewModel: MemberDonasiViewModel = hiltViewModel()
 ) {
 
-    if (viewModel.isLoading.value) {
-        LoadingDialog()
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()

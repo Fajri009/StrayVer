@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.riwayat
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,12 @@ import com.fajri.strayver.ui.theme.Type
 
 @Composable
 fun MemberRiwayatScreen(viewModel: MemberRiwayatViewModel= hiltViewModel(), navController: NavController) {
+
+    LaunchedEffect(key1 = viewModel.type.value, block = {
+        Log.i("tipe", "MemberRiwayatScreen: ${viewModel.type.value}")
+        viewModel.getUserTransaksi()
+    })
+
     Box(
         modifier = Modifier
             .fillMaxSize()

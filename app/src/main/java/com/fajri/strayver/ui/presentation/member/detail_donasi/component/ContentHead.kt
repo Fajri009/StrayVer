@@ -28,14 +28,17 @@ import com.fajri.strayver.util.formatLongWithDots
 import com.fajri.strayver.util.toDateString
 
 @Composable
-fun ContentHead(donasi: Donasi) {
+fun ContentHead(
+    donasi: Donasi,
+    modifier: Modifier = Modifier
+) {
 
     val formattedGoal = formatLongWithDots(donasi.donasiGoal!!)
     val formattedGain = formatLongWithDots(donasi.donasiGain)
     val localDate = donasi.waktu.toDateString()
     val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal.toFloat()
 
-    Column {
+    Column(modifier = modifier) {
         Text(
             text = donasi.title,
             style = Type.textLgBold(),
