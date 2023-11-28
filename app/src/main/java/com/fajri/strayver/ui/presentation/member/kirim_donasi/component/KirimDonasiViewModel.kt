@@ -131,7 +131,7 @@ class KirimDonasiViewModel @Inject constructor(
                 when (it) {
                     is Resource.Error -> setLoading(false)
                     is Resource.Loading -> setLoading(true)
-                    is Resource.Success -> updateDonasiGain(donasiId, trans.income)
+                    is Resource.Success -> showDialog(true)
                 }
             }
         }

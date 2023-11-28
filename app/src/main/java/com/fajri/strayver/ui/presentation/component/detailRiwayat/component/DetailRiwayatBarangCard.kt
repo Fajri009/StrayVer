@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.fajri.strayver.model.Transaksi
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary200
@@ -30,22 +31,14 @@ import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Success900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.ui.theme.Warning900
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.DonaturProgres
+import com.fajri.strayver.util.formatLongWithDots
+import com.fajri.strayver.util.toDateString
 
 @Composable
-fun DetailRiwayatBarangCard(
-    kode: String,
-    judul: String,
-    nama: String,
-    jumlah: Int,
-    tanggal: String,
-    status: String,
-    ekspedisi: String,
-    noResi: String,
-    deskripsi: String,
-    gambar: Int
-) {
+fun DetailRiwayatBarangCard(transaksi: Transaksi, role: String) {
     Column {
         Card(
             elevation = CardDefaults.cardElevation(5.dp)
@@ -73,7 +66,7 @@ fun DetailRiwayatBarangCard(
                             .padding(20.dp)
                     ) {
                         Text(
-                            text = "Kode Donasi: $kode",
+                            text = "Kode Donasi: ${transaksi.donasiId}",
                             color = Neutral800,
                             style = Type.text2xsBold()
                         )
@@ -84,7 +77,7 @@ fun DetailRiwayatBarangCard(
                             style = Type.textSmSemiBold()
                         )
                         Text(
-                            text = judul,
+                            text = transaksi.title,
                             color = Color.Black,
                             style = Type.textXsRegular()
                         )
@@ -103,12 +96,15 @@ fun DetailRiwayatBarangCard(
                                 modifier = Modifier.weight(.6f)
                             ) {
                                 Text(
-                                    text = "Nama Donatur",
+                                    text = if (role == "member")
+                                        "Nama Relawan"
+                                    else
+                                        "Nama Donatur",
                                     color = Color.Black,
                                     style = Type.textSmSemiBold()
                                 )
                                 Text(
-                                    text = nama,
+                                    text = transaksi.namaRelawan,
                                     color = Color.Black,
                                     style = Type.textXsRegular()
                                 )
@@ -122,7 +118,7 @@ fun DetailRiwayatBarangCard(
                                     style = Type.textSmSemiBold()
                                 )
                                 Text(
-                                    text = jumlah.toString(),
+                                    text = formatLongWithDots(transaksi.income),
                                     color = Color.Black,
                                     style = Type.textXsRegular()
                                 )
@@ -148,7 +144,7 @@ fun DetailRiwayatBarangCard(
                                     style = Type.textSmSemiBold()
                                 )
                                 Text(
-                                    text = tanggal,
+                                    text = (transaksi.tanggal).toDateString(),
                                     color = Color.Black,
                                     style = Type.textXsRegular()
                                 )
@@ -162,10 +158,10 @@ fun DetailRiwayatBarangCard(
                                     style = Type.textSmSemiBold()
                                 )
                                 Text(
-                                    text = status,
+                                    text = transaksi.status,
                                     color =
-                                    when (status) {
-                                        DonaturProgres.PROSES -> Secondary900
+                                    when (transaksi.status) {
+                                        DonaturProgres.PROSES -> Warning900
                                         DonaturProgres.SELESAI -> Success900
                                         else -> Color.Black
                                     },
@@ -193,7 +189,7 @@ fun DetailRiwayatBarangCard(
                                     style = Type.textSmSemiBold()
                                 )
                                 Text(
-                                    text = ekspedisi,
+                                    text = transaksi.ekspedisi,
                                     color = Color.Black,
                                     style = Type.textXsRegular()
                                 )
@@ -207,7 +203,7 @@ fun DetailRiwayatBarangCard(
                                     style = Type.textSmSemiBold()
                                 )
                                 Text(
-                                    text = "SP$noResi",
+                                    text = transaksi.resi,
                                     color = Color.Black,
                                     style = Type.textXsRegular()
                                 )
@@ -225,7 +221,7 @@ fun DetailRiwayatBarangCard(
                             style = Type.textSmSemiBold()
                         )
                         Text(
-                            text = deskripsi,
+                            text = transaksi.deskripsi,
                             color = Color.Black,
                             style = Type.textXsRegular()
                         )
@@ -241,7 +237,7 @@ fun DetailRiwayatBarangCard(
                             style = Type.textSmSemiBold()
                         )
                         AsyncImage(
-                            model = gambar,
+                            model = transaksi.gambar,
                             contentDescription = "",
                             modifier = Modifier.size(100.dp)
                         )
@@ -250,17 +246,19 @@ fun DetailRiwayatBarangCard(
             }
         }
 
-//        when (status) {
-//            DonaturProgres.PROSES -> {
-//                Spacer(modifier = Modifier.height(25.dp))
-//                CustomButton(
-//                    onClick = {
-//
-//                    },
-//                    text = "Diterima",
-//                    type = ButtonType.LARGE
-//                )
-//            }
-//        }
+        if (role == "relawan") {
+            when (transaksi.status) {
+                DonaturProgres.PROSES -> {
+                    Spacer(modifier = Modifier.height(25.dp))
+                    CustomButton(
+                        onClick = {
+
+                        },
+                        text = "Diterima",
+                        type = ButtonType.LARGE
+                    )
+                }
+            }
+        }
     }
 }

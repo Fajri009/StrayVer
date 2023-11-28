@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -166,6 +167,27 @@ class TransaksiRepository {
                 }
             })
 
+            awaitClose {
+                close()
+            }
+        }
+
+    fun getTransaksiById(transaksiId: String) =
+        callbackFlow<Resource<TransaksiModelResponse>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val transaksi= snapshot.children.map {
+                        TransaksiModelResponse(it.getValue(Transaksi::class.java), it.key)
+                    }.filter { it.key == transaksiId}
+                    trySend(Resource.Success(transaksi[0]))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
             awaitClose {
                 close()
             }
