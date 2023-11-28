@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.ui.presentation.component.DateTag
 import com.fajri.strayver.ui.presentation.component.NotFound
 import com.fajri.strayver.ui.presentation.member.donasi.component.DonasiCard
 import com.fajri.strayver.ui.presentation.member.riwayat.MemberRiwayatViewModel
@@ -47,6 +48,7 @@ import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.toDateString
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import java.util.Locale
 
@@ -54,7 +56,7 @@ import java.util.Locale
 @Composable
 fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavController) {
 
-    val tabTitle = listOf("Semua",TipeDonasi.DANA, TipeDonasi.BARANG)
+    val tabTitle = listOf("Semua", TipeDonasi.DANA, TipeDonasi.BARANG)
     val transaksi by viewModel.transaksi
 
     Column(
@@ -69,15 +71,15 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
             selectedTabIndex = viewModel.currTabIndex.value,
             modifier = Modifier.fillMaxWidth(),
             indicator = {
-                    TabRowDefaults.Indicator(
-                        modifier = Modifier
-                            .tabIndicatorOffset(it[viewModel.currTabIndex.value])
-                            .padding(horizontal= 35.dp)
-                            .clip(CircleShape),
-                        color = Primary700,
-                        height = 4.dp
-                    )
-                }
+                TabRowDefaults.Indicator(
+                    modifier = Modifier
+                        .tabIndicatorOffset(it[viewModel.currTabIndex.value])
+                        .padding(horizontal = 35.dp)
+                        .clip(CircleShape),
+                    color = Primary700,
+                    height = 4.dp
+                )
+            }
 
         ) {
             tabTitle.forEachIndexed { index, tab ->
@@ -114,8 +116,21 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
                     }
                 }
             } else {
-                items(transaksi) { transaksi ->
-                    RiwayatItem(transaksi.item!!, navController = navController)
+                items(transaksi.size) {
+                    if (it == 0) {
+                        DateTag(date = (transaksi[it].item!!.tanggal).toDateString())
+                        RiwayatItem(transaksi[it].item!!, navController = navController)
+                    } else {
+
+                        if ((transaksi[it].item!!.tanggal).toDateString() == (transaksi[it - 1].item!!
+                                .tanggal).toDateString()
+                        ) {
+                            RiwayatItem(transaksi[it].item!!, navController = navController)
+                        } else {
+                            DateTag(date = (transaksi[it].item!!.tanggal).toDateString())
+                            RiwayatItem(transaksi[it].item!!, navController = navController)
+                        }
+                    }
                 }
 
                 item {

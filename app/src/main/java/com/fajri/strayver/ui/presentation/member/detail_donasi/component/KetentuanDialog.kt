@@ -23,7 +23,6 @@ import androidx.navigation.NavController
 import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.member.detail_donasi.DetaiDonasiViewModel
-import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary50
 import com.fajri.strayver.ui.theme.Primary800
@@ -93,7 +92,7 @@ fun KetentuanDialog(navController: NavController, donasi: Donasi, viewModel: Det
                                     Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
                                             "?donasiId=${donasi.donasiId}" +
                                             "?type=${donasi.category}" + "?relawan=${donasi
-                                                .relawanNama}" + "?idRelawan= ${donasi.userId}"
+                                                .relawanNama}" + "?idRelawan=${donasi.userId}"
                                 )
                             },
                             text = "Baik",

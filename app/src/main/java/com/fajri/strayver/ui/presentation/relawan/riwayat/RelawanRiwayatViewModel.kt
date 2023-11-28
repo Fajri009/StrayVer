@@ -69,7 +69,7 @@ class RelawanRiwayatViewModel @Inject constructor(
 
     fun searchQuery() {
         viewModelScope.launch {
-            transaksiRepository.transaksiSearchQuery(_search.value, userRepository.user!!.uid)
+            transaksiRepository.transaksiSearchQueryByIdRelawan(_search.value, userRepository.user!!.uid)
                 .collect {
                     when (it) {
                         is Resource.Error -> {}

@@ -32,7 +32,7 @@ fun RiwayatItem(transaksi: Transaksi, navController: NavController) {
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 8.dp)
             .clickable {
-                navController.navigate(Route.DETAIL_RIWAYAT)
+                navController.navigate(Route.DETAIL_RIWAYAT + "?transaksiId=${transaksi.transaksiId}")
             },
         horizontalArrangement = Arrangement.spacedBy(27.dp),
         verticalAlignment = Alignment.CenterVertically

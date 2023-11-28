@@ -21,7 +21,7 @@ class MemberDonasiViewModel @Inject constructor(
     private val _currTabIndex= mutableIntStateOf(0)
     val currTabIndex: State<Int> = _currTabIndex
 
-    private val _type= mutableStateOf("Semua")
+    private val _type= mutableStateOf(TipeDonasi.DANA)
     val type: State<String> = _type
 
     private val _search= mutableStateOf("")

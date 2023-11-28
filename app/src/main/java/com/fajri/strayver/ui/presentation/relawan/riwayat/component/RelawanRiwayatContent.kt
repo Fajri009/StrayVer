@@ -1,19 +1,15 @@
 package com.fajri.strayver.ui.presentation.relawan.riwayat.component
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,41 +20,27 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.fajri.strayver.data.model.TransaksiModelResponse
+import com.fajri.strayver.ui.presentation.component.DateTag
+import com.fajri.strayver.ui.presentation.component.NotFound
 import com.fajri.strayver.ui.presentation.relawan.riwayat.RelawanRiwayatViewModel
-import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral800
-import com.fajri.strayver.ui.theme.Primary100
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.toDateString
 
 @Composable
 fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwayatViewModel) {
     val tabTitle = listOf("Semua", TipeDonasi.DANA, TipeDonasi.BARANG)
     val transaksiData by viewModel.transaksiData
-
-    LaunchedEffect(key1 = viewModel.search.value) {
-        viewModel.searchQuery()
-
-    }
-
-    LaunchedEffect(key1 = viewModel.tipeDonasi.value) {
-        viewModel.getTransaksiByIdRelawan()
-    }
 
     Column(
         modifier = Modifier
@@ -102,9 +84,53 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
         }
 
         LazyColumn() {
-            items(transaksiData) {
-                RelawanRiwayatCard(transaksi = it.item!!, navController = navController)
+            if (transaksiData.isEmpty()) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(1f),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        NotFound(message = "Riwayat tidak ditemukan")
+                    }
+                }
+            } else {
+                item {
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+                items(transaksiData.size) {
+                    // Jika riwayatnya cuman 1
+                    if (it == 0) {
+                        DateTag(date = (transaksiData[it].item!!.tanggal).toDateString())
+                        Spacer(modifier = Modifier.height(5.dp))
+                        RelawanRiwayatCard(
+                            transaksi = transaksiData[it].item!!, 
+                            navController = navController
+                        )
+                    } else {
+                        // Jika riwayat lain memiliki tanggal yang sama, dimulai dari it == transaksi.size
+                        if ((transaksiData[it].item!!.tanggal).toDateString() == (transaksiData[it - 1].item!!.tanggal).toDateString()) {
+                            RelawanRiwayatCard(
+                                transaksi = transaksiData[it].item!!,
+                                navController = navController
+                            )
+                        }
+                        // Jika berbeda, akan membuat kategori baru dengan tanggal yang berbeda
+                        else {
+                            Spacer(modifier = Modifier.height(20.dp))
+                            DateTag(date = (transaksiData[it].item!!.tanggal).toDateString())
+                            Spacer(modifier = Modifier.height(5.dp))
+                            RelawanRiwayatCard(
+                                transaksi = transaksiData[it].item!!,
+                                navController = navController
+                            )
+                        }
+                    }
+                }
             }
+
         }
     }
 }
