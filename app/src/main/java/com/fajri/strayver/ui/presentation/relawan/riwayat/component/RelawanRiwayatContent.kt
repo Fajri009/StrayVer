@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.relawan.riwayat.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,14 +44,20 @@ import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.TipeDonasi
 
 @Composable
-fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwayatViewModel = hiltViewModel()) {
-    val tabTitle = listOf("Semua", "Dana", "Barang")
+fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwayatViewModel) {
+    val tabTitle = listOf("Semua", TipeDonasi.DANA, TipeDonasi.BARANG)
     val transaksiData by viewModel.transaksiData
-    
+
+    LaunchedEffect(key1 = viewModel.search.value) {
+        viewModel.searchQuery()
+
+    }
+
     LaunchedEffect(key1 = viewModel.tipeDonasi.value) {
-        viewModel.getDonasiByDonasiId()
+        viewModel.getTransaksiByIdRelawan()
     }
 
     Column(
@@ -96,7 +103,7 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
 
         LazyColumn() {
             items(transaksiData) {
-                RelawanRiwayatKategoriData(navController = navController, transaksiData = it.item!!)
+                RelawanRiwayatCard(transaksi = it.item!!, navController = navController)
             }
         }
     }

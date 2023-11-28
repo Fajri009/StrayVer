@@ -12,10 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.fajri.strayver.ui.presentation.component.CustomTextField
+import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiViewModel
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun RelawanDonasiHead() {
+fun RelawanDonasiHead(viewModel: RelawanDonasiViewModel) {
     Spacer(modifier = Modifier.height(55.dp))
     Text(
         modifier = Modifier.padding(start = 20.dp),
@@ -28,9 +29,12 @@ fun RelawanDonasiHead() {
         modifier = Modifier.padding(start = 20.dp, end = 20.dp)
     ) {
         CustomTextField(
-            text = "",
+            text = viewModel.search.value,
             placeholder = "Search",
-            label = "Search",
+            onValueChange = { search ->
+                viewModel.onChangeSearch(search)
+            },
+            trailingIcon = Icons.Default.Search
         )
     }
 }

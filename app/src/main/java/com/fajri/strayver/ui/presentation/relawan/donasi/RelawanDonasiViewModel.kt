@@ -19,6 +19,9 @@ class RelawanDonasiViewModel @Inject constructor(
     private val donasiRepository: DonasiRepository,
     private val userRepository: UserRepository
 ): ViewModel() {
+    private val _search = mutableStateOf("")
+    val search: State<String> = _search
+
     private val _currentTabIndex = mutableIntStateOf(0)
     val currentTabIndex: State<Int> = _currentTabIndex
 
@@ -31,12 +34,35 @@ class RelawanDonasiViewModel @Inject constructor(
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
+    fun onChangeSearch(value: String) {
+        _search.value = value
+    }
+
     fun setIndex(index: Int) {
         _currentTabIndex.intValue = index
     }
 
     fun setTipeDonasi(tipeDonasi: String) {
         _tipeDonasi.value = tipeDonasi
+    }
+
+    fun searchQuery() {
+        viewModelScope.launch {
+            donasiRepository.donasiSearchQuery(_search.value).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _isLoading.value  = true
+                    }
+                    is Resource.Success -> {
+                        _donasiData.value = it.data!!
+                        _isLoading.value = false
+                    }
+                    is Resource.Error -> {
+                        _isLoading.value = false
+                    }
+                }
+            }
+        }
     }
 
     fun getDonasiByUserIdAndCategory() {

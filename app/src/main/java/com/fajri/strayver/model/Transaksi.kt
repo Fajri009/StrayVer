@@ -8,6 +8,7 @@ data class Transaksi(
     val donasiType: String= "",
     val title: String= "",
     val namaRelawan: String= "",
+    val idRelawan: String= "",
     val namaMember: String= "",
     val idMember: String= "",
     val income: Long= 0,

@@ -74,7 +74,7 @@ fun Navigation(navController: NavHostController) {
         }
         composable(
             Route.KIRIM_DONASI + "?namaDonasi={namaDonasi}" + "?donasiId={id}" + "?type={type}" +
-            "?relawan={relawan}",
+                    "?relawan={relawan}" + "?idRelawan={idRelawan}",
             arguments = listOf(
                 navArgument(name = "namaDonasi") {
                     type = NavType.StringType
@@ -87,6 +87,9 @@ fun Navigation(navController: NavHostController) {
                 },
                 navArgument(name = "relawan") {
                     type = NavType.StringType
+                },
+                navArgument(name = "idRelawan") {
+                    type = NavType.StringType
                 }
             )
         ) {
@@ -94,10 +97,10 @@ fun Navigation(navController: NavHostController) {
             val donasiId = it.arguments?.getString("id")
             val donasiType = it.arguments?.getString("type")
             val relawan = it.arguments?.getString("relawan")
+            val idRelawan = it.arguments?.getString("idRelawan")
             KirimDonasiScreen(
-                navController = navController, namaDonasi= namaDonasi!!, donasiId = donasiId!!,
-                donasiType =
-                donasiType!!, relawan = relawan!!
+                navController = navController, namaDonasi = namaDonasi!!, donasiId = donasiId!!,
+                donasiType = donasiType!!, relawan = relawan!!, idRelawan = idRelawan!!
             )
         }
         composable(Route.MEMBER_RIWAYAT) {

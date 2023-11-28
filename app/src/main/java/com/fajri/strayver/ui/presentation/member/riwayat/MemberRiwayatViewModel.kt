@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.riwayat
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -31,8 +32,15 @@ class MemberRiwayatViewModel @Inject constructor(
     private val _type = mutableStateOf("Semua")
     val type: State<String> = _type
 
+    private val _search = mutableStateOf("")
+    val search: State<String> = _search
+
     fun setIndex(index: Int) {
         _currTabIndex.intValue = index
+    }
+
+    fun onChangeSearch(value: String) {
+        _search.value = value
     }
 
     fun setType(type: String) {
@@ -49,10 +57,24 @@ class MemberRiwayatViewModel @Inject constructor(
                     when (it) {
                         is Resource.Error -> {}
                         is Resource.Loading -> {}
-                        is Resource.Success -> _transaksi.value = it.data!!
+                        is Resource.Success -> {
+                            _transaksi.value = it.data!!
+                        }
                     }
                 }
         }
     }
 
+    fun searchQuery() {
+        viewModelScope.launch {
+            transaksiRepository.transaksiSearchQuery(_search.value, userRepository.user!!.uid)
+                .collect {
+                    when (it) {
+                        is Resource.Error -> {}
+                        is Resource.Loading -> {}
+                        is Resource.Success -> _transaksi.value = it.data!!
+                    }
+                }
+        }
+    }
 }

@@ -103,8 +103,7 @@ class KirimDonasiViewModel @Inject constructor(
 
     fun donasiBarangSubmit(
         context: Context, namaDonasi: String, donasiId: String, donasiType:
-        String, relawan:
-        String
+        String, relawan: String, idRelawan: String
     ) {
 
 
@@ -123,7 +122,8 @@ class KirimDonasiViewModel @Inject constructor(
             deskripsi = _deskripsi.value,
             metodePembayaran = _metode.value,
             gambar = "",
-            idMember = userId
+            idMember = userId,
+            idRelawan = idRelawan
         )
 
         viewModelScope.launch {
@@ -139,7 +139,7 @@ class KirimDonasiViewModel @Inject constructor(
 
     fun donasiDanaSubmit(
         namaDonasi: String, donasiId: String, donasiType:
-        String, relawan: String
+        String, relawan: String, idRelawan: String
     ) {
         val trans = Transaksi(
             donasiId = donasiId,
@@ -156,7 +156,8 @@ class KirimDonasiViewModel @Inject constructor(
             deskripsi = "",
             metodePembayaran = _metode.value,
             gambar = "",
-            idMember = userId
+            idMember = userId,
+            idRelawan = idRelawan
         )
 
         viewModelScope.launch {

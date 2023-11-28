@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 fun FormBarang(
     navController: NavController, context: Context, viewModel: KirimDonasiViewModel,
     modifier: Modifier = Modifier, namaDonasi: String, donasiId: String, donasiType: String,
-    relawan: String,
+    relawan: String, idRelawan: String
 ) {
 
     val scope = rememberCoroutineScope()
@@ -115,7 +115,7 @@ fun FormBarang(
                 type = ButtonType.LARGE,
                 onClick = {
                     viewModel.donasiBarangSubmit(context, namaDonasi= namaDonasi, donasiId=
-                    donasiId, donasiType= donasiType, relawan= relawan)
+                    donasiId, donasiType= donasiType, relawan= relawan, idRelawan = idRelawan)
                 }
             )
         }

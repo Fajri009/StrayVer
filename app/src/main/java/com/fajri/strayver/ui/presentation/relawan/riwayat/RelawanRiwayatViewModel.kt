@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.relawan.riwayat
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,9 @@ class RelawanRiwayatViewModel @Inject constructor(
     private val transaksiRepository: TransaksiRepository,
     private val userRepository: UserRepository
 ): ViewModel() {
+    private val _search = mutableStateOf("")
+    val search: State<String> = _search
+
     private val _currentTabIndex = mutableStateOf(0)
     val currentTabIndex: State<Int> = _currentTabIndex
 
@@ -32,6 +36,10 @@ class RelawanRiwayatViewModel @Inject constructor(
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
+    fun onChangeSearch(value: String) {
+        _search.value = value
+    }
+
     fun setIndex(index: Int) {
         _currentTabIndex.value = index
     }
@@ -40,9 +48,9 @@ class RelawanRiwayatViewModel @Inject constructor(
         _tipeDonasi.value = tipeDonasi
     }
 
-    fun getTransaksi() {
+    fun getTransaksiByIdRelawan() {
         viewModelScope.launch {
-            transaksiRepository.getTransaksi(userRepository.user!!.uid, _tipeDonasi.value).collect {
+            transaksiRepository.getTransaksiByIdRelawan(userRepository.user!!.uid, _tipeDonasi.value).collect {
                 when (it) {
                     is Resource.Loading -> {
                         _isLoading.value  = true
@@ -56,6 +64,19 @@ class RelawanRiwayatViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun searchQuery() {
+        viewModelScope.launch {
+            transaksiRepository.transaksiSearchQuery(_search.value, userRepository.user!!.uid)
+                .collect {
+                    when (it) {
+                        is Resource.Error -> {}
+                        is Resource.Loading -> {}
+                        is Resource.Success -> _transaksiData.value = it.data!!
+                    }
+                }
         }
     }
 }

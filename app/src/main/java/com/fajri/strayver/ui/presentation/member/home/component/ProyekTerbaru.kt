@@ -77,7 +77,11 @@ fun ProyekTerbaru(navController: NavController, viewModel: MemberHomeViewModel) 
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             } else {
-                items(4) {
+                items(
+                    if (donasi.size < 4) {
+                        donasi.size
+                    } else 4
+                ) {
                     ProyekCard(navController, donasi[it].item!!)
                 }
             }

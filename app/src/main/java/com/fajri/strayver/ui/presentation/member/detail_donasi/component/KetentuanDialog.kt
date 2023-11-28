@@ -92,7 +92,8 @@ fun KetentuanDialog(navController: NavController, donasi: Donasi, viewModel: Det
                                 navController.navigate(
                                     Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
                                             "?donasiId=${donasi.donasiId}" +
-                                            "?type=${donasi.category}" + "?relawan=${donasi.relawanNama}"
+                                            "?type=${donasi.category}" + "?relawan=${donasi
+                                                .relawanNama}" + "?idRelawan= ${donasi.userId}"
                                 )
                             },
                             text = "Baik",

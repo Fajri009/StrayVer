@@ -45,9 +45,16 @@ import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
 
 @Composable
-fun RelawanDonasiContent(navController: NavController, viewModel: RelawanDonasiViewModel = hiltViewModel()) {
+fun RelawanDonasiContent(navController: NavController, viewModel: RelawanDonasiViewModel) {
     val tabTitle = listOf(TipeDonasi.DANA, TipeDonasi.BARANG)
     val donasiData by viewModel.donasiData
+
+    LaunchedEffect(key1 = viewModel.search.value) {
+        viewModel.searchQuery()
+        if (viewModel.search.equals("")) {
+            viewModel.getDonasiByUserIdAndCategory()
+        }
+    }
 
     LaunchedEffect(key1 = viewModel.tipeDonasi.value) {
         viewModel.getDonasiByUserIdAndCategory()

@@ -110,7 +110,7 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        NotFound(message = "Riawayat tidak ditemukan ")
+                        NotFound(message = "Riwayat tidak ditemukan ")
                     }
                 }
             } else {
