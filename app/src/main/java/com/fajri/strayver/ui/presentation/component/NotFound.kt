@@ -18,7 +18,7 @@ import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun NotFound() {
+fun NotFound(message: String) {
     Column(
         Modifier.fillMaxWidth(1f).fillMaxHeight(1f),
         verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -29,6 +29,6 @@ fun NotFound() {
             contentDescription = "",
             modifier = Modifier.width(230.dp).height(170.dp)
         )
-        Text(text = "Tidak ada donasi", style = Type.textMdSemiBold(), color = Primary900)
+        Text(text = message, style = Type.textMdSemiBold(), color = Primary900)
     }
 }

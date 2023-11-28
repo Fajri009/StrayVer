@@ -9,6 +9,7 @@ data class Transaksi(
     val title: String= "",
     val namaRelawan: String= "",
     val namaMember: String= "",
+    val idMember: String= "",
     val income: Long= 0,
     val tanggal: Long= 0,
     val resi: String= "",

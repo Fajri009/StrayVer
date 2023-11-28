@@ -2,6 +2,7 @@ package com.fajri.strayver.ui.presentation.member.kirim_donasi.component
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +28,8 @@ class KirimDonasiViewModel @Inject constructor(
 ) : ViewModel() {
 
     lateinit var context: Context
+
+    var userId= userRepository.user!!.uid
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
@@ -103,6 +106,8 @@ class KirimDonasiViewModel @Inject constructor(
         String, relawan:
         String
     ) {
+
+
         val trans = Transaksi(
             donasiId = donasiId,
             transaksiId = UUID.randomUUID().toString(),
@@ -117,7 +122,8 @@ class KirimDonasiViewModel @Inject constructor(
             ekspedisi = _ekspedisi.value,
             deskripsi = _deskripsi.value,
             metodePembayaran = _metode.value,
-            gambar = ""
+            gambar = "",
+            idMember = userId
         )
 
         viewModelScope.launch {
@@ -141,7 +147,7 @@ class KirimDonasiViewModel @Inject constructor(
             donasiType = donasiType,
             title = namaDonasi,
             namaRelawan = relawan,
-            namaMember = _pengirim.value,
+            namaMember = userRepository.currentUser!!.item!!.username,
             income = _dana.value.toLong(),
             tanggal = System.currentTimeMillis(),
             resi = "",
@@ -149,7 +155,8 @@ class KirimDonasiViewModel @Inject constructor(
             ekspedisi = "",
             deskripsi = "",
             metodePembayaran = _metode.value,
-            gambar = ""
+            gambar = "",
+            idMember = userId
         )
 
         viewModelScope.launch {
