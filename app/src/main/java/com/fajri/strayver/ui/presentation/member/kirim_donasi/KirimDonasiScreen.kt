@@ -50,6 +50,7 @@ fun KirimDonasiScreen(
     donasiId: String,
     donasiType: String,
     relawan: String,
+    idRelawan: String
 ) {
 
     viewModel.context= LocalContext.current
@@ -78,12 +79,13 @@ fun KirimDonasiScreen(
     when (donasiType) {
         "Dana" -> KirimDana(
             navController, context, viewModel, namaDonasi, donasiId, donasiType,
-            relawan
+            relawan, idRelawan
         )
 
         "Barang" -> KirimBarang(
             navController = navController, context = context, viewModel = viewModel, donasiId =
-            donasiId, donasiType = donasiType, relawan = relawan, namaDonasi = namaDonasi
+            donasiId, donasiType = donasiType, relawan = relawan, namaDonasi = namaDonasi,
+            idRelawan= idRelawan
         )
     }
 }
@@ -93,7 +95,7 @@ private fun KirimDana(
     navController: NavController, context: Context,
     viewModel:
     KirimDonasiViewModel,
-    namaDonasi: String, donasiId: String, donasiType: String, relawan: String,
+    namaDonasi: String, donasiId: String, donasiType: String, relawan: String, idRelawan: String
 ) {
     Box(
         Modifier
@@ -146,7 +148,7 @@ private fun KirimDana(
             CustomButton(
                 onClick = {
                     viewModel.donasiDanaSubmit(namaDonasi= namaDonasi, donasiId=
-                    donasiId, donasiType= donasiType, relawan= relawan)
+                    donasiId, donasiType= donasiType, relawan= relawan, idRelawan= idRelawan)
                 },
                 text = "Kirim",
                 type = ButtonType.LARGE
@@ -164,6 +166,7 @@ private fun KirimBarang(
     donasiType: String,
     relawan: String,
     namaDonasi: String,
+    idRelawan: String
 ) {
     Box(
         Modifier
@@ -209,7 +212,8 @@ private fun KirimBarang(
                 namaDonasi = namaDonasi,
                 donasiType = donasiType,
                 donasiId = donasiId,
-                relawan = relawan
+                relawan = relawan,
+                idRelawan = idRelawan
             )
         }
     }

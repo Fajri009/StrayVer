@@ -58,6 +58,7 @@ class TransaksiRepository {
                                         tanggal = transaksiData.tanggal,
                                         resi = transaksiData.resi,
                                         idMember = transaksiData.idMember,
+                                        idRelawan= transaksiData.idRelawan,
                                         status = transaksiData.status,
                                         ekspedisi = transaksiData.ekspedisi,
                                         deskripsi = transaksiData.deskripsi,
