@@ -26,10 +26,16 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberRiwayatScreen(viewModel: MemberRiwayatViewModel= hiltViewModel(), navController: NavController) {
+fun MemberRiwayatScreen(
+    viewModel: MemberRiwayatViewModel = hiltViewModel(),
+    navController: NavController
+) {
+
+    LaunchedEffect(key1 = viewModel.search.value, block = {
+        viewModel.searchQuery()
+    })
 
     LaunchedEffect(key1 = viewModel.type.value, block = {
-        Log.i("tipe", "MemberRiwayatScreen: ${viewModel.type.value}")
         viewModel.getUserTransaksi()
     })
 
@@ -49,11 +55,11 @@ fun MemberRiwayatScreen(viewModel: MemberRiwayatViewModel= hiltViewModel(), navC
             )
 
             CustomTextField(
-                text = "",
+                text = viewModel.search.value,
                 placeholder = "Search",
                 trailingIcon = Icons.Default.Search,
                 onValueChange = {
-
+                    viewModel.onChangeSearch(it)
                 },
                 modifier = Modifier
                     .padding(horizontal = 20.dp)

@@ -3,7 +3,9 @@ package com.fajri.strayver.data.repository
 import android.content.Context
 import android.net.Uri
 import com.fajri.strayver.data.Resource
+import com.fajri.strayver.data.model.DonasiModelResponse
 import com.fajri.strayver.data.model.TransaksiModelResponse
+import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.model.Transaksi
 import com.google.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
@@ -55,7 +57,7 @@ class TransaksiRepository {
                                         income = transaksiData.income,
                                         tanggal = transaksiData.tanggal,
                                         resi = transaksiData.resi,
-                                        idMember= transaksiData.idMember,
+                                        idMember = transaksiData.idMember,
                                         status = transaksiData.status,
                                         ekspedisi = transaksiData.ekspedisi,
                                         deskripsi = transaksiData.deskripsi,
@@ -114,7 +116,7 @@ class TransaksiRepository {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val transaksi = snapshot.children.map {
                             TransaksiModelResponse(it.getValue(Transaksi::class.java), it.key)
-                        }.filter {it.item!!.idMember == user}
+                        }.filter { it.item!!.idMember == user }
                         trySend(Resource.Success(transaksi))
                     }
 
@@ -138,6 +140,30 @@ class TransaksiRepository {
                     }
                 })
             }
+
+            awaitClose {
+                close()
+            }
+        }
+
+    fun transaksiSearchQuery(query: String, user: String) =
+        callbackFlow<Resource<List<TransaksiModelResponse>>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val transaksi = snapshot.children.map {
+                        TransaksiModelResponse(it.getValue(Transaksi::class.java), it.key)
+                    }.filter {
+                        (it.item!!.title).lowercase().contains(query) && it.item!!.idMember == user
+                    }
+                    trySend(Resource.Success(transaksi))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
 
             awaitClose {
                 close()
