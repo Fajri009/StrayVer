@@ -3,10 +3,14 @@ package com.fajri.strayver.data.repository
 import android.content.Context
 import android.net.Uri
 import com.fajri.strayver.data.Resource
+import com.fajri.strayver.data.model.TransaksiModelResponse
 import com.fajri.strayver.model.Transaksi
 import com.google.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -37,10 +41,10 @@ class TransaksiRepository {
                 photoRef.putBytes(imageByteArray!!)
                     .addOnSuccessListener {
                         photoRef.downloadUrl.addOnSuccessListener {
-                            imageAdress= it.toString()
+                            imageAdress = it.toString()
 
                             if (imageAdress != null) {
-                                val trans=
+                                val trans =
                                     Transaksi(
                                         transaksiId = transaksiData.transaksiId,
                                         donasiId = transaksiData.donasiId,
@@ -51,6 +55,7 @@ class TransaksiRepository {
                                         income = transaksiData.income,
                                         tanggal = transaksiData.tanggal,
                                         resi = transaksiData.resi,
+                                        idMember= transaksiData.idMember,
                                         status = transaksiData.status,
                                         ekspedisi = transaksiData.ekspedisi,
                                         deskripsi = transaksiData.deskripsi,
@@ -82,7 +87,7 @@ class TransaksiRepository {
             }
         }
 
-    fun addTransaksiDana(transaksiData: Transaksi)=
+    fun addTransaksiDana(transaksiData: Transaksi) =
         callbackFlow<Resource<String>> {
             trySend(Resource.Loading())
 
@@ -93,6 +98,46 @@ class TransaksiRepository {
                 .addOnFailureListener {
                     trySend(Resource.Error(it.message.toString()))
                 }
+
+            awaitClose {
+                close()
+            }
+        }
+
+
+    fun getTransaksi(user: String, type: String) =
+        callbackFlow<Resource<List<TransaksiModelResponse>>> {
+            trySend(Resource.Loading())
+
+            if (type == "Semua") {
+                db.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val transaksi = snapshot.children.map {
+                            TransaksiModelResponse(it.getValue(Transaksi::class.java), it.key)
+                        }.filter {it.item!!.idMember == user}
+                        trySend(Resource.Success(transaksi))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        trySend(Resource.Error(error.message))
+                    }
+                })
+            } else {
+                db.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val transaksi = snapshot.children.map {
+                            TransaksiModelResponse(it.getValue(Transaksi::class.java), it.key)
+                        }.filter {
+                            it.item!!.donasiType == type && it.item!!.idMember == user
+                        }
+                        trySend(Resource.Success(transaksi))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        trySend(Resource.Error(error.message))
+                    }
+                })
+            }
 
             awaitClose {
                 close()

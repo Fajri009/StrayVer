@@ -123,12 +123,13 @@ fun DonasiContent(navController: NavController, viewModel: MemberDonasiViewModel
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            NotFound()
+                            NotFound(message = "Donasi tidak ditemukan")
                         }
                     }
                 } else {
                     items(dataDonasi) { donasi ->
                         DonasiCard(donasi.item!!, navController)
+                        Spacer(modifier = Modifier.height(10.dp))
                     }
                     
                     item {
