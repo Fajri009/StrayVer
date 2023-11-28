@@ -21,6 +21,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +47,10 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
 
     var type by remember {
         mutableStateOf("Semua")
+    }
+    
+    LaunchedEffect(key1 = viewModel.tipeDonasi.value) {
+
     }
 
     Column(
@@ -73,7 +78,7 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
                     selected = index == viewModel.currentTabIndex.value,
                     onClick = {
                         viewModel.setIndex(index)
-                        type = tab
+                        viewModel.setTipeDonasi(tab)
                     },
                     text = {
                         Text(

@@ -30,6 +30,7 @@ import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,8 +55,8 @@ fun RelawanDonasiCard(
                     .clip(RoundedCornerShape(10.dp))
                     .size(100.dp),
                 model = donasiData.gambar,
-                contentDescription = "",
-                contentScale = ContentScale.FillWidth
+                contentDescription = "gambar proyek",
+                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(20.dp))
             Column {
@@ -76,7 +77,12 @@ fun RelawanDonasiCard(
                     color = Neutral600
                 )
                 Text(
-                    text = donasiData.donasiGain.toString(),
+                    text =
+                        if (donasiData.category == TipeDonasi.DANA) {
+                            "Rp ${donasiData.donasiGain}"
+                        } else {
+                            "${donasiData.donasiGain} barang"
+                        },
                     style = Type.textXsSemiBold(),
                     color = Secondary900
                 )

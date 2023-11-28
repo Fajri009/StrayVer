@@ -42,19 +42,15 @@ import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
 
 @Composable
 fun RelawanDonasiContent(navController: NavController, viewModel: RelawanDonasiViewModel = hiltViewModel()) {
-    val tabTitle = listOf("Dana", "Barang")
-
+    val tabTitle = listOf(TipeDonasi.DANA, TipeDonasi.BARANG)
     val donasiData by viewModel.donasiData
 
-    var type by remember {
-        mutableStateOf("Dana")
-    }
-
-    LaunchedEffect(key1 = true) {
-        viewModel.getDonasi()
+    LaunchedEffect(key1 = viewModel.tipeDonasi.value) {
+        viewModel.getDonasiByUserIdAndCategory()
     }
 
     Column(
@@ -87,7 +83,7 @@ fun RelawanDonasiContent(navController: NavController, viewModel: RelawanDonasiV
                         selected = index == viewModel.currentTabIndex.value,
                         onClick = {
                             viewModel.setIndex(index)
-                            type = tab
+                            viewModel.setTipeDonasi(tab)
                         },
                         text = {
                             Text(

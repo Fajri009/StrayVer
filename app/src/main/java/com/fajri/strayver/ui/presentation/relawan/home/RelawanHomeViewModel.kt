@@ -47,9 +47,9 @@ class RelawanHomeViewModel @Inject constructor(
         }
     }
 
-    fun getDonasi() {
+    fun getDonasiByUserId() {
         viewModelScope.launch {
-            donasiRepository.getAllDonasi().collect {
+            donasiRepository.getDonasiByUserId(userRepository.user!!.uid).collect {
                 when (it) {
                     is Resource.Loading -> {
                         _isLoading.value = true

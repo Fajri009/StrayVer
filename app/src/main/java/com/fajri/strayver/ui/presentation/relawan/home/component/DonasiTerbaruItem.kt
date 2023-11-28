@@ -57,8 +57,8 @@ fun DonasiTerbaruItem(
                         .clip(RoundedCornerShape(10.dp))
                         .size(100.dp),
                     model = donasiData.gambar,
-                    contentDescription = "",
-                    contentScale = ContentScale.FillWidth
+                    contentDescription = "gambar proyek",
+                    contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Column {

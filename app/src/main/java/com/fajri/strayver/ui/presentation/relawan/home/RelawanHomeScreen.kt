@@ -41,7 +41,7 @@ fun RelawanHomeScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.getUser()
-        viewModel.getDonasi()
+        viewModel.getDonasiByUserId()
     }
     
     Column {
