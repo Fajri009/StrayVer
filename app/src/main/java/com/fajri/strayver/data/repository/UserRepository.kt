@@ -104,7 +104,7 @@ class UserRepository() {
             }
         }
 
-    fun getUserById(): Flow<Resource<UserModelResponse>> =
+    fun getUserById(userId: String= user!!.uid): Flow<Resource<UserModelResponse>> =
         callbackFlow {
             trySend(Resource.Loading())
 
@@ -112,7 +112,7 @@ class UserRepository() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.children.map {
                         UserModelResponse(it.getValue(UserData::class.java), it.key)
-                    }.filter { it.key == user!!.uid }
+                    }.filter { it.key == userId }
                     currentUser = user[0]
                     trySend(Resource.Success(user[0]))
                 }

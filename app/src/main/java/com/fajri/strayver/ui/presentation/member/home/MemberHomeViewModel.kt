@@ -14,6 +14,7 @@ import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.data.repository.DatabaseRepository
 import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.UserRepository
+import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -40,6 +41,9 @@ class MemberHomeViewModel @Inject constructor(
 
     private val _userData= mutableStateOf(UserModelResponse())
     val userData: State<UserModelResponse> = _userData
+
+    private val _relawanData= mutableStateOf(UserData())
+    val relawanData: State<UserData> = _relawanData
 
     fun getArtikel(context: Context) {
         viewModelScope.launch {
@@ -87,6 +91,25 @@ class MemberHomeViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         _donasi.value= it.data!!
+                        _donasiLoading.value= false
+                    }
+                    is Resource.Error -> {
+                        _donasiLoading.value= false
+                    }
+                }
+            }
+        }
+    }
+
+    fun getRelawanData(userId: String) {
+        viewModelScope.launch {
+            userRepository.getUserById(userId).collect {
+                when(it) {
+                    is Resource.Loading -> {
+                        _donasiLoading.value= true
+                    }
+                    is Resource.Success -> {
+                        _relawanData.value= it.data!!.item!!
                         _donasiLoading.value= false
                     }
                     is Resource.Error -> {

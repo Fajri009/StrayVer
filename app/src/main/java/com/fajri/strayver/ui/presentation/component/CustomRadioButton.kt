@@ -12,6 +12,7 @@ import com.fajri.strayver.ui.theme.Primary700
 fun CustomRadioButton(
     isSelected: Boolean= false,
     onClick: () -> Unit= {},
+    isEnabled: Boolean= true
 ) {
     RadioButton(
         selected = isSelected,
@@ -22,6 +23,7 @@ fun CustomRadioButton(
             selectedColor = Primary700,
             unselectedColor = Primary700
         ),
-        modifier = Modifier.sizeIn(maxWidth = 20.dp, maxHeight = 20.dp)
+        modifier = Modifier.sizeIn(maxWidth = 20.dp, maxHeight = 20.dp),
+        enabled = isEnabled
     )
 }

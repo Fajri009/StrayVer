@@ -47,11 +47,18 @@ fun DetailDonasiScreen(
     donasiId: String,
     viewModel: DetaiDonasiViewModel = hiltViewModel()
 ) {
+
+    val donasi by viewModel.donasi
+    val relawanData by viewModel.relawanData
+
+
     LaunchedEffect(key1 = true, block = {
         viewModel.getDonasiDetail(donasiId)
     })
 
-    val donasi by viewModel.donasi
+//    if (donasi.donasiId != "") {
+//        viewModel.getRelawanData(donasi.userId)
+//    }
 
     val colors = listOf(
         Color.Transparent,
@@ -104,7 +111,7 @@ fun DetailDonasiScreen(
 
         Column(Modifier.align(Alignment.TopStart)) {
             Spacer(modifier = Modifier.height(180.dp))
-            DetailContent(navController, donasi, viewModel)
+            DetailContent(navController, donasi, viewModel, relawanData.avatar)
         }
     }
 }
