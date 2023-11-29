@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.relawan.editProfil
 
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -26,6 +27,9 @@ class RelawanEditViewModel @Inject constructor(
     private val _userData = mutableStateOf(UserData())
     val userData: State<UserData> = _userData
 
+    private val _imageUri = mutableStateOf<Uri?>(null)
+    val imageUri: State<Uri?> = _imageUri
+
     private val _nama: MutableState<String> = mutableStateOf("")
     val nama: State<String> = _nama
 
@@ -49,6 +53,10 @@ class RelawanEditViewModel @Inject constructor(
 
     private val _isReVisible: MutableState<Boolean> = mutableStateOf(false)
     val isReVisible: State<Boolean> = _isReVisible
+
+    fun setImageUri(uri: Uri) {
+        _imageUri.value = uri
+    }
 
     fun onChangeName(value: String) {
         _nama.value = value
@@ -95,6 +103,7 @@ class RelawanEditViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         _userData.value = it.data!!.item!!
+                        _imageUri.value = Uri.parse(_userData.value.avatar)
                         _nama.value= _userData.value.nama
                         _username.value = _userData.value.username
                         _deskripsi.value = _userData.value.deskripsi
@@ -114,6 +123,7 @@ class RelawanEditViewModel @Inject constructor(
 
     fun updateProfil(): Flow<Resource<String>> {
         val user = UserData (
+            avatar = _imageUri.value.toString(),
             nama = _nama.value,
             username = _username.value,
             email = _email.value,

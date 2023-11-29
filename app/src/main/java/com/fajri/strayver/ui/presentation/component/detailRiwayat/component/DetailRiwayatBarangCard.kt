@@ -16,6 +16,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -40,6 +42,12 @@ import com.fajri.strayver.util.toDateString
 
 @Composable
 fun DetailRiwayatBarangCard(transaksi: Transaksi, role: String, viewModel: DetailRiwayatViewModel) {
+    val donasiData by viewModel.donasiData
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getDonasiById(transaksi.donasiId)
+    }
+
     Column {
         Card(
             elevation = CardDefaults.cardElevation(5.dp)
@@ -258,7 +266,8 @@ fun DetailRiwayatBarangCard(transaksi: Transaksi, role: String, viewModel: Detai
                     Spacer(modifier = Modifier.height(25.dp))
                     CustomButton(
                         onClick = {
-
+                            viewModel.setStatus(transaksi.transaksiId)
+                            viewModel.updateDonasiGain(transaksi.donasiId, transaksi.income)
                         },
                         text = "Diterima",
                         type = ButtonType.LARGE

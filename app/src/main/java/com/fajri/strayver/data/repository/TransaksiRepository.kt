@@ -108,11 +108,21 @@ class TransaksiRepository {
             }
         }
 
-    fun updateStatus(transaksi: Transaksi) =
+    fun updateStatus(transaksiId: String) =
         callbackFlow<Resource<String>> {
             trySend(Resource.Loading())
 
-            db
+            db.child(transaksiId).child("status").setValue("Selesai")
+                .addOnSuccessListener {
+                    trySend(Resource.Success("Status transaksi berhasil diubah"))
+                }
+                .addOnFailureListener {
+                    trySend(Resource.Error(it.message.toString()))
+                }
+
+            awaitClose {
+                close()
+            }
         }
 
     fun getTransaksi(user: String, type: String) =

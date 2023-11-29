@@ -32,6 +32,7 @@ import com.fajri.strayver.ui.presentation.relawan.detailRiwayat.component.Detail
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.DonaturProgres
 import com.fajri.strayver.util.Route
 
 @Composable
@@ -73,8 +74,12 @@ fun DetailRiwayatScreen(
                 IconButton(
                     modifier = Modifier.padding(start = 15.dp, end = 10.dp),
                     onClick = {
-                    navController.popBackStack()
-                }) {
+                        navController.popBackStack()
+                        if (transaksi.status == DonaturProgres.SELESAI) {
+                            navController.navigate(Route.RELAWAN_RIWAYAT)
+                        }
+                    }
+                ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBackIos,
                         contentDescription = "",

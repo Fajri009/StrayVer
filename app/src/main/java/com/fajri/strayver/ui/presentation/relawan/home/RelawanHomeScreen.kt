@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.relawan.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -47,6 +48,10 @@ fun RelawanHomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.getUser()
         viewModel.getDonasiByUserId()
+        viewModel.getDonasiByUserIdAndCategoryDana()
+        viewModel.getDonasiByUserIdAndCategoryBarang()
+        viewModel.totalDonasiDana()
+        viewModel.totalDonasiBarang()
     }
     
     Column {
@@ -68,7 +73,8 @@ fun RelawanHomeScreen(
                             .align(Alignment.TopCenter)
                             .offset(y = 130.dp)
                             .padding(horizontal = 30.dp),
-                        userData.item!!
+                        userData.item!!,
+                        viewModel
                     )
                 }
                 Spacer(modifier = Modifier.height(100.dp))
