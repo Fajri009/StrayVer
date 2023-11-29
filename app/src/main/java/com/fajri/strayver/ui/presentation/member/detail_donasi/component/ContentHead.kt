@@ -75,7 +75,7 @@ fun ContentHead(
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                 AsyncImage(
-                    model = R.drawable.anabul_foundation,
+                    model = donasi.gambar,
                     contentDescription = "",
                     Modifier
                         .size(50.dp)

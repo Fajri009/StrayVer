@@ -141,6 +141,7 @@ class RegisterViewModel @Inject constructor(
             password = _password.value,
             role = userRole,
             saldo = 1500000,
+            avatar = "https://firebasestorage.googleapis.com/v0/b/strayver-6c1c0.appspot.com/o/images%2Fprofile%2Fdefault_avatar.jpg?alt=media&token=fde93e0a-c147-4ba1-8bdc-3d93f9c9a0cf"
         )
 
         return userRepository.registerUser(

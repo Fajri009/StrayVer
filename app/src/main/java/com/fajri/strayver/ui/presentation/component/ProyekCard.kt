@@ -40,9 +40,8 @@ import com.fajri.strayver.util.formatLongWithDots
 @Composable
 fun ProyekCard(navController: NavController, donasi: Donasi) {
 
-    val formattedGoal= formatLongWithDots(donasi.donasiGoal!!)
     val formattedGain= formatLongWithDots(donasi.donasiGain)
-    val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal.toFloat()
+    val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal!!.toFloat()
     Card(
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -71,7 +70,7 @@ fun ProyekCard(navController: NavController, donasi: Donasi) {
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 AsyncImage(
-                    model = R.drawable.anabul_foundation,
+                    model = donasi.relawanAvatar,
                     contentDescription = "",
                     modifier = Modifier
                         .size(width= 16.dp, height = 16.dp)

@@ -67,7 +67,7 @@ fun DonasiCard(
             ) {
                 CompanyTag(
                     companyName = dataDonasi.relawanNama,
-                    companyIcon = "R.drawable.anabul_foundation"
+                    companyIcon = dataDonasi.relawanAvatar
                 )
                 Text(
                     text = dataDonasi.title,

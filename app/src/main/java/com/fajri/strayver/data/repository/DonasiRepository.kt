@@ -66,7 +66,7 @@ class DonasiRepository {
                                         deskripsi = donasiData.deskripsi,
                                         alamat = donasiData.alamat,
                                         gambar = imageAdress!!,
-                                        relawanAvatar = "",
+                                        relawanAvatar = donasiData.relawanAvatar,
                                         relawanNama = donasiData.relawanNama,
                                         waktu = donasiData.waktu,
                                         userId = donasiData.userId,
