@@ -30,6 +30,7 @@ import com.fajri.strayver.util.toDateString
 @Composable
 fun ContentHead(
     donasi: Donasi,
+    relawanAvatar: String,
     modifier: Modifier = Modifier
 ) {
 
@@ -45,7 +46,6 @@ fun ContentHead(
             color = Primary900,
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Log.i("anjing", "ContentHead: $progress")
 
         Column(Modifier.fillMaxWidth()) {
             CustomProgressBar(
@@ -75,7 +75,7 @@ fun ContentHead(
             Spacer(modifier = Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(11.dp)) {
                 AsyncImage(
-                    model = donasi.gambar,
+                    model = relawanAvatar,
                     contentDescription = "",
                     Modifier
                         .size(50.dp)

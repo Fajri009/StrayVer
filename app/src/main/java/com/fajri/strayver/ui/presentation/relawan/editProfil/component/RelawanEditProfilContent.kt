@@ -138,7 +138,7 @@ fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEdi
             CustomButton(
                 onClick = {
                     scope.launch {
-                        viewModel.updateProfil().collect {
+                        viewModel.updateProfil(context).collect {
                             when (it) {
                                 is Resource.Loading -> {
                                     viewModel.onChangeLoadingState(true)

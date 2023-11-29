@@ -29,7 +29,12 @@ import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
 
 @Composable
-fun DetailContent(navController: NavController, donasi: Donasi, viewModel: DetaiDonasiViewModel) {
+fun DetailContent(
+    navController: NavController,
+    donasi: Donasi,
+    viewModel: DetaiDonasiViewModel,
+    relawanAvatar: String
+) {
     Column(
         Modifier
             .fillMaxSize()
@@ -40,6 +45,7 @@ fun DetailContent(navController: NavController, donasi: Donasi, viewModel: Detai
     ) {
         ContentHead(
             donasi,
+            relawanAvatar,
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.3f)
@@ -76,7 +82,7 @@ fun DetailContent(navController: NavController, donasi: Donasi, viewModel: Detai
                             Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
                                     "?donasiId=${donasi.donasiId}" +
                                     "?type=${donasi.category}" + "?relawan=${donasi.relawanNama}" +
-                            "?idRelawan=${donasi.userId}"
+                                    "?idRelawan=${donasi.userId}"
                         )
                     }
                 },

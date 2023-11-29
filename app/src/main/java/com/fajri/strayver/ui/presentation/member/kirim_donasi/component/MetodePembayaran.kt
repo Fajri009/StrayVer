@@ -43,9 +43,9 @@ fun MetodePembayaran(
 ) {
 
     val metodeList = listOf(
-        MetodePembayaranData(R.drawable.ic_wallet, "Saldo Strayver"),
-        MetodePembayaranData(R.drawable.ic_gopay, "Gopay"),
-        MetodePembayaranData(R.drawable.ic_dana, "Dana"),
+        MetodePembayaranData(R.drawable.ic_wallet, "Saldo Strayver", true),
+        MetodePembayaranData(R.drawable.ic_gopay, "Gopay", false),
+        MetodePembayaranData(R.drawable.ic_dana, "Dana", false),
     )
     Column(
         modifier = modifier
@@ -107,7 +107,8 @@ fun MetodePembayaran(
                             onClick = {
                                 viewModel.setMotode(data.nama)
                             },
-                            isSelected = data.nama == viewModel.metode.value
+                            isSelected = data.nama == viewModel.metode.value,
+                            isEnabled = data.isEnabled
                         )
                     }
                 }

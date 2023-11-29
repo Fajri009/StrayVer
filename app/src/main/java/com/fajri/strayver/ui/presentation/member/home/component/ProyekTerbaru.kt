@@ -82,7 +82,7 @@ fun ProyekTerbaru(navController: NavController, viewModel: MemberHomeViewModel) 
                         donasi.size
                     } else 4
                 ) {
-                    ProyekCard(navController, donasi[it].item!!)
+                    ProyekCard(navController, donasi[it].item!!, viewModel)
                 }
             }
         }

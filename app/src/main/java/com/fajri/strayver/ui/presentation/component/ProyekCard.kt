@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +34,7 @@ import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
+import com.fajri.strayver.ui.presentation.member.home.MemberHomeViewModel
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
@@ -38,10 +42,16 @@ import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
-fun ProyekCard(navController: NavController, donasi: Donasi) {
+fun ProyekCard(navController: NavController, donasi: Donasi, viewModel: MemberHomeViewModel) {
 
     val formattedGain= formatLongWithDots(donasi.donasiGain)
     val progress= donasi.donasiGain.toFloat() / donasi.donasiGoal!!.toFloat()
+    val relawanData by viewModel.relawanData
+
+    LaunchedEffect(key1 = true, block =  {
+        viewModel.getRelawanData(donasi.userId)
+    })
+
     Card(
         shape = RoundedCornerShape(25.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -70,10 +80,10 @@ fun ProyekCard(navController: NavController, donasi: Donasi) {
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 AsyncImage(
-                    model = donasi.relawanAvatar,
+                    model = relawanData.avatar,
                     contentDescription = "",
                     modifier = Modifier
-                        .size(width= 16.dp, height = 16.dp)
+                        .size(width = 16.dp, height = 16.dp)
                         .clip(RoundedCornerShape(20.dp))
                 )
                 Text(text = donasi.relawanNama, style = Type.text2xsRegular(), color = Neutral600)
