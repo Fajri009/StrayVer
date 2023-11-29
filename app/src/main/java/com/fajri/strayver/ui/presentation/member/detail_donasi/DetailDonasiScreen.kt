@@ -56,9 +56,6 @@ fun DetailDonasiScreen(
         viewModel.getDonasiDetail(donasiId)
     })
 
-//    if (donasi.donasiId != "") {
-//        viewModel.getRelawanData(donasi.userId)
-//    }
 
     val colors = listOf(
         Color.Transparent,

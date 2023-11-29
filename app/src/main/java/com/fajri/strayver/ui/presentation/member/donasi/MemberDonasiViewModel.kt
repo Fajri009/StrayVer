@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.model.DonasiModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
+import com.fajri.strayver.data.repository.UserRepository
+import com.fajri.strayver.model.UserData
 import com.fajri.strayver.util.TipeDonasi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MemberDonasiViewModel @Inject constructor(
-    private val donasiRepository: DonasiRepository
+    private val donasiRepository: DonasiRepository,
+    private val userRepository: UserRepository
 ): ViewModel() {
 
     private val _currTabIndex= mutableIntStateOf(0)
@@ -33,6 +36,8 @@ class MemberDonasiViewModel @Inject constructor(
     private val _donasi = mutableStateOf<List<DonasiModelResponse>>(emptyList())
     val donasi: State<List<DonasiModelResponse>> = _donasi
 
+    private val _relawanData= mutableStateOf(UserData())
+    val relawanData: State<UserData> = _relawanData
 
     fun setLoading(state: Boolean) {
         _isLoading.value= state
@@ -74,6 +79,22 @@ class MemberDonasiViewModel @Inject constructor(
                     is Resource.Success -> {
                         _donasi.value= it.data!!
                         setLoading(false)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getRelawanData(userId: String) {
+        viewModelScope.launch {
+            userRepository.getUserById(userId).collect {
+                when(it) {
+                    is Resource.Loading -> {
+                    }
+                    is Resource.Success -> {
+                        _relawanData.value= it.data!!.item!!
+                    }
+                    is Resource.Error -> {
                     }
                 }
             }
