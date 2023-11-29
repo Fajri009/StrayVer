@@ -1,5 +1,8 @@
 package com.fajri.strayver.ui.presentation.member.edit_profil
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,11 +45,13 @@ import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 
 @Composable
-fun EditProfilMemberScreen(navController: NavController, viewModel: EditProfilMemberViewModel=
-    hiltViewModel()) {
+fun EditProfilMemberScreen(
+    navController: NavController, viewModel: EditProfilMemberViewModel =
+        hiltViewModel()
+) {
 
     val userData by viewModel.userData
-    val scope= rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
         viewModel.getUserData()
@@ -103,6 +108,7 @@ fun EditProfilMemberScreen(navController: NavController, viewModel: EditProfilMe
         }
 
         ProfilePicture(
+            viewModel.imageUri.value ?: userData.avatar,
             Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = 115.dp)
@@ -112,20 +118,34 @@ fun EditProfilMemberScreen(navController: NavController, viewModel: EditProfilMe
             Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = 200.dp, x = 50.dp)
-                .size(30.dp)
-
+                .size(30.dp),
+            viewModel
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun EditButton(modifier: Modifier = Modifier) {
+private fun EditButton(modifier: Modifier = Modifier, viewModel: EditProfilMemberViewModel) {
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = {
+            it?.let {
+                viewModel.setImageUri(it)
+            }
+        }
+    )
+
     Card(
         modifier = modifier,
         shape = CircleShape,
         colors = CardDefaults.cardColors(containerColor = Shades50),
-        onClick = {},
+        onClick = {
+            launcher.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        },
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         AsyncImage(

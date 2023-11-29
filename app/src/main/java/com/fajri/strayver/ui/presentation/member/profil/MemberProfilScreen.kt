@@ -67,6 +67,7 @@ fun MemberProfilScreen(
         }
 
         ProfilePicture(
+            userData.item!!.avatar,
             Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = 115.dp)

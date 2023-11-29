@@ -118,7 +118,7 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
             } else {
                 items(transaksi.size) {
                     if (it == 0) {
-                        DateTag(date = (transaksi[it].item!!.tanggal).toDateString())
+                        DateTag(date = (transaksi[0].item!!.tanggal).toDateString())
                         RiwayatItem(transaksi[it].item!!, navController = navController)
                     } else {
 

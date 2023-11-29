@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.edit_profil.component
 
+import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +48,14 @@ class EditProfilMemberViewModel @Inject constructor(
 
     private val _password: MutableState<String> = mutableStateOf("")
     val password: State<String> = _password
+
+    private val _imageUri = mutableStateOf<Uri?>(null)
+    val imageUri: State<Uri?> = _imageUri
+
+
+    fun setImageUri(uri: Uri) {
+        _imageUri.value = uri
+    }
 
     fun onChangeNama(value: String) {
         _nama.value = value

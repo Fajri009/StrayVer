@@ -2,6 +2,7 @@ package com.fajri.strayver.model
 
 data class UserData(
     val nama: String= "",
+    val avatar: String= "",
     val username: String= "",
     val email: String= "",
     val deskripsi: String= "",

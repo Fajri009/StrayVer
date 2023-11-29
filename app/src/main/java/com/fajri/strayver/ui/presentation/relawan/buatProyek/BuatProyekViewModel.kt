@@ -114,7 +114,7 @@ class BuatProyekViewModel @Inject constructor(
             deskripsi = _deskripsi.value,
             alamat = _userData.value.item!!.alamat,
             gambar = "",
-            relawanAvatar = "",
+            relawanAvatar = _userData.value.item!!.avatar,
             relawanNama = _userData.value.item!!.username,
             waktu = System.currentTimeMillis(),
             userId = _userData.value.key!!,
