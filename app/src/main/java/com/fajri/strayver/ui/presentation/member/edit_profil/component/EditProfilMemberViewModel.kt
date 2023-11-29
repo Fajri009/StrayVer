@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.edit_profil.component
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -112,7 +113,7 @@ class EditProfilMemberViewModel @Inject constructor(
         }
     }
 
-    fun updateProfil(): Flow<Resource<String>> {
+    fun updateProfil(context: Context): Flow<Resource<String>> {
 
         val user = UserData(
             nama = _nama.value,
@@ -126,6 +127,6 @@ class EditProfilMemberViewModel @Inject constructor(
             saldo = _userData.value.saldo
         )
 
-        return userRepository.updateUserProfile(user)
+        return userRepository.updateUserProfile(user, _imageUri.value!!, context)
     }
 }

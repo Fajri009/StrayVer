@@ -117,7 +117,7 @@ fun EditProfilContent(viewModel: EditProfilMemberViewModel, scope: CoroutineScop
             CustomButton(
                 onClick = {
                     scope.launch {
-                        viewModel.updateProfil().collect {
+                        viewModel.updateProfil(context).collect {
                             when(it) {
                                 is Resource.Success -> {
                                     viewModel.getUserData()

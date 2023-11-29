@@ -1,5 +1,7 @@
 package com.fajri.strayver.ui.presentation.relawan.editProfil
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -19,6 +21,9 @@ import javax.inject.Inject
 class RelawanEditViewModel @Inject constructor(
     private val userRepository: UserRepository
 ): ViewModel() {
+
+    private val _imageUri= mutableStateOf<Uri?>(null)
+    val imageUri: State<Uri?> = _imageUri
 
     private val _isLoading= mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
@@ -112,7 +117,7 @@ class RelawanEditViewModel @Inject constructor(
         }
     }
 
-    fun updateProfil(): Flow<Resource<String>> {
+    fun updateProfil(context: Context): Flow<Resource<String>> {
         val user = UserData (
             nama = _nama.value,
             username = _username.value,
@@ -123,6 +128,6 @@ class RelawanEditViewModel @Inject constructor(
             password = _password.value,
         )
 
-        return userRepository.updateUserProfile(user)
+        return userRepository.updateUserProfile(user, _imageUri.value!!, context)
     }
 }

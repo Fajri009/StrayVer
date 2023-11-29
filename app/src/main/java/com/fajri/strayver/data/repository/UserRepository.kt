@@ -1,6 +1,7 @@
 package com.fajri.strayver.data.repository
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -30,6 +32,7 @@ class UserRepository() {
         .getReference("Users")
     var user: FirebaseUser? = null
     var currentUser: UserModelResponse? = null
+    val imgStorage = Firebase.storage.reference.child("images/")
 
     fun resetPassword(email: String): Flow<Resource<String>> =
         callbackFlow {
@@ -123,17 +126,55 @@ class UserRepository() {
             }
         }
 
-    fun updateUserProfile(userData: UserData): Flow<Resource<String>> =
+    fun updateUserProfile(userData: UserData, imageUri: Uri, context: Context):
+            Flow<Resource<String>> =
         callbackFlow {
             trySend(Resource.Loading())
 
-            userDb.child(user!!.uid).setValue(userData)
-                .addOnSuccessListener {
-                    trySend(Resource.Success("Berhasil mengubah data"))
+            val imageId = userData.username
+            val photoRef = imgStorage.child("/profile/${userData.username}/$imageId")
+
+            val imageByteArray: ByteArray? = context.contentResolver
+                .openInputStream(imageUri)
+                .use {
+                    it?.readBytes()
                 }
-                .addOnFailureListener {
-                    trySend(Resource.Error("Gagal mengubah data\n${it.message}"))
-                }
+
+            try {
+                photoRef.putBytes(imageByteArray!!)
+                    .addOnSuccessListener {
+                        photoRef.downloadUrl.addOnSuccessListener {
+
+                            val userAvatar= it.toString()
+                            userDb.child(user!!.uid)
+                                .setValue(UserData(
+                                    nama = userData.nama,
+                                    avatar = userAvatar,
+                                    username = userData.username,
+                                    email = userData.email,
+                                    deskripsi = userData.deskripsi,
+                                    telp= userData.telp,
+                                    alamat = userData.alamat,
+                                    password = userData.password,
+                                    role = userData.role,
+                                    saldo = userData.saldo,
+                                    totalDana = userData.totalDana,
+                                    totalBarang = userData.totalBarang
+                                ))
+                                .addOnSuccessListener {
+                                    trySend(Resource.Success("Berhasil mengubah data"))
+                                }
+                                .addOnFailureListener {
+                                    trySend(Resource.Error("Gagal mengubah data\n${it.message}"))
+                                }
+                        }
+                    }
+                    .addOnFailureListener {
+                        trySend(Resource.Error("${it.message}"))
+                    }
+            } catch (e: Exception) {
+                trySend(Resource.Error("${e.message}"))
+            }
 
             awaitClose {
                 close()
