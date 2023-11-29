@@ -40,7 +40,7 @@ fun RelawanDonasiCard(
 ) {
     Card(
         onClick = {
-            navController.navigate(Route.TAMBAH_DONASI)
+            navController.navigate(Route.TAMBAH_DONASI + "?donasiId=${donasiData.donasiId}")
         },
         elevation = CardDefaults.cardElevation(2.dp)
     ) {

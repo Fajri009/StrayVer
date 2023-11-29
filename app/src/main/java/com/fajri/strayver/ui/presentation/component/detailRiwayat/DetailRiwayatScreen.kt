@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -66,14 +67,14 @@ fun DetailRiwayatScreen(
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.height(35.dp))
             Row(
-                verticalAlignment = Alignment.CenterVertically, horizontalArrangement =
-                Arrangement.spacedBy(0.dp)
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(0.dp)
             ) {
-                IconButton(onClick = {
+                IconButton(
+                    modifier = Modifier.padding(start = 15.dp, end = 10.dp),
+                    onClick = {
                     navController.popBackStack()
-                    navController.navigate(Route.MEMBER_RIWAYAT)
-                }
-                ) {
+                }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBackIos,
                         contentDescription = "",
@@ -81,13 +82,13 @@ fun DetailRiwayatScreen(
                     )
                 }
                 Text(
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier.padding(vertical = 20.dp),
                     text = "Detail Riwayat",
                     color = Color.White,
                     style = Type.displayXsSemiBold()
                 )
             }
-            DetailRiwayatContent(transaksi, role)
+            DetailRiwayatContent(transaksi, role, viewModel)
         }
     }
 }

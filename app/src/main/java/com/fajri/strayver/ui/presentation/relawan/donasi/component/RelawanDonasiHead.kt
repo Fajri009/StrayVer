@@ -31,6 +31,7 @@ fun RelawanDonasiHead(viewModel: RelawanDonasiViewModel) {
         CustomTextField(
             text = viewModel.search.value,
             placeholder = "Search",
+            label = "Search",
             onValueChange = { search ->
                 viewModel.onChangeSearch(search)
             },

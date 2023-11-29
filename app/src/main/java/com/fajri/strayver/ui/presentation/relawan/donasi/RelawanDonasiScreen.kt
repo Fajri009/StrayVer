@@ -18,7 +18,10 @@ import com.fajri.strayver.ui.presentation.relawan.donasi.component.RelawanDonasi
 import com.fajri.strayver.ui.theme.Primary700
 
 @Composable
-fun RelawanDonasiScreen(navController: NavController, viewModel: RelawanDonasiViewModel = hiltViewModel()) {
+fun RelawanDonasiScreen(
+    navController: NavController,
+    viewModel: RelawanDonasiViewModel = hiltViewModel()
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()

@@ -13,12 +13,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
+import com.fajri.strayver.ui.presentation.relawan.tambahDonasi.TambahDonasiViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Primary600
@@ -26,9 +31,15 @@ import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
-fun TambahDonasiContainerJudul(navController: NavController) {
+fun TambahDonasiContainerJudul(
+    navController: NavController,
+    donasiData: Donasi,
+    viewModel: TambahDonasiViewModel
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,12 +51,12 @@ fun TambahDonasiContainerJudul(navController: NavController) {
                 modifier = Modifier.padding(20.dp)
             ) {
                 Text(
-                    text = "Dibutuhkan Kandang Hewan (Kucing atau Anjing)",
+                    text = donasiData.title,
                     color = Primary900,
                     style = Type.textLgSemiBold()
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                CustomProgressBar(progress = 0.4f)
+                CustomProgressBar(progress = donasiData.donasiGain.toFloat() / donasiData.donasiGoal!!.toFloat())
                 Spacer(modifier = Modifier.height(2.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -58,13 +69,23 @@ fun TambahDonasiContainerJudul(navController: NavController) {
                             style = Type.text2xsRegular()
                         )
                         Text(
-                            text = "10 barang",
+                            text =
+                                when(donasiData.category) {
+                                    TipeDonasi.DANA -> "Rp ${formatLongWithDots(donasiData.donasiGain)}"
+                                    TipeDonasi.BARANG -> "${formatLongWithDots(donasiData.donasiGain)} barang"
+                                    else -> "-"
+                                },
                             color = Secondary900,
                             style = Type.textXsSemiBold()
                         )
                     }
                     Text(
-                        text = "dari 30 barang",
+                        text =
+                            when(donasiData.category) {
+                                TipeDonasi.DANA -> "dari Rp ${formatLongWithDots(donasiData.donasiGoal!!)}"
+                                TipeDonasi.BARANG -> "dari ${formatLongWithDots(donasiData.donasiGoal!!)} barang"
+                                else -> "-"
+                            },
                         color = Neutral600,
                         style = Type.text2xsRegular()
                     )
@@ -88,7 +109,7 @@ fun TambahDonasiContainerJudul(navController: NavController) {
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(10.dp))
-                    TambahDonasiContainerDonatur(navController)
+                    TambahDonasiContainerDonatur(navController, viewModel)
                 }
             }
         }

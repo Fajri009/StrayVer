@@ -103,17 +103,17 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
                 items(transaksiData.size) {
                     // Jika riwayatnya cuman 1
                     if (it == 0) {
-                        DateTag(date = (transaksiData[it].item!!.tanggal).toDateString())
+                        DateTag(date = (transaksiData[0].item!!.tanggal).toDateString())
                         Spacer(modifier = Modifier.height(5.dp))
                         RelawanRiwayatCard(
-                            transaksi = transaksiData[it].item!!, 
+                            transaksiData = transaksiData[it].item!!,
                             navController = navController
                         )
                     } else {
                         // Jika riwayat lain memiliki tanggal yang sama, dimulai dari it == transaksi.size
                         if ((transaksiData[it].item!!.tanggal).toDateString() == (transaksiData[it - 1].item!!.tanggal).toDateString()) {
                             RelawanRiwayatCard(
-                                transaksi = transaksiData[it].item!!,
+                                transaksiData = transaksiData[it].item!!,
                                 navController = navController
                             )
                         }
@@ -123,7 +123,7 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
                             DateTag(date = (transaksiData[it].item!!.tanggal).toDateString())
                             Spacer(modifier = Modifier.height(5.dp))
                             RelawanRiwayatCard(
-                                transaksi = transaksiData[it].item!!,
+                                transaksiData = transaksiData[it].item!!,
                                 navController = navController
                             )
                         }

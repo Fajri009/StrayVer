@@ -108,6 +108,12 @@ class TransaksiRepository {
             }
         }
 
+    fun updateStatus(transaksi: Transaksi) =
+        callbackFlow<Resource<String>> {
+            trySend(Resource.Loading())
+
+            db
+        }
 
     fun getTransaksi(user: String, type: String) =
         callbackFlow<Resource<List<TransaksiModelResponse>>> {
@@ -183,6 +189,30 @@ class TransaksiRepository {
                     }
                 })
             }
+
+            awaitClose {
+                close()
+            }
+        }
+
+    fun getTransaksiByIdDonasi(donasiId: String) =
+        callbackFlow<Resource<List<TransaksiModelResponse>>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val transaksi = snapshot.children.map {
+                        TransaksiModelResponse(it.getValue(Transaksi::class.java), it.key)
+                    }.filter {
+                        it.item!!.donasiId == donasiId
+                    }
+                    trySend(Resource.Success(transaksi))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.message))
+                }
+            })
 
             awaitClose {
                 close()

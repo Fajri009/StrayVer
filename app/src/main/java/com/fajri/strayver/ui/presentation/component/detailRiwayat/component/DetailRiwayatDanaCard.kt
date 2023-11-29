@@ -100,7 +100,12 @@ fun DetailRiwayatDanaCard(
                                 style = Type.textSmSemiBold()
                             )
                             Text(
-                                text = transaksi.namaRelawan,
+                                text =
+                                    if (role == "member") {
+                                        transaksi.namaRelawan
+                                    } else {
+                                        transaksi.namaMember
+                                },
                                 color = Color.Black,
                                 style = Type.textXsRegular()
                             )

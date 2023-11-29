@@ -35,7 +35,7 @@ import com.fajri.strayver.util.TipeDonasi
 
 @Composable
 fun RelawanRiwayatCard(
-    transaksi: Transaksi,
+    transaksiData: Transaksi,
     navController: NavController
 ) {
     Column(
@@ -47,14 +47,14 @@ fun RelawanRiwayatCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    navController.navigate(Route.DETAIL_RIWAYAT)
+                    navController.navigate(Route.DETAIL_RIWAYAT + "?transaksiId=${transaksiData.transaksiId}")
                 },
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
                 modifier = Modifier
                     .background(
-                        when (transaksi.donasiType) {
+                        when (transaksiData.donasiType) {
                             TipeDonasi.DANA -> Secondary50
                             TipeDonasi.BARANG -> Primary50
                             else -> Color.White
@@ -62,7 +62,7 @@ fun RelawanRiwayatCard(
                     )
                     .padding(8.dp),
                 model =
-                when (transaksi.donasiType) {
+                when (transaksiData.donasiType) {
                     TipeDonasi.DANA -> R.drawable.dana_icon
                     TipeDonasi.BARANG -> R.drawable.barang_icon
                     else -> R.drawable.anabul_foundation
@@ -72,15 +72,15 @@ fun RelawanRiwayatCard(
             Spacer(modifier = Modifier.width(10.dp))
             Column{
                 Row {
-                    CompanyTag(companyName = transaksi.namaMember, companyIcon = "companyIcon")
+                    CompanyTag(companyName = transaksiData.namaMember, companyIcon = transaksiData.gambar)
                     Spacer(modifier = Modifier.width(5.dp))
-                    when (transaksi.status) {
+                    when (transaksiData.status) {
                         DonaturProgres.PROSES -> ProgresProses()
                         DonaturProgres.SELESAI -> ProgresSelesai()
                     }
                 }
                 Text(
-                    text = transaksi.title,
+                    text = transaksiData.title,
                     color = Neutral700,
                     style = Type.textXsSemiBold(),
                     modifier = Modifier.fillMaxWidth(.7f)
@@ -88,10 +88,10 @@ fun RelawanRiwayatCard(
             }
             Text(
                 text =
-                    when (transaksi.donasiType) {
-                        TipeDonasi.DANA -> "Rp ${transaksi.income}"
-                        TipeDonasi.BARANG -> "${transaksi.income} pcs"
-                        else -> transaksi.income.toString()
+                    when (transaksiData.donasiType) {
+                        TipeDonasi.DANA -> "Rp ${transaksiData.income}"
+                        TipeDonasi.BARANG -> "${transaksiData.income} pcs"
+                        else -> transaksiData.income.toString()
                     },
                 color = Primary900,
                 style = Type.textSmSemiBold(),
