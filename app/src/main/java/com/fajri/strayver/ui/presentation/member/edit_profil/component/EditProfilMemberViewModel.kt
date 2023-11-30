@@ -127,6 +127,6 @@ class EditProfilMemberViewModel @Inject constructor(
             saldo = _userData.value.saldo
         )
 
-        return userRepository.updateUserProfile(user, _imageUri.value!!, context)
+        return userRepository.updateUserProfile(user, _imageUri.value, context)
     }
 }

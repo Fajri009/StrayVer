@@ -48,7 +48,7 @@ fun DetailContent(
             relawanAvatar,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.3f)
+                .fillMaxHeight(0.35f)
         )
         Spacer(modifier = Modifier.height(20.dp))
         Divider(

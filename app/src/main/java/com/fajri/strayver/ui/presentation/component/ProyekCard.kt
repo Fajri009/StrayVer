@@ -83,7 +83,7 @@ fun ProyekCard(navController: NavController, donasi: Donasi, viewModel: MemberHo
                     model = relawanData.avatar,
                     contentDescription = "",
                     modifier = Modifier
-                        .size(width = 16.dp, height = 16.dp)
+                        .size(width = 20.dp, height = 20.dp)
                         .clip(RoundedCornerShape(20.dp))
                 )
                 Text(text = donasi.relawanNama, style = Type.text2xsRegular(), color = Neutral600)

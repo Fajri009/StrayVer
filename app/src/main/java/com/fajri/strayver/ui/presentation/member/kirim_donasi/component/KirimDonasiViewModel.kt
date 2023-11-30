@@ -200,10 +200,9 @@ class KirimDonasiViewModel @Inject constructor(
                         setLoading(false)
                         Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     }
-
                     is Resource.Loading -> setLoading(true)
                     is Resource.Success -> {
-                        setLoading(true)
+                        setLoading(false)
                         updateDonasiGain(donasiId, value)
                     }
                 }

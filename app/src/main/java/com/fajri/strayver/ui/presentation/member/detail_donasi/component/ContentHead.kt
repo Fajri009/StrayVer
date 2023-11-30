@@ -78,8 +78,8 @@ fun ContentHead(
                     model = relawanAvatar,
                     contentDescription = "",
                     Modifier
-                        .size(50.dp)
-                        .clip(CircleShape),
+                        .clip(CircleShape)
+                        .size(50.dp),
                     contentScale = ContentScale.Crop
                 )
                 Column(verticalArrangement = Arrangement.Center) {
