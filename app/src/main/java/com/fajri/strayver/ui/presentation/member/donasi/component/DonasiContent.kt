@@ -128,7 +128,7 @@ fun DonasiContent(navController: NavController, viewModel: MemberDonasiViewModel
                     }
                 } else {
                     items(dataDonasi) { donasi ->
-                        DonasiCard(donasi.item!!, navController)
+                        DonasiCard(donasi.item!!, navController, viewModel)
                         Spacer(modifier = Modifier.height(10.dp))
                     }
                     

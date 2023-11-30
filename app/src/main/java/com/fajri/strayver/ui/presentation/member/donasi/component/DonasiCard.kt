@@ -11,6 +11,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +26,7 @@ import com.fajri.strayver.R
 import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CompanyTag
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
+import com.fajri.strayver.ui.presentation.member.donasi.MemberDonasiViewModel
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
@@ -34,10 +37,16 @@ import com.fajri.strayver.util.formatLongWithDots
 @Composable
 fun DonasiCard(
     dataDonasi: Donasi,
-    navController: NavController
+    navController: NavController,
+    viewModel: MemberDonasiViewModel
 ) {
 
     val progress = dataDonasi.donasiGain.toFloat() / dataDonasi.donasiGoal!!.toFloat()
+    val relawaData by viewModel.relawanData
+
+    LaunchedEffect(key1 = true, block = {
+        viewModel.getRelawanData(dataDonasi.userId)
+    })
 
     Card(
         Modifier
@@ -67,7 +76,7 @@ fun DonasiCard(
             ) {
                 CompanyTag(
                     companyName = dataDonasi.relawanNama,
-                    companyIcon = dataDonasi.relawanAvatar
+                    companyIcon = relawaData.avatar
                 )
                 Text(
                     text = dataDonasi.title,
