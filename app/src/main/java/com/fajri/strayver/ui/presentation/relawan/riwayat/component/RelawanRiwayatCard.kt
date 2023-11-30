@@ -82,7 +82,7 @@ fun RelawanRiwayatCard(
             Spacer(modifier = Modifier.width(10.dp))
             Column{
                 Row {
-                    CompanyTag(companyName = userData.email, companyIcon = userData.avatar)
+                    CompanyTag(companyName = transaksiData.namaMember, companyIcon = userData.avatar)
                     Spacer(modifier = Modifier.width(5.dp))
                     when (transaksiData.status) {
                         DonaturProgres.PROSES -> ProgresProses()

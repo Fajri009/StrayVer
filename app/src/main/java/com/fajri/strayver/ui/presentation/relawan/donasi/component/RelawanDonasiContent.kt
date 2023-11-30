@@ -129,7 +129,7 @@ fun RelawanDonasiContent(navController: NavController, viewModel: RelawanDonasiV
                     }
                 } else {
                     items(donasiData) {
-                        RelawanDonasiCard(donasiData = it.item!!, navController = navController)
+                        RelawanDonasiCard(donasiData = it.item!!, navController = navController, viewModel)
                     }
                 }
             }

@@ -9,6 +9,7 @@ import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.model.DonasiModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.UserRepository
+import com.fajri.strayver.model.UserData
 import com.fajri.strayver.util.TipeDonasi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,6 +31,9 @@ class RelawanDonasiViewModel @Inject constructor(
 
     private val _donasiData = mutableStateOf<List<DonasiModelResponse>>(emptyList())
     val donasiData: State<List<DonasiModelResponse>> = _donasiData
+
+    private val _userData = mutableStateOf(UserData())
+    val userData: State<UserData> = _userData
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
@@ -74,6 +78,25 @@ class RelawanDonasiViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         _donasiData.value = it.data!!
+                        _isLoading.value = false
+                    }
+                    is Resource.Error -> {
+                        _isLoading.value = false
+                    }
+                }
+            }
+        }
+    }
+
+    fun getUserById(userId: String) {
+        viewModelScope.launch {
+            userRepository.getUserById(userId).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _isLoading.value  = true
+                    }
+                    is Resource.Success -> {
+                        _userData.value = it.data!!.item!!
                         _isLoading.value = false
                     }
                     is Resource.Error -> {
