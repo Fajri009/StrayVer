@@ -14,6 +14,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,22 +26,32 @@ import coil.compose.AsyncImage
 import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CompanyTag
 import com.fajri.strayver.ui.presentation.component.CustomProgressBar
+import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiViewModel
 import com.fajri.strayver.ui.theme.Neutral600
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RelawanDonasiCard(
     donasiData: Donasi,
-    navController: NavController
+    navController: NavController,
+    viewModel: RelawanDonasiViewModel
 ) {
+    val userData by viewModel.userData
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUserById(donasiData.userId)
+    }
+
     Card(
         onClick = {
-            navController.navigate(Route.TAMBAH_DONASI)
+            navController.navigate(Route.TAMBAH_DONASI + "?donasiId=${donasiData.donasiId}")
         },
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
@@ -54,13 +66,13 @@ fun RelawanDonasiCard(
                     .clip(RoundedCornerShape(10.dp))
                     .size(100.dp),
                 model = donasiData.gambar,
-                contentDescription = "",
-                contentScale = ContentScale.FillWidth
+                contentDescription = "gambar proyek",
+                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.width(20.dp))
             Column {
                 Row {
-                    CompanyTag(companyName = donasiData.relawanNama, companyIcon = donasiData.relawanAvatar)
+                    CompanyTag(companyName = donasiData.relawanNama, companyIcon = userData.avatar)
                 }
                 Text(
                     text = donasiData.title,
@@ -76,7 +88,12 @@ fun RelawanDonasiCard(
                     color = Neutral600
                 )
                 Text(
-                    text = donasiData.donasiGain.toString(),
+                    text =
+                        if (donasiData.category == TipeDonasi.DANA) {
+                            "Rp ${formatLongWithDots(donasiData.donasiGain)}"
+                        } else {
+                            "${formatLongWithDots(donasiData.donasiGain)} barang"
+                        },
                     style = Type.textXsSemiBold(),
                     color = Secondary900
                 )

@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.member.riwayat
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -56,7 +57,9 @@ class MemberRiwayatViewModel @Inject constructor(
                     when (it) {
                         is Resource.Error -> {}
                         is Resource.Loading -> {}
-                        is Resource.Success -> _transaksi.value = it.data!!
+                        is Resource.Success -> {
+                            _transaksi.value = it.data!!
+                        }
                     }
                 }
         }

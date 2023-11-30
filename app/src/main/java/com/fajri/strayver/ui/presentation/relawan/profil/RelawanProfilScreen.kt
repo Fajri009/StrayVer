@@ -62,9 +62,10 @@ fun RelawanProfilScreen(
         }
 
         RelawanProfilPicture(
-            Modifier
+            modifier = Modifier
                 .align(Alignment.TopCenter)
-                .offset(y = 115.dp)
+                .offset(y = 115.dp),
+            avatar = userData.item!!.avatar
         )
     }
 }

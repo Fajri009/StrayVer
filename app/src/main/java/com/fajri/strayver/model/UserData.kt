@@ -11,6 +11,6 @@ data class UserData(
     val password: String= "",
     val role: String= "",
     val saldo: Long= 0,
-    val totalDana: Int = 0,
-    val totalBarang: Int = 0
+    var totalDana: Long = 0,
+    var totalBarang: Long = 0
 )

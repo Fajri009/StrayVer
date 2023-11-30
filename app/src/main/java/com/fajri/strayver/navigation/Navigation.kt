@@ -141,8 +141,18 @@ fun Navigation(navController: NavHostController) {
         composable(Route.RELAWAN_DONASI) {
             RelawanDonasiScreen(navController = navController)
         }
-        composable(Route.TAMBAH_DONASI) {
-            TambahDonasiScreen(navController = navController)
+        composable(
+            Route.TAMBAH_DONASI + "?donasiId={donasiId}",
+            arguments = listOf(
+                navArgument(name = "donasiId") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val donasiId = it.arguments?.getString("donasiId")
+            donasiId?.let {
+                TambahDonasiScreen(navController = navController, donasiId = donasiId)
+            }
         }
         composable(Route.RELAWAN_RIWAYAT) {
             RelawanRiwayatScreen(navController)

@@ -15,7 +15,7 @@ import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Shades50
 
 @Composable
-fun RelawanProfilPicture(modifier: Modifier = Modifier) {
+fun RelawanProfilPicture(modifier: Modifier = Modifier, avatar: Any) {
     Card(
         modifier= modifier,
         colors = CardDefaults.cardColors(containerColor = Shades50),
@@ -23,8 +23,8 @@ fun RelawanProfilPicture(modifier: Modifier = Modifier) {
         shape = CircleShape
     ) {
         AsyncImage(
-            model = R.drawable.profile,
-            contentDescription = "",
+            model = avatar,
+            contentDescription = "Avatar",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .padding(5.dp)

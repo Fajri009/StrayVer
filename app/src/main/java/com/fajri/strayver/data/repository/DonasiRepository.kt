@@ -203,4 +203,70 @@ class DonasiRepository {
                 close()
             }
         }
+
+    fun getDonasiByUserId(userId: String) =
+        callbackFlow<Resource<List<DonasiModelResponse>>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val donasi = snapshot.children.map {
+                        DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
+                    }.filter { it.item!!.userId== userId }
+                    trySend(Resource.Success(donasi))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
+
+            awaitClose {
+                close()
+            }
+        }
+
+    fun getDonasiByUserIdAndCategory(userId: String, category: String) =
+        callbackFlow<Resource<List<DonasiModelResponse>>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val donasi = snapshot.children.map {
+                        DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
+                    }.filter { it.item!!.userId== userId && it.item!!.category == category }
+                    trySend(Resource.Success(donasi))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
+
+            awaitClose {
+                close()
+            }
+        }
+
+    fun addSumDonasiByUserIdAndCategory(userId: String, category: String) =
+        callbackFlow<Resource<List<DonasiModelResponse>>> {
+            trySend(Resource.Loading())
+
+            db.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val donasi = snapshot.children.map {
+                        DonasiModelResponse(it.getValue(Donasi::class.java), it.key)
+                    }.filter { it.item!!.userId== userId && it.item!!.category == category }
+                    trySend(Resource.Success(donasi))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    trySend(Resource.Error(error.toString()))
+                }
+            })
+
+            awaitClose {
+                close()
+            }
+        }
 }

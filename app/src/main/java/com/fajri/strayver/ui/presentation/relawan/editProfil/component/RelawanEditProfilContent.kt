@@ -153,6 +153,8 @@ fun RelawanEditProfilContent(navController: NavController, viewModel: RelawanEdi
                                     viewModel.onChangeLoadingState(false)
                                     Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
                                 }
+
+                                else -> {}
                             }
                         }
                     }

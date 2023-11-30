@@ -1,5 +1,8 @@
 package com.fajri.strayver.ui.presentation.relawan.editProfil
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,6 +47,7 @@ fun RelawanEditProfilScreen(
     viewModel: RelawanEditViewModel = hiltViewModel(),
 ) {
     val scope = rememberCoroutineScope()
+    val userData by viewModel.userData
 
     val context = LocalContext.current
 
@@ -100,28 +104,43 @@ fun RelawanEditProfilScreen(
         }
 
         RelawanProfilPicture(
-            Modifier
+            modifier = Modifier
                 .align(Alignment.TopCenter)
-                .offset(y = 115.dp)
+                .offset(y = 115.dp),
+            avatar = viewModel.imageUri.value ?: userData.avatar,
         )
 
         EditButton(
             Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = 200.dp, x = 50.dp)
-                .size(30.dp)
+                .size(30.dp),
+            viewModel = viewModel
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun EditButton(modifier: Modifier= Modifier) {
+private fun EditButton(modifier: Modifier= Modifier, viewModel: RelawanEditViewModel) {
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = {
+            it?.let {
+                viewModel.setImageUri(it)
+            }
+        }
+    )
+
     Card(
         modifier = modifier,
         shape = CircleShape,
         colors = CardDefaults.cardColors(containerColor = Shades50),
-        onClick = {},
+        onClick = {
+            launcher.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        },
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         AsyncImage(

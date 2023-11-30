@@ -1,11 +1,12 @@
 package com.fajri.strayver.ui.presentation.relawan.editProfil
 
-import android.content.Context
 import android.net.Uri
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
@@ -91,6 +92,10 @@ class RelawanEditViewModel @Inject constructor(
         _isLoading.value = value
     }
 
+    fun setImageUri(uri: Uri) {
+        _imageUri.value = uri
+    }
+
     fun getUserData() {
         viewModelScope.launch {
             userRepository.getUserById().collect {
@@ -105,6 +110,7 @@ class RelawanEditViewModel @Inject constructor(
                         _deskripsi.value = _userData.value.deskripsi
                         _email.value = _userData.value.email
                         _alamat.value = _userData.value.alamat
+                        _imageUri.value = _userData.value.avatar.toUri()
                         _noTelp.value = _userData.value.telp
                         _password.value = _userData.value.password
                         _isLoading.value= false

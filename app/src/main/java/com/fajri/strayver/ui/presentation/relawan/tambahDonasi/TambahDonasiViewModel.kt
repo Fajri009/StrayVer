@@ -1,87 +1,77 @@
-package com.fajri.strayver.ui.presentation.relawan.donasi
+package com.fajri.strayver.ui.presentation.relawan.tambahDonasi
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
 import com.fajri.strayver.data.model.DonasiModelResponse
+import com.fajri.strayver.data.model.TransaksiModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
+import com.fajri.strayver.data.repository.TransaksiRepository
 import com.fajri.strayver.data.repository.UserRepository
+import com.fajri.strayver.model.Donasi
+import com.fajri.strayver.model.Transaksi
 import com.fajri.strayver.model.UserData
-import com.fajri.strayver.util.TipeDonasi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RelawanDonasiViewModel @Inject constructor(
+class TambahDonasiViewModel @Inject constructor(
     private val donasiRepository: DonasiRepository,
+    private val transaksiRepository: TransaksiRepository,
     private val userRepository: UserRepository
 ): ViewModel() {
-    private val _search = mutableStateOf("")
-    val search: State<String> = _search
+    private val _donasiData = mutableStateOf(Donasi())
+    val donasiData: State<Donasi> = _donasiData
 
-    private val _currentTabIndex = mutableIntStateOf(0)
-    val currentTabIndex: State<Int> = _currentTabIndex
-
-    private val _tipeDonasi = mutableStateOf(TipeDonasi.DANA)
-    val tipeDonasi: State<String> = _tipeDonasi
-
-    private val _donasiData = mutableStateOf<List<DonasiModelResponse>>(emptyList())
-    val donasiData: State<List<DonasiModelResponse>> = _donasiData
-
-    private val _userData = mutableStateOf(UserData())
-    val userData: State<UserData> = _userData
+    private val _transaksiData = mutableStateOf<List<TransaksiModelResponse>>(emptyList())
+    val transaksiData: State<List<TransaksiModelResponse>> = _transaksiData
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
-    fun onChangeSearch(value: String) {
-        _search.value = value
+    private val _userData = mutableStateOf(UserData())
+    val userData: State<UserData> = _userData
+
+    fun setLoading(value: Boolean) {
+        _isLoading.value = value
     }
 
-    fun setIndex(index: Int) {
-        _currentTabIndex.intValue = index
-    }
-
-    fun setTipeDonasi(tipeDonasi: String) {
-        _tipeDonasi.value = tipeDonasi
-    }
-
-    fun searchQuery() {
+    fun getDonasiById(donasiId: String) {
         viewModelScope.launch {
-            donasiRepository.donasiSearchQuery(_search.value).collect {
+            donasiRepository.getDonasiById(donasiId).collect {
                 when (it) {
                     is Resource.Loading -> {
-                        _isLoading.value  = true
+                        setLoading(true)
                     }
                     is Resource.Success -> {
-                        _donasiData.value = it.data!!
-                        _isLoading.value = false
+                        _donasiData.value = it.data!!.item!!
+                        setLoading(false)
                     }
                     is Resource.Error -> {
-                        _isLoading.value = false
+                        setLoading(false)
                     }
                 }
             }
         }
     }
 
-    fun getDonasiByUserIdAndCategory() {
+    fun getTransaksiByIdDonasi(donasiId: String) {
         viewModelScope.launch {
-            donasiRepository.getDonasiByUserIdAndCategory(userRepository.user!!.uid, _tipeDonasi.value).collect {
+            transaksiRepository.getTransaksiByIdDonasi(donasiId).collect {
                 when (it) {
                     is Resource.Loading -> {
-                        _isLoading.value  = true
+                        setLoading(true)
                     }
                     is Resource.Success -> {
-                        _donasiData.value = it.data!!
-                        _isLoading.value = false
+                        _transaksiData.value = it.data!!
+                        setLoading(false)
                     }
                     is Resource.Error -> {
-                        _isLoading.value = false
+                        setLoading(false)
                     }
                 }
             }
@@ -93,14 +83,14 @@ class RelawanDonasiViewModel @Inject constructor(
             userRepository.getUserById(userId).collect {
                 when (it) {
                     is Resource.Loading -> {
-                        _isLoading.value  = true
+                        setLoading(true)
                     }
                     is Resource.Success -> {
                         _userData.value = it.data!!.item!!
-                        _isLoading.value = false
+                        setLoading(false)
                     }
                     is Resource.Error -> {
-                        _isLoading.value = false
+                        setLoading(false)
                     }
                 }
             }

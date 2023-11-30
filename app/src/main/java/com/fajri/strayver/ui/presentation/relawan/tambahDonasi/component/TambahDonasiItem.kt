@@ -15,13 +15,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.fajri.strayver.model.Transaksi
+import com.fajri.strayver.ui.presentation.relawan.tambahDonasi.TambahDonasiViewModel
 import com.fajri.strayver.ui.theme.Error900
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary300
@@ -30,20 +35,27 @@ import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.ui.theme.Warning900
 import com.fajri.strayver.util.DonaturProgres
+import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
+import com.fajri.strayver.util.toDateString
 
 @Composable
 fun TambahDonasiItem(
-    foto: Int,
-    tanggal: String,
-    progres: String,
-    nama: String,
-    jumlah: String,
-    onClick: () -> Unit
+    transaksiData: Transaksi,
+    navController: NavController,
+    viewModel: TambahDonasiViewModel
 ) {
+    val userData by viewModel.userData
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUserById(transaksiData.idMember)
+    }
+
     Column(
         modifier = Modifier
             .clickable {
-                onClick()
+                navController.navigate(Route.DETAIL_RIWAYAT + "?transaksiId=${transaksiData.transaksiId}")
             }
             .fillMaxWidth()
             .padding(top = 10.dp)
@@ -58,7 +70,7 @@ fun TambahDonasiItem(
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape),
-                model = foto,
+                model = userData.avatar,
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
@@ -68,25 +80,30 @@ fun TambahDonasiItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = tanggal,
+                        text = transaksiData.tanggal.toDateString(),
                         color = Neutral800,
                         style = Type.text2xsRegular()
                     )
                     Spacer(modifier = Modifier.width(10.dp))
-                    when (progres) {
+                    when (transaksiData.status) {
                         DonaturProgres.PROSES -> ProgresProses()
                         DonaturProgres.SELESAI -> ProgresSelesai()
                     }
                 }
                 Text(
-                    text = nama,
+                    text = transaksiData.namaMember,
                     color = Neutral800,
                     style = Type.textSmSemiBold()
                 )
             }
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = jumlah,
+                text =
+                    when(transaksiData.donasiType) {
+                        TipeDonasi.DANA -> "Rp ${formatLongWithDots(transaksiData.income)}"
+                        TipeDonasi.BARANG -> "${formatLongWithDots(transaksiData.income)} barang"
+                        else -> "-"
+                    },
                 color = Secondary900,
                 style = Type.textSmSemiBold(),
                 textAlign = TextAlign.End

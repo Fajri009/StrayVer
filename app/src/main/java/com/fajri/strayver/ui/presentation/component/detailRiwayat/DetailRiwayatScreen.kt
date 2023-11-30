@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIos
@@ -31,6 +32,7 @@ import com.fajri.strayver.ui.presentation.relawan.detailRiwayat.component.Detail
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.DonaturProgres
 import com.fajri.strayver.util.Route
 
 @Composable
@@ -66,13 +68,17 @@ fun DetailRiwayatScreen(
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.height(35.dp))
             Row(
-                verticalAlignment = Alignment.CenterVertically, horizontalArrangement =
-                Arrangement.spacedBy(0.dp)
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(0.dp)
             ) {
-                IconButton(onClick = {
-                    navController.popBackStack()
-                    navController.navigate(Route.MEMBER_RIWAYAT)
-                }
+                IconButton(
+                    modifier = Modifier.padding(start = 15.dp, end = 10.dp),
+                    onClick = {
+                        navController.popBackStack()
+                        if (transaksi.status == DonaturProgres.SELESAI) {
+                            navController.navigate(Route.RELAWAN_RIWAYAT)
+                        }
+                    }
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBackIos,
@@ -81,13 +87,13 @@ fun DetailRiwayatScreen(
                     )
                 }
                 Text(
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier.padding(vertical = 20.dp),
                     text = "Detail Riwayat",
                     color = Color.White,
                     style = Type.displayXsSemiBold()
                 )
             }
-            DetailRiwayatContent(transaksi, role)
+            DetailRiwayatContent(transaksi, role, viewModel)
         }
     }
 }

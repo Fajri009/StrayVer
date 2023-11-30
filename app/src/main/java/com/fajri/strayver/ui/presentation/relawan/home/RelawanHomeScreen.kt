@@ -1,8 +1,12 @@
 package com.fajri.strayver.ui.presentation.relawan.home
 
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +33,9 @@ import com.fajri.strayver.ui.presentation.relawan.home.component.DonasiCard
 import com.fajri.strayver.ui.presentation.relawan.home.component.DonasiTerbaruItem
 import com.fajri.strayver.ui.presentation.relawan.home.component.RelawanGreet
 import com.fajri.strayver.ui.theme.Primary700
+import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
 
 @Composable
 fun RelawanHomeScreen(
@@ -41,7 +47,11 @@ fun RelawanHomeScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.getUser()
-        viewModel.getDonasi()
+        viewModel.getDonasiByUserId()
+        viewModel.getDonasiByUserIdAndCategoryDana()
+        viewModel.getDonasiByUserIdAndCategoryBarang()
+        viewModel.totalDonasiDana()
+        viewModel.totalDonasiBarang()
     }
     
     Column {
@@ -63,7 +73,8 @@ fun RelawanHomeScreen(
                             .align(Alignment.TopCenter)
                             .offset(y = 130.dp)
                             .padding(horizontal = 30.dp),
-                        userData.item!!
+                        userData.item!!,
+                        viewModel
                     )
                 }
                 Spacer(modifier = Modifier.height(100.dp))
@@ -77,11 +88,24 @@ fun RelawanHomeScreen(
                 ) {
                     BuatProyek(modifier = Modifier.fillMaxWidth(), navController)
                     Spacer(modifier = Modifier.height(30.dp))
-
-                    Text(
-                        text = "Proyek Terbarumu",
-                        style = Type.textMdSemiBold(),
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Proyek Terbarumu",
+                            style = Type.textMdSemiBold(),
+                        )
+                        Text(
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(Route.RELAWAN_DONASI)
+                                },
+                            text = "Lihat Semua >",
+                            style = Type.textMdRegular(),
+                            color = Primary900
+                        )
+                    }
                     Spacer(modifier = Modifier.height(10.dp))
                 }
             }
@@ -94,7 +118,11 @@ fun RelawanHomeScreen(
 }
 
 fun LazyListScope.DonasiTerbaruList(navController: NavController, donasiList: List<DonasiModelResponse>) {
-    items(donasiList) {
-        DonasiTerbaruItem(navController, it.item!!)
+    items(
+        if (donasiList.size < 3) {
+            donasiList.size
+        } else 3
+    ) {
+        DonasiTerbaruItem(navController, donasiList[it].item!!)
     }
 }

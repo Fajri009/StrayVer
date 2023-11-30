@@ -1,5 +1,6 @@
 package com.fajri.strayver.ui.presentation.relawan.home.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,7 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,7 +44,7 @@ fun DonasiTerbaruItem(
     ) {
         Card(
             onClick = {
-                navController.navigate(Route.TAMBAH_DONASI + "?type=${donasiData.category}")
+                navController.navigate(Route.TAMBAH_DONASI + "?donasiId=${donasiData.donasiId}")
             },
             elevation = CardDefaults.cardElevation(2.dp)
         ) {
@@ -57,8 +59,8 @@ fun DonasiTerbaruItem(
                         .clip(RoundedCornerShape(10.dp))
                         .size(100.dp),
                     model = donasiData.gambar,
-                    contentDescription = "",
-                    contentScale = ContentScale.FillWidth
+                    contentDescription = "gambar proyek",
+                    contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Column {
@@ -78,8 +80,8 @@ fun DonasiTerbaruItem(
                     Text(
                         text =
                         when (donasiData.category) {
-                            TipeDonasi.BARANG -> "${donasiData.donasiGain.toInt()} barang"
-                            TipeDonasi.DANA -> "Rp ${donasiData.donasiGain}"
+                            TipeDonasi.BARANG -> "${formatLongWithDots(donasiData.donasiGain)} barang"
+                            TipeDonasi.DANA -> "Rp ${formatLongWithDots(donasiData.donasiGain)}"
                             else -> {""}
                         },
                         style = Type.textXsSemiBold(),
