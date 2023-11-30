@@ -1,8 +1,10 @@
 package com.fajri.strayver.ui.presentation.relawan.donasi.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -33,6 +36,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.fajri.strayver.R
 import com.fajri.strayver.data.model.DonasiModelResponse
+import com.fajri.strayver.ui.presentation.component.NotFound
 import com.fajri.strayver.ui.presentation.relawan.donasi.RelawanDonasiViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral800
@@ -111,8 +115,22 @@ fun RelawanDonasiContent(navController: NavController, viewModel: RelawanDonasiV
             LazyColumn(
                 modifier = Modifier.padding(horizontal = 20.dp)
             ) {
-                items(donasiData) {
-                    RelawanDonasiCard(donasiData = it.item!!, navController = navController)
+                if (donasiData.isEmpty()) {
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(1f),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            NotFound(message = "Tidak ada donasi")
+                        }
+                    }
+                } else {
+                    items(donasiData) {
+                        RelawanDonasiCard(donasiData = it.item!!, navController = navController)
+                    }
                 }
             }
         }

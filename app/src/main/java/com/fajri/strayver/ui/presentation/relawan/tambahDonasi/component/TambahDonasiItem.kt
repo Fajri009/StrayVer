@@ -15,6 +15,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.model.Transaksi
+import com.fajri.strayver.ui.presentation.relawan.tambahDonasi.TambahDonasiViewModel
 import com.fajri.strayver.ui.theme.Error900
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary300
@@ -35,12 +38,20 @@ import com.fajri.strayver.util.DonaturProgres
 import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
 import com.fajri.strayver.util.formatLongWithDots
+import com.fajri.strayver.util.toDateString
 
 @Composable
 fun TambahDonasiItem(
     transaksiData: Transaksi,
-    navController: NavController
+    navController: NavController,
+    viewModel: TambahDonasiViewModel
 ) {
+    val userData by viewModel.userData
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUserById(transaksiData.idMember)
+    }
+
     Column(
         modifier = Modifier
             .clickable {
@@ -59,7 +70,7 @@ fun TambahDonasiItem(
                 modifier = Modifier
                     .size(60.dp)
                     .clip(CircleShape),
-                model = transaksiData.gambar,
+                model = userData.avatar,
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
@@ -69,7 +80,7 @@ fun TambahDonasiItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = transaksiData.tanggal.toString(),
+                        text = transaksiData.tanggal.toDateString(),
                         color = Neutral800,
                         style = Type.text2xsRegular()
                     )

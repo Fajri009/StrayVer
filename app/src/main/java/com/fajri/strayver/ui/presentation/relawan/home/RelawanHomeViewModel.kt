@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.relawan.home
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -28,10 +29,10 @@ class RelawanHomeViewModel @Inject constructor(
     val donasiData: State<List<DonasiModelResponse>> = _donasiData
 
     private val _donasiDataDana = mutableStateOf<List<DonasiModelResponse>>(emptyList())
-    val donasiDataDana: State<List<DonasiModelResponse>> = _donasiDataDana
+//    val donasiDataDana: State<List<DonasiModelResponse>> = _donasiDataDana
 
     private val _donasiDataBarang = mutableStateOf<List<DonasiModelResponse>>(emptyList())
-    val donasiDataBarang: State<List<DonasiModelResponse>> = _donasiDataBarang
+//    val donasiDataBarang: State<List<DonasiModelResponse>> = _donasiDataBarang
 
     private val _totalDana = mutableStateOf(0L)
     val totalDana: State<Long> = _totalDana
@@ -122,22 +123,23 @@ class RelawanHomeViewModel @Inject constructor(
     }
 
     fun totalDonasiDana() {
+        var result: Long = 0L
+
         _donasiDataDana.value.forEach {
-            if (_donasiDataDana.value.isNotEmpty()) {
-                _totalDana.value = 0
-            }
-            Log.i("cok", _totalDana.value.toString())
-            _totalDana.value += it.item!!.donasiGain
+            result += it.item?.donasiGain ?: 0
         }
+
+        _totalDana.value = result
     }
 
+
     fun totalDonasiBarang() {
+        var result: Long = 0L
+
         _donasiDataBarang.value.forEach {
-            if (_donasiDataBarang.value.isNotEmpty()) {
-                _totalBarang.value = 0
-            }
-            Log.i("pek", _totalBarang.value.toString())
-            _totalBarang.value += it.item!!.donasiGain
+            result += it.item?.donasiGain ?: 0
         }
+
+        _totalBarang.value = result
     }
 }

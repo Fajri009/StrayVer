@@ -11,6 +11,7 @@ import com.fajri.strayver.data.model.TransaksiModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.TransaksiRepository
 import com.fajri.strayver.data.repository.UserRepository
+import com.fajri.strayver.model.UserData
 import com.fajri.strayver.util.TipeDonasi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -32,6 +33,9 @@ class RelawanRiwayatViewModel @Inject constructor(
 
     private val _transaksiData = mutableStateOf<List<TransaksiModelResponse>>(emptyList())
     val transaksiData: State<List<TransaksiModelResponse>> = _transaksiData
+
+    private val _userData = mutableStateOf(UserData())
+    val userData: State<UserData> = _userData
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
@@ -62,6 +66,18 @@ class RelawanRiwayatViewModel @Inject constructor(
                     is Resource.Error -> {
                         _isLoading.value = false
                     }
+                }
+            }
+        }
+    }
+
+    fun getUserDataByUserId(userId: String) {
+        viewModelScope.launch {
+            userRepository.getUserById(userId).collect {
+                when (it) {
+                    is Resource.Error -> {}
+                    is Resource.Loading -> {}
+                    is Resource.Success -> _userData.value = it.data!!.item!!
                 }
             }
         }

@@ -31,6 +31,7 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,9 +80,9 @@ fun RelawanDonasiCard(
                 Text(
                     text =
                         if (donasiData.category == TipeDonasi.DANA) {
-                            "Rp ${donasiData.donasiGain}"
+                            "Rp ${formatLongWithDots(donasiData.donasiGain)}"
                         } else {
-                            "${donasiData.donasiGain} barang"
+                            "${formatLongWithDots(donasiData.donasiGain)} barang"
                         },
                     style = Type.textXsSemiBold(),
                     color = Secondary900

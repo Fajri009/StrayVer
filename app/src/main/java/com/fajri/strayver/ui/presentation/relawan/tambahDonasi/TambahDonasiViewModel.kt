@@ -9,8 +9,10 @@ import com.fajri.strayver.data.model.DonasiModelResponse
 import com.fajri.strayver.data.model.TransaksiModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.TransaksiRepository
+import com.fajri.strayver.data.repository.UserRepository
 import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.model.Transaksi
+import com.fajri.strayver.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TambahDonasiViewModel @Inject constructor(
     private val donasiRepository: DonasiRepository,
-    private val transaksiRepository: TransaksiRepository
+    private val transaksiRepository: TransaksiRepository,
+    private val userRepository: UserRepository
 ): ViewModel() {
     private val _donasiData = mutableStateOf(Donasi())
     val donasiData: State<Donasi> = _donasiData
@@ -29,6 +32,9 @@ class TambahDonasiViewModel @Inject constructor(
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
+
+    private val _userData = mutableStateOf(UserData())
+    val userData: State<UserData> = _userData
 
     fun setLoading(value: Boolean) {
         _isLoading.value = value
@@ -62,6 +68,25 @@ class TambahDonasiViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         _transaksiData.value = it.data!!
+                        setLoading(false)
+                    }
+                    is Resource.Error -> {
+                        setLoading(false)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getUserById(userId: String) {
+        viewModelScope.launch {
+            userRepository.getUserById(userId).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        setLoading(true)
+                    }
+                    is Resource.Success -> {
+                        _userData.value = it.data!!.item!!
                         setLoading(false)
                     }
                     is Resource.Error -> {

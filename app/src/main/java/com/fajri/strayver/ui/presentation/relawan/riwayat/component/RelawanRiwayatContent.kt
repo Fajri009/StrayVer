@@ -107,14 +107,16 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
                         Spacer(modifier = Modifier.height(5.dp))
                         RelawanRiwayatCard(
                             transaksiData = transaksiData[it].item!!,
-                            navController = navController
+                            navController = navController,
+                            viewModel = viewModel
                         )
                     } else {
                         // Jika riwayat lain memiliki tanggal yang sama, dimulai dari it == transaksi.size
                         if ((transaksiData[it].item!!.tanggal).toDateString() == (transaksiData[it - 1].item!!.tanggal).toDateString()) {
                             RelawanRiwayatCard(
                                 transaksiData = transaksiData[it].item!!,
-                                navController = navController
+                                navController = navController,
+                                viewModel = viewModel
                             )
                         }
                         // Jika berbeda, akan membuat kategori baru dengan tanggal yang berbeda
@@ -124,7 +126,8 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
                             Spacer(modifier = Modifier.height(5.dp))
                             RelawanRiwayatCard(
                                 transaksiData = transaksiData[it].item!!,
-                                navController = navController
+                                navController = navController,
+                                viewModel = viewModel
                             )
                         }
                     }

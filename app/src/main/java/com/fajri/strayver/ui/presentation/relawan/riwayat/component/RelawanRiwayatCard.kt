@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +25,7 @@ import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.model.Transaksi
 import com.fajri.strayver.ui.presentation.component.CompanyTag
+import com.fajri.strayver.ui.presentation.relawan.riwayat.RelawanRiwayatViewModel
 import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Primary50
 import com.fajri.strayver.ui.theme.Primary900
@@ -32,12 +35,19 @@ import com.fajri.strayver.ui.theme.Warning900
 import com.fajri.strayver.util.DonaturProgres
 import com.fajri.strayver.util.Route
 import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
 fun RelawanRiwayatCard(
     transaksiData: Transaksi,
-    navController: NavController
+    navController: NavController,
+    viewModel: RelawanRiwayatViewModel
 ) {
+    val userData by viewModel.userData
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUserDataByUserId(transaksiData.idMember)
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,7 +82,7 @@ fun RelawanRiwayatCard(
             Spacer(modifier = Modifier.width(10.dp))
             Column{
                 Row {
-                    CompanyTag(companyName = transaksiData.namaMember, companyIcon = transaksiData.gambar)
+                    CompanyTag(companyName = userData.email, companyIcon = userData.avatar)
                     Spacer(modifier = Modifier.width(5.dp))
                     when (transaksiData.status) {
                         DonaturProgres.PROSES -> ProgresProses()
@@ -89,8 +99,8 @@ fun RelawanRiwayatCard(
             Text(
                 text =
                     when (transaksiData.donasiType) {
-                        TipeDonasi.DANA -> "Rp ${transaksiData.income}"
-                        TipeDonasi.BARANG -> "${transaksiData.income} pcs"
+                        TipeDonasi.DANA -> "Rp ${formatLongWithDots(transaksiData.income)}"
+                        TipeDonasi.BARANG -> "${formatLongWithDots(transaksiData.income)} pcs"
                         else -> transaksiData.income.toString()
                     },
                 color = Primary900,

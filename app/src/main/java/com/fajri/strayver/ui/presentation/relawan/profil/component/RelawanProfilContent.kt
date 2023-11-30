@@ -66,7 +66,7 @@ fun RelawanProfilContent(userData: UserData,navController: NavController) {
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            RelawanInfoItem(value = "Role", title = "Role", icon = R.drawable.ic_role)
+            RelawanInfoItem(value = "Relawan", title = "Role", icon = R.drawable.ic_role)
         }
 
         item {
