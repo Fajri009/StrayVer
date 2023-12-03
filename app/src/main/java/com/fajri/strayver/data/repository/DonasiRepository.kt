@@ -146,6 +146,8 @@ class DonasiRepository {
         callbackFlow<Resource<String>> {
             trySend(Resource.Loading())
 
+            Log.i("currdon", "updateDonasiGain: ${currentDonasi!!.item!!.donasiGain}")
+
             db.child(donasiId).child("donasiGain")
                 .setValue(currentDonasi!!.item!!.donasiGain + value)
                 .addOnSuccessListener {

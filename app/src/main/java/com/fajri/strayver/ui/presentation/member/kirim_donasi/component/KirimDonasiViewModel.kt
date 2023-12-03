@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
+import com.fajri.strayver.data.model.UserModelResponse
 import com.fajri.strayver.data.repository.DonasiRepository
 import com.fajri.strayver.data.repository.TransaksiRepository
 import com.fajri.strayver.data.repository.UserRepository
@@ -29,7 +30,8 @@ class KirimDonasiViewModel @Inject constructor(
 
     lateinit var context: Context
 
-    var userId= userRepository.user!!.uid
+    private val _userData= mutableStateOf<UserModelResponse>(UserModelResponse())
+    val userData: State<UserModelResponse> = _userData
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
@@ -122,7 +124,7 @@ class KirimDonasiViewModel @Inject constructor(
             deskripsi = _deskripsi.value,
             metodePembayaran = _metode.value,
             gambar = "",
-            idMember = userId,
+            idMember = _userData.value.key!!,
             idRelawan = idRelawan
         )
 
@@ -156,7 +158,7 @@ class KirimDonasiViewModel @Inject constructor(
             deskripsi = "",
             metodePembayaran = _metode.value,
             gambar = "",
-            idMember = userId,
+            idMember = _userData.value.key!!,
             idRelawan = idRelawan
         )
 
@@ -194,7 +196,7 @@ class KirimDonasiViewModel @Inject constructor(
 
     private fun updateUserSaldo(value: Long, donasiId: String) {
         viewModelScope.launch {
-            userRepository.updateSaldo(value).collect {
+            userRepository.updateSaldo(value, _userData.value.item!!).collect {
                 when (it) {
                     is Resource.Error -> {
                         setLoading(false)
@@ -204,6 +206,24 @@ class KirimDonasiViewModel @Inject constructor(
                     is Resource.Success -> {
                         setLoading(false)
                         updateDonasiGain(donasiId, value)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getCurrentUser() {
+        viewModelScope.launch {
+            userRepository.getUserById().collect {
+                when (it) {
+                    is Resource.Error -> {
+                        setLoading(false)
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is Resource.Loading -> setLoading(true)
+                    is Resource.Success -> {
+                        _userData.value= it.data!!
+                        setLoading(false)
                     }
                 }
             }
