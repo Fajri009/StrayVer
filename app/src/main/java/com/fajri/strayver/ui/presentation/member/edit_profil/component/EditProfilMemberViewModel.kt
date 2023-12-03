@@ -106,7 +106,7 @@ class EditProfilMemberViewModel @Inject constructor(
                         _deskripsi.value= _userData.value.deskripsi
                         _email.value= _userData.value.email
                         _alamat.value= _userData.value.alamat
-                        _imageUri.value = _userData.value.avatar.toUri()
+//                        _imageUri.value = _userData.value.avatar.toUri()
                         _telp.value= _userData.value.telp
                         _password.value= _userData.value.password
                         _isLoading.value = false
@@ -120,6 +120,7 @@ class EditProfilMemberViewModel @Inject constructor(
 
     fun updateProfil(context: Context): Flow<Resource<String>> {
 
+
         val user = UserData(
             nama = _nama.value,
             username = _username.value,
@@ -131,8 +132,6 @@ class EditProfilMemberViewModel @Inject constructor(
             role = _userData.value.role,
             saldo = _userData.value.saldo
         )
-
-        Log.i("jancok", "updateProfil: ${_imageUri.value}")
 
         return userRepository.updateUserProfile(user, _imageUri.value, context)
     }
