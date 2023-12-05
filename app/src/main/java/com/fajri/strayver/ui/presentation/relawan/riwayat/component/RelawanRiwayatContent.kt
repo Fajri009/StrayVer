@@ -97,40 +97,21 @@ fun RelawanRiwayatContent(navController: NavController, viewModel: RelawanRiwaya
                     }
                 }
             } else {
+                val sortedTransaksi = transaksiData.sortedByDescending {
+                    it.item!!.tanggal
+                }
                 item {
                     Spacer(modifier = Modifier.height(20.dp))
                 }
                 items(transaksiData.size) {
-                    // Jika riwayatnya cuman 1
-                    if (it == 0) {
-                        DateTag(date = (transaksiData[0].item!!.tanggal).toDateString())
-                        Spacer(modifier = Modifier.height(5.dp))
-                        RelawanRiwayatCard(
-                            transaksiData = transaksiData[it].item!!,
-                            navController = navController,
-                            viewModel = viewModel
-                        )
-                    } else {
-                        // Jika riwayat lain memiliki tanggal yang sama, dimulai dari it == transaksi.size
-                        if ((transaksiData[it].item!!.tanggal).toDateString() == (transaksiData[it - 1].item!!.tanggal).toDateString()) {
-                            RelawanRiwayatCard(
-                                transaksiData = transaksiData[it].item!!,
-                                navController = navController,
-                                viewModel = viewModel
-                            )
-                        }
-                        // Jika berbeda, akan membuat kategori baru dengan tanggal yang berbeda
-                        else {
-                            Spacer(modifier = Modifier.height(20.dp))
-                            DateTag(date = (transaksiData[it].item!!.tanggal).toDateString())
-                            Spacer(modifier = Modifier.height(5.dp))
-                            RelawanRiwayatCard(
-                                transaksiData = transaksiData[it].item!!,
-                                navController = navController,
-                                viewModel = viewModel
-                            )
-                        }
+                    val currentDate = (sortedTransaksi[it].item!!.tanggal).toDateString()
+
+                    if (it == 0 || currentDate != (sortedTransaksi[it - 1].item!!.tanggal).toDateString
+                            ()) {
+                        DateTag(date = currentDate)
                     }
+
+                    RelawanRiwayatCard(sortedTransaksi[it].item!!, navController = navController, viewModel = viewModel)
                 }
             }
             item {
