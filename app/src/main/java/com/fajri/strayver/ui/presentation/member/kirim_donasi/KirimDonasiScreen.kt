@@ -53,6 +53,10 @@ fun KirimDonasiScreen(
     idRelawan: String
 ) {
 
+    LaunchedEffect(key1 = true, block = {
+        viewModel.getCurrentUser()
+    })
+
     viewModel.context= LocalContext.current
 
     if (viewModel.isLoading.value) {

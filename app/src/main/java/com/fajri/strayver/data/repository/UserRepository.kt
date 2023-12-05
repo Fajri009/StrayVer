@@ -207,13 +207,11 @@ class UserRepository() {
             }
         }
 
-    fun updateSaldo(value: Long) =
+    fun updateSaldo(value: Long, userData: UserData) =
         callbackFlow<Resource<String>> {
             trySend(Resource.Loading())
 
-            getUserById(user!!.uid)
-
-            if (currentUser?.item?.saldo!! < value) {
+            if (userData.saldo < value) {
                 trySend(
                     Resource.Error(
                         "Saldo anda tidak cukup\nRp saldo anda: ${
@@ -225,7 +223,7 @@ class UserRepository() {
                 )
             } else {
                 userDb.child(user!!.uid).child("saldo")
-                    .setValue(currentUser?.item?.saldo!! - value)
+                    .setValue(userData.saldo - value)
                     .addOnSuccessListener {
                         trySend(Resource.Success("Berhasil mengubah saldo"))
                     }

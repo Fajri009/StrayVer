@@ -55,6 +55,7 @@ fun EditProfilMemberScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.getUserData()
+        viewModel.setImageUri(null)
     }
 
     if (viewModel.isLoading.value) {

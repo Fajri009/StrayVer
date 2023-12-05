@@ -123,6 +123,7 @@ fun EditProfilContent(viewModel: EditProfilMemberViewModel, scope: CoroutineScop
                                     viewModel.getUserData()
                                     viewModel.onChangeLoadingState(false)
                                     Toast.makeText(context, "Data akun berhasil diubah", Toast.LENGTH_SHORT).show()
+                                    viewModel.setImageUri(null)
                                     navController.navigate(Route.MEMBER_PROFIL)
                                 }
                                 is Resource.Loading -> {
