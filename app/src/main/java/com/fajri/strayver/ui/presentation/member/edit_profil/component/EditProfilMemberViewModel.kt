@@ -106,7 +106,6 @@ class EditProfilMemberViewModel @Inject constructor(
                         _deskripsi.value= _userData.value.deskripsi
                         _email.value= _userData.value.email
                         _alamat.value= _userData.value.alamat
-//                        _imageUri.value = _userData.value.avatar.toUri()
                         _telp.value= _userData.value.telp
                         _password.value= _userData.value.password
                         _isLoading.value = false
