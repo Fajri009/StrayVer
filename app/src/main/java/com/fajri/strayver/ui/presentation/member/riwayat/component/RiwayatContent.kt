@@ -121,7 +121,6 @@ fun RiwayatContent(viewModel: MemberRiwayatViewModel, navController: NavControll
                         DateTag(date = (transaksi[0].item!!.tanggal).toDateString())
                         RiwayatItem(transaksi[it].item!!, navController = navController)
                     } else {
-
                         if ((transaksi[it].item!!.tanggal).toDateString() == (transaksi[it - 1].item!!
                                 .tanggal).toDateString()
                         ) {
