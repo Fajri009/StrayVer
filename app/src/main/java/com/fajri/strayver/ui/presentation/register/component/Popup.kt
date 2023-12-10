@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +35,7 @@ fun Popup(
     pesan: String
 ) {
     Dialog(onDismissRequest = { /*TODO*/ }) {
-        Dialog(onDismissRequest = { }) {
+        Card() {
             Column(
                 Modifier
                     .clip(RoundedCornerShape(30.dp))
@@ -61,6 +62,7 @@ fun Popup(
                         when (type) {
                             "Register" -> navController.navigate(Route.LOGIN)
                             "Buat Proyek" -> navController.navigate(Route.RELAWAN_HOME)
+                            "KirimDonasi" -> navController.navigate(Route.MEMBER_RIWAYAT)
                         }
                     },
                     text = "Baik",

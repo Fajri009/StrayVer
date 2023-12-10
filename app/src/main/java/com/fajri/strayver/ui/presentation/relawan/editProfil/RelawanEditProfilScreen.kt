@@ -1,5 +1,8 @@
 package com.fajri.strayver.ui.presentation.relawan.editProfil
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,11 +22,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
@@ -34,7 +42,19 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun RelawanEditProfilScreen(navController: NavController) {
+fun RelawanEditProfilScreen(
+    navController: NavController,
+    viewModel: RelawanEditViewModel = hiltViewModel(),
+) {
+    val scope = rememberCoroutineScope()
+    val userData by viewModel.userData
+
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUserData()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -80,32 +100,47 @@ fun RelawanEditProfilScreen(navController: NavController) {
         }
 
         Column(Modifier.align(Alignment.TopStart)) {
-            RelawanEditProfilContent(navController)
+            RelawanEditProfilContent(navController, viewModel, scope, context)
         }
 
         RelawanProfilPicture(
-            Modifier
+            modifier = Modifier
                 .align(Alignment.TopCenter)
-                .offset(y = 115.dp)
+                .offset(y = 115.dp),
+            avatar = viewModel.imageUri.value ?: userData.avatar,
         )
 
         EditButton(
             Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = 200.dp, x = 50.dp)
-                .size(30.dp)
+                .size(30.dp),
+            viewModel = viewModel
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun EditButton(modifier: Modifier= Modifier) {
+private fun EditButton(modifier: Modifier= Modifier, viewModel: RelawanEditViewModel) {
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = {
+            it?.let {
+                viewModel.setImageUri(it)
+            }
+        }
+    )
+
     Card(
         modifier = modifier,
         shape = CircleShape,
         colors = CardDefaults.cardColors(containerColor = Shades50),
-        onClick = {},
+        onClick = {
+            launcher.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        },
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         AsyncImage(

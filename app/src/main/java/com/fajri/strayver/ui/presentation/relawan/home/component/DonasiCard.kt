@@ -17,20 +17,25 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.fajri.strayver.model.Donasi
+import com.fajri.strayver.model.UserData
+import com.fajri.strayver.ui.presentation.relawan.home.RelawanHomeViewModel
 import com.fajri.strayver.ui.theme.Neutral300
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
-fun DonasiCard(modifier: Modifier = Modifier) {
+fun DonasiCard(modifier: Modifier = Modifier, userData: UserData, viewModel: RelawanHomeViewModel) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(Neutral50),
@@ -68,7 +73,7 @@ fun DonasiCard(modifier: Modifier = Modifier) {
                         style = Type.text2xsRegular()
                     )
                     Text(
-                        text = "Rp 3.258.500",
+                        text = "Rp ${formatLongWithDots(viewModel.totalDana.value)}",
                         color = Neutral900,
                         style = Type.textSmSemiBold()
                     )
@@ -91,7 +96,7 @@ fun DonasiCard(modifier: Modifier = Modifier) {
                         style = Type.text2xsRegular()
                     )
                     Text(
-                        text = "3",
+                        text = formatLongWithDots(viewModel.totalBarang.value),
                         color = Neutral900,
                         style = Type.textSmSemiBold()
                     )

@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.member.kirim_donasi
 
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +34,7 @@ import com.fajri.strayver.ui.presentation.component.LoadingDialog
 import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.FormBarang
 import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.KirimDonasiViewModel
 import com.fajri.strayver.ui.presentation.member.kirim_donasi.component.MetodePembayaran
+import com.fajri.strayver.ui.presentation.register.component.Popup
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Shades50
@@ -42,29 +45,68 @@ import com.fajri.strayver.util.Route
 @Composable
 fun KirimDonasiScreen(
     navController: NavController,
-    viewModel: KirimDonasiViewModel = hiltViewModel()
+    viewModel: KirimDonasiViewModel = hiltViewModel(),
+    namaDonasi: String,
+    donasiId: String,
+    donasiType: String,
+    relawan: String,
+    idRelawan: String
 ) {
+
+    LaunchedEffect(key1 = true, block = {
+        viewModel.getCurrentUser()
+    })
+
+    viewModel.context= LocalContext.current
 
     if (viewModel.isLoading.value) {
         LoadingDialog()
     }
 
-    val type = "barang"
+    if (viewModel.showDialog.value) {
+        Popup(
+            navController = navController,
+            type = "KirimDonasi",
+            judul = "Donasi Sukses",
+            pesan = "Terima kasih telah memberikan donasi kepada kami"
+        )
+    }
+
+    if (viewModel.isLoading.value) {
+        LoadingDialog()
+    }
+
+    BackHandler(false, onBack = {})
+
     val context = LocalContext.current
 
-    when (type) {
-        "dana" -> KirimDana(navController, context, viewModel)
-        "barang" -> KirimBarang(navController, context, viewModel)
+    when (donasiType) {
+        "Dana" -> KirimDana(
+            navController, context, viewModel, namaDonasi, donasiId, donasiType,
+            relawan, idRelawan
+        )
+
+        "Barang" -> KirimBarang(
+            navController = navController, context = context, viewModel = viewModel, donasiId =
+            donasiId, donasiType = donasiType, relawan = relawan, namaDonasi = namaDonasi,
+            idRelawan= idRelawan
+        )
     }
 }
 
 @Composable
-private fun KirimDana(navController: NavController, context: Context, viewModel: KirimDonasiViewModel) {
+private fun KirimDana(
+    navController: NavController, context: Context,
+    viewModel:
+    KirimDonasiViewModel,
+    namaDonasi: String, donasiId: String, donasiType: String, relawan: String, idRelawan: String
+) {
     Box(
         Modifier
             .fillMaxSize()
             .background(Primary700)
     ) {
+        BackHandler(false, onBack = {})
         AsyncImage(model = R.drawable.ilustrasi, contentDescription = "")
         Row(
             Modifier
@@ -76,7 +118,7 @@ private fun KirimDana(navController: NavController, context: Context, viewModel:
             IconButton(
                 onClick = {
                     navController.popBackStack()
-                    navController.navigate(Route.DETAIL_DONASI)
+                    navController.navigate(Route.DETAIL_DONASI + "?donasiId=$donasiId")
                 }
             ) {
                 Icon(
@@ -97,7 +139,8 @@ private fun KirimDana(navController: NavController, context: Context, viewModel:
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
                     .background(Neutral50)
-                    .padding(20.dp)
+                    .padding(20.dp),
+                viewModel
             )
         }
 
@@ -106,18 +149,35 @@ private fun KirimDana(navController: NavController, context: Context, viewModel:
                 .align(Alignment.BottomCenter)
                 .padding(horizontal = 20.dp, vertical = 40.dp)
         ) {
-            CustomButton(onClick = { /*TODO*/ }, text = "Kirim", type = ButtonType.LARGE)
+            CustomButton(
+                onClick = {
+                    viewModel.donasiDanaSubmit(namaDonasi= namaDonasi, donasiId=
+                    donasiId, donasiType= donasiType, relawan= relawan, idRelawan= idRelawan)
+                },
+                text = "Kirim",
+                type = ButtonType.LARGE
+            )
         }
     }
 }
 
 @Composable
-private fun KirimBarang(navController: NavController, context: Context, viewModel: KirimDonasiViewModel) {
+private fun KirimBarang(
+    navController: NavController,
+    context: Context,
+    viewModel: KirimDonasiViewModel,
+    donasiId: String,
+    donasiType: String,
+    relawan: String,
+    namaDonasi: String,
+    idRelawan: String
+) {
     Box(
         Modifier
             .fillMaxSize()
             .background(Primary700)
     ) {
+        BackHandler(false, onBack = {})
         AsyncImage(model = R.drawable.ilustrasi, contentDescription = "")
         Row(
             Modifier
@@ -129,7 +189,7 @@ private fun KirimBarang(navController: NavController, context: Context, viewMode
             IconButton(
                 onClick = {
                     navController.popBackStack()
-                    navController.navigate(Route.DETAIL_DONASI)
+                    navController.navigate(Route.DETAIL_DONASI + "?donasiId=$donasiId")
                 }
             ) {
                 Icon(
@@ -146,13 +206,18 @@ private fun KirimBarang(navController: NavController, context: Context, viewMode
             FormBarang(
                 navController = navController,
                 context = context,
-                viewModel= viewModel,
-                Modifier
+                viewModel = viewModel,
+                modifier = Modifier
                     .padding(top = 60.dp)
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
                     .background(Neutral50)
-                    .padding(20.dp)
+                    .padding(20.dp),
+                namaDonasi = namaDonasi,
+                donasiType = donasiType,
+                donasiId = donasiId,
+                relawan = relawan,
+                idRelawan = idRelawan
             )
         }
     }

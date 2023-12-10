@@ -1,7 +1,10 @@
 package com.fajri.strayver.ui.presentation.member.detail_donasi.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,19 +13,29 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.fajri.strayver.model.Donasi
 import com.fajri.strayver.ui.presentation.component.CustomButton
+import com.fajri.strayver.ui.presentation.member.detail_donasi.DetaiDonasiViewModel
+import com.fajri.strayver.ui.theme.Pink40
 import com.fajri.strayver.ui.theme.Primary400
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
 
 @Composable
-fun DetailContent(navController: NavController) {
-    LazyColumn(
+fun DetailContent(
+    navController: NavController,
+    donasi: Donasi,
+    viewModel: DetaiDonasiViewModel,
+    relawanAvatar: String
+) {
+    Column(
         Modifier
             .fillMaxSize()
             .padding(top = 40.dp)
@@ -30,30 +43,54 @@ fun DetailContent(navController: NavController) {
             .background(Shades50)
             .padding(20.dp),
     ) {
-        item {
-            ContentHead()
-        }
+        ContentHead(
+            donasi,
+            relawanAvatar,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.35f)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Divider(
+            Modifier
+                .fillMaxWidth()
+                .height(1.dp), color = Primary400
+        )
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.8f)
 
-        item {
-            Spacer(modifier = Modifier.height(20.dp))
-            Divider(
-                Modifier
-                    .fillMaxWidth()
-                    .height(1.dp), color = Primary400
-            )
-            Spacer(modifier = Modifier.height(20.dp))
+        ) {
+            item {
+                Spacer(modifier = Modifier.height(20.dp))
+                ContentDescription(donasi)
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
-
-        item {
-            ContentDescription()
-            Spacer(modifier = Modifier.height(16.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
             CustomButton(
                 onClick = {
-                    navController.navigate(Route.KIRIM_DONASI)
+                    if (donasi.category == TipeDonasi.BARANG) {
+                        viewModel.setDialog(true)
+                    } else {
+                        navController.navigate(
+                            Route.KIRIM_DONASI + "?namaDonasi=${donasi.title}" +
+                                    "?donasiId=${donasi.donasiId}" +
+                                    "?type=${donasi.category}" + "?relawan=${donasi.relawanNama}" +
+                                    "?idRelawan=${donasi.userId}"
+                        )
+                    }
                 },
                 text = "Donasi",
-                type = ButtonType.LARGE
+                type = ButtonType.LARGE,
+                modifier = Modifier.align(Alignment.Center)
             )
         }
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }

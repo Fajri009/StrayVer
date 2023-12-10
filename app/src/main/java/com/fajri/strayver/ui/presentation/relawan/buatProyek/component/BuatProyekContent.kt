@@ -1,6 +1,7 @@
 package com.fajri.strayver.ui.presentation.relawan.buatProyek.component
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.fajri.strayver.data.Resource
 import com.fajri.strayver.ui.presentation.component.CustomButton
 import com.fajri.strayver.ui.presentation.component.CustomTextField
+import com.fajri.strayver.ui.presentation.component.PickImage
+import com.fajri.strayver.ui.presentation.component.PickImageBuatProyek
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.BuatProyekViewModel
 import com.fajri.strayver.ui.theme.Neutral50
 import com.fajri.strayver.ui.theme.Neutral700
@@ -27,7 +31,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, context: Context, donasiType: String) {
+fun BuatProyekForm(
+    viewModel: BuatProyekViewModel,
+    scope: CoroutineScope,
+    context: Context,
+    donasiType: String
+) {
+
+    val context= LocalContext.current
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -37,7 +49,7 @@ fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, contex
     ) {
         item {
             Text(
-                text = "Donasi $donasiType" ,
+                text = "Donasi $donasiType",
                 color = Neutral900,
                 style = Type.textLgSemiBold()
             )
@@ -78,7 +90,8 @@ fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, contex
                     viewModel.onChangeDeskripsi(it)
                 },
                 minLine = 8,
-                maxLine = 8)
+                maxLine = 8
+            )
             Spacer(modifier = Modifier.height(10.dp))
         }
 
@@ -90,11 +103,11 @@ fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, contex
             )
             CustomTextField(
                 text =
-                    if (viewModel.jumlahMaks.value.toString() == "null") {
-                        ""
-                    } else {
-                        viewModel.jumlahMaks.value.toString()
-                    },
+                if (viewModel.jumlahMaks.value.toString() == "null") {
+                    ""
+                } else {
+                    viewModel.jumlahMaks.value.toString()
+                },
                 placeholder = "",
                 onValueChange = {
                     if (it == "") {
@@ -114,10 +127,7 @@ fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, contex
                 color = Color.Black,
                 style = Type.textSmMedium()
             )
-            CustomTextField(
-                text = "",
-                placeholder = ""
-            )
+            PickImageBuatProyek(viewModel = viewModel)
             Spacer(modifier = Modifier.height(20.dp))
         }
 
@@ -126,16 +136,20 @@ fun BuatProyekForm(viewModel: BuatProyekViewModel, scope: CoroutineScope, contex
                 onClick = {
                     if (viewModel.isValid(context)) {
                         scope.launch {
-                            viewModel.buatProyek().collect {
-                                when(it) {
+                            viewModel.buatProyek(context).collect {
+                                when (it) {
                                     is Resource.Loading -> {
                                         viewModel.setLoading(true)
                                     }
+
                                     is Resource.Success -> {
                                         viewModel.setDialog(true)
                                     }
+
                                     is Resource.Error -> {
                                         viewModel.setLoading(false)
+                                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT)
+                                            .show()
                                     }
                                 }
                             }

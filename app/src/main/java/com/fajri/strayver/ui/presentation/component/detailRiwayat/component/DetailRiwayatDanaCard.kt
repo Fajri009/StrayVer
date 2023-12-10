@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.fajri.strayver.model.Transaksi
 import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Neutral800
 import com.fajri.strayver.ui.theme.Primary200
@@ -26,15 +27,13 @@ import com.fajri.strayver.ui.theme.Secondary50
 import com.fajri.strayver.ui.theme.Secondary900
 import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.formatLongWithDots
+import com.fajri.strayver.util.toDateString
 
 @Composable
 fun DetailRiwayatDanaCard(
-    kode: String,
-    judul: String,
-    nama: String,
-    tanggal: String,
-    metode: String,
-    total: String
+    transaksi: Transaksi,
+    role: String
 ) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp)
@@ -61,7 +60,7 @@ fun DetailRiwayatDanaCard(
                         .padding(20.dp)
                 ) {
                     Text(
-                        text = "Kode Donasi: $kode",
+                        text = "Kode Donasi: ${transaksi.donasiId}",
                         color = Neutral800,
                         style = Type.text2xsBold()
                     )
@@ -74,7 +73,7 @@ fun DetailRiwayatDanaCard(
                             style = Type.textSmSemiBold()
                         )
                         Text(
-                            text = judul,
+                            text = transaksi.title,
                             color = Color.Black,
                             style = Type.textXsRegular()
                         )
@@ -92,12 +91,21 @@ fun DetailRiwayatDanaCard(
                             modifier = Modifier.weight(.6f)
                         ) {
                             Text(
-                                text = "Nama Relawan",
+                                text =
+                                if (role == "member")
+                                    "Nama Relawan"
+                                else
+                                    "Nama Member",
                                 color = Color.Black,
                                 style = Type.textSmSemiBold()
                             )
                             Text(
-                                text = nama,
+                                text =
+                                    if (role == "member") {
+                                        transaksi.namaRelawan
+                                    } else {
+                                        transaksi.namaMember
+                                },
                                 color = Color.Black,
                                 style = Type.textXsRegular()
                             )
@@ -111,7 +119,7 @@ fun DetailRiwayatDanaCard(
                                 style = Type.textSmSemiBold()
                             )
                             Text(
-                                text = tanggal,
+                                text = (transaksi.tanggal).toDateString(),
                                 color = Neutral700,
                                 style = Type.textXsRegular()
                             )
@@ -129,7 +137,7 @@ fun DetailRiwayatDanaCard(
                         style = Type.textSmSemiBold()
                     )
                     Text(
-                        text = metode,
+                        text = transaksi.metodePembayaran,
                         color = Neutral700,
                         style = Type.textXsRegular()
                     )
@@ -145,7 +153,7 @@ fun DetailRiwayatDanaCard(
                         style = Type.textSmSemiBold()
                     )
                     Text(
-                        text = "Rp $total",
+                        text = "Rp ${formatLongWithDots(transaksi.income)}",
                         color = Secondary900,
                         style = Type.textMdSemiBold()
                     )

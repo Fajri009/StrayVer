@@ -17,7 +17,7 @@ import com.fajri.strayver.R
 import com.fajri.strayver.ui.theme.Shades50
 
 @Composable
-fun ProfilePicture(modifier: Modifier= Modifier) {
+fun ProfilePicture(avatar: Any, modifier: Modifier= Modifier) {
     Card(
         modifier= modifier,
         colors = CardDefaults.cardColors(containerColor = Shades50),
@@ -25,7 +25,7 @@ fun ProfilePicture(modifier: Modifier= Modifier) {
         shape = CircleShape
     ) {
         AsyncImage(
-            model = R.drawable.danis,
+            model = avatar,
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier

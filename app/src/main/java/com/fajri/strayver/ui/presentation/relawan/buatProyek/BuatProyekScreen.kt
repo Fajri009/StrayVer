@@ -1,6 +1,5 @@
 package com.fajri.strayver.ui.presentation.relawan.buatProyek
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -22,7 +22,6 @@ import com.fajri.strayver.ui.presentation.register.component.Popup
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.component.BuatProyekForm
 import com.fajri.strayver.ui.presentation.relawan.buatProyek.component.BuatProyekHead
 import com.fajri.strayver.ui.theme.Primary700
-import com.fajri.strayver.util.Route
 
 @Composable
 fun BuatProyekScreen(
@@ -30,9 +29,13 @@ fun BuatProyekScreen(
     viewModel: BuatProyekViewModel = hiltViewModel(),
     donasiType: String
 ) {
-    val scope= rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     val context = LocalContext.current
+
+    LaunchedEffect(key1 = true, block = {
+        viewModel.getUser()
+    })
 
     viewModel.donasiType = donasiType
 
@@ -60,7 +63,9 @@ fun BuatProyekScreen(
             contentScale = ContentScale.FillWidth
         )
 
-        Column {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
             Spacer(modifier = Modifier.height(20.dp))
             BuatProyekHead(navController)
             BuatProyekForm(viewModel, scope, context, donasiType)

@@ -10,10 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
 import com.fajri.strayver.ui.presentation.component.CustomTextField
@@ -23,7 +25,19 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun MemberRiwayatScreen(viewModel: MemberRiwayatViewModel= hiltViewModel()) {
+fun MemberRiwayatScreen(
+    viewModel: MemberRiwayatViewModel = hiltViewModel(),
+    navController: NavController
+) {
+
+    LaunchedEffect(key1 = viewModel.search.value, block = {
+        viewModel.searchQuery()
+    })
+
+    LaunchedEffect(key1 = viewModel.type.value, block = {
+        viewModel.getUserTransaksi()
+    })
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,17 +54,17 @@ fun MemberRiwayatScreen(viewModel: MemberRiwayatViewModel= hiltViewModel()) {
             )
 
             CustomTextField(
-                text = "",
+                text = viewModel.search.value,
                 placeholder = "Search",
                 trailingIcon = Icons.Default.Search,
                 onValueChange = {
-
+                    viewModel.onChangeSearch(it)
                 },
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth()
             )
-            RiwayatContent(viewModel)
+            RiwayatContent(viewModel, navController = navController)
         }
     }
 }

@@ -1,5 +1,10 @@
 package com.fajri.strayver.util
 
+import java.text.DateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 fun formatLongWithDots(value: Long): String {
     val stringValue = value.toString()
     val length = stringValue.length
@@ -20,4 +25,9 @@ fun formatLongWithDots(value: Long): String {
         }
     }
     return formatted.reverse().toString()
+}
+
+fun Long.toDateString(dateFormat: Int =  DateFormat.MEDIUM): String {
+    val df = DateFormat.getDateInstance(dateFormat, Locale.getDefault())
+    return df.format(this)
 }

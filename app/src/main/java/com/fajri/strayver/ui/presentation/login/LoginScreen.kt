@@ -1,6 +1,5 @@
 package com.fajri.strayver.ui.presentation.login
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,39 +13,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
-import com.fajri.strayver.ui.presentation.component.CustomButton
-import com.fajri.strayver.ui.presentation.component.CustomCheckBox
-import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.component.LoadingDialog
-import com.fajri.strayver.ui.presentation.login.component.Form
 import com.fajri.strayver.ui.presentation.login.component.Greeting
+import com.fajri.strayver.ui.presentation.login.component.LoginForm
 import com.fajri.strayver.ui.theme.Neutral50
-import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Neutral900
 import com.fajri.strayver.ui.theme.Primary700
 import com.fajri.strayver.ui.theme.Primary800
-import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
-import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 
 @Composable
@@ -94,7 +78,7 @@ fun LoginScreen(
 
                     Spacer(modifier = Modifier.height(25.dp))
 
-                    Form(viewModel, navController, scope)
+                    LoginForm(viewModel, navController, scope)
 
                     Spacer(modifier = Modifier.height(30.dp))
                     Row(

@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
@@ -14,21 +13,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
+import com.fajri.strayver.model.Transaksi
 import com.fajri.strayver.ui.presentation.component.CompanyTag
 import com.fajri.strayver.ui.theme.Neutral700
 import com.fajri.strayver.ui.theme.Primary900
 import com.fajri.strayver.ui.theme.Type
+import com.fajri.strayver.util.Route
+import com.fajri.strayver.util.TipeDonasi
+import com.fajri.strayver.util.formatLongWithDots
 
 @Composable
-fun RiwayatItem(type: String) {
+fun RiwayatItem(transaksi: Transaksi, navController: NavController) {
     Row(
         Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 8.dp)
             .clickable {
-
+                navController.navigate(Route.DETAIL_RIWAYAT + "?transaksiId=${transaksi.transaksiId}")
             },
         horizontalArrangement = Arrangement.spacedBy(27.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -40,12 +44,12 @@ fun RiwayatItem(type: String) {
         ) {
             AsyncImage(
                 model =
-                when (type) {
-                    "dana" -> R.drawable.ic_riwayat_dana
-                    "barang" -> R.drawable.ic_riwayat_barang
+                when (transaksi.donasiType) {
+                    TipeDonasi.DANA -> R.drawable.ic_riwayat_dana
+                    TipeDonasi.BARANG -> R.drawable.ic_riwayat_barang
                     else -> ""
                 },
-                contentDescription = type,
+                contentDescription = transaksi.donasiType,
                 modifier = Modifier.sizeIn(maxWidth = 48.dp, minWidth = 48.dp)
             )
 
@@ -53,11 +57,11 @@ fun RiwayatItem(type: String) {
                 horizontalAlignment = Alignment.Start
             ) {
                 CompanyTag(
-                    companyName = "Anabul Foundation",
-                    companyIcon = R.drawable.anabul_foundation
+                    companyName = transaksi.namaRelawan,
+                    companyIcon = "R.drawable.anabul_foundation"
                 )
                 Text(
-                    text = "Selamatkan ratusan kucing kelaparan",
+                    text = transaksi.title,
                     style = Type.textSmBold(),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -67,9 +71,9 @@ fun RiwayatItem(type: String) {
         }
         Text(
             text =
-            when (type) {
-                "dana" -> "Rp 50.000"
-                "barang" -> "3 pcs"
+            when (transaksi.donasiType) {
+                TipeDonasi.DANA -> "Rp ${formatLongWithDots(transaksi.income)}"
+                TipeDonasi.BARANG -> "${formatLongWithDots(transaksi.income)} pcs"
                 else -> ""
             },
             style = Type.textMdBold(),

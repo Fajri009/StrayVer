@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
@@ -23,7 +26,16 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.ui.theme.Type
 
 @Composable
-fun RelawanProfilScreen(navController: NavController) {
+fun RelawanProfilScreen(
+    viewModel: RelawanProfilViewModel = hiltViewModel(),
+    navController: NavController
+) {
+    val userData by viewModel.userData
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getUser()
+    }
+
     Box(
         Modifier
             .fillMaxSize()
@@ -46,13 +58,14 @@ fun RelawanProfilScreen(navController: NavController) {
         }
 
         Column(Modifier.align(Alignment.TopStart)) {
-            RelawanProfilContent(navController)
+            RelawanProfilContent(userData.item!!, navController)
         }
 
         RelawanProfilPicture(
-            Modifier
+            modifier = Modifier
                 .align(Alignment.TopCenter)
-                .offset(y = 115.dp)
+                .offset(y = 115.dp),
+            avatar = userData.item!!.avatar
         )
     }
 }

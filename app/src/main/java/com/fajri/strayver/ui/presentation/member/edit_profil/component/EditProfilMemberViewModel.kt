@@ -1,8 +1,12 @@
 package com.fajri.strayver.ui.presentation.member.edit_profil.component
 
+import android.content.Context
+import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajri.strayver.data.Resource
@@ -17,8 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditProfilMemberViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val repository: OnBoardRepository
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _isLoading = mutableStateOf(false)
@@ -30,8 +33,8 @@ class EditProfilMemberViewModel @Inject constructor(
     private val _nama: MutableState<String> = mutableStateOf("")
     val nama: State<String> = _nama
 
-    private val _usernmae: MutableState<String> = mutableStateOf("")
-    val username: State<String> = _usernmae
+    private val _username: MutableState<String> = mutableStateOf("")
+    val username: State<String> = _username
 
     private val _deskripsi: MutableState<String> = mutableStateOf("")
     val deskripsi: State<String> = _deskripsi
@@ -48,12 +51,23 @@ class EditProfilMemberViewModel @Inject constructor(
     private val _password: MutableState<String> = mutableStateOf("")
     val password: State<String> = _password
 
+    private val _imageUri = mutableStateOf<Uri?>(null)
+    val imageUri: State<Uri?> = _imageUri
+
+    init {
+        setImageUri(null)
+    }
+
+    fun setImageUri(uri: Uri?) {
+        _imageUri.value = uri
+    }
+
     fun onChangeNama(value: String) {
         _nama.value = value
     }
 
     fun onChangeUsername(value: String) {
-        _usernmae.value = value
+        _username.value = value
     }
 
     fun onChangeDeskripsi(value: String) {
@@ -88,10 +102,11 @@ class EditProfilMemberViewModel @Inject constructor(
                     is Resource.Success -> {
                         _userData.value = it.data!!.item!!
                         _nama.value= _userData.value.nama
-                        _usernmae.value= _userData.value.username
+                        _username.value= _userData.value.username
                         _deskripsi.value= _userData.value.deskripsi
                         _email.value= _userData.value.email
                         _alamat.value= _userData.value.alamat
+//                        _imageUri.value = _userData.value.avatar.toUri()
                         _telp.value= _userData.value.telp
                         _password.value= _userData.value.password
                         _isLoading.value = false
@@ -103,11 +118,12 @@ class EditProfilMemberViewModel @Inject constructor(
         }
     }
 
-    fun updateProfil(): Flow<Resource<String>> {
+    fun updateProfil(context: Context): Flow<Resource<String>> {
+
 
         val user = UserData(
             nama = _nama.value,
-            username = _usernmae.value,
+            username = _username.value,
             deskripsi= _deskripsi.value,
             email = _email.value,
             telp = _telp.value,
@@ -117,6 +133,6 @@ class EditProfilMemberViewModel @Inject constructor(
             saldo = _userData.value.saldo
         )
 
-        return userRepository.uodateUserProfile(user)
+        return userRepository.updateUserProfile(user, _imageUri.value, context)
     }
 }

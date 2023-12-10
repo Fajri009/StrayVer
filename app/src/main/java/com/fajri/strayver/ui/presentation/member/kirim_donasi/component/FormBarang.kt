@@ -17,16 +17,18 @@ import com.fajri.strayver.ui.presentation.component.CustomTextField
 import com.fajri.strayver.ui.presentation.component.PickImage
 import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
+import com.fajri.strayver.util.Route
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
 fun FormBarang(
     navController: NavController, context: Context, viewModel: KirimDonasiViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier, namaDonasi: String, donasiId: String, donasiType: String,
+    relawan: String, idRelawan: String
 ) {
 
-    val scope= rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
 
     LazyColumn(modifier = modifier) {
         item {
@@ -37,32 +39,67 @@ fun FormBarang(
 
         item {
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = "Nama Produk", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
-        }
-
-        item {
-            Spacer(modifier = Modifier.height(12.dp))
             Text(text = "Nama Pengirim", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.pengirim.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onPengirimChange(it)
+                }
+            )
         }
 
         item {
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = "Deskripsi", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "", minLine = 4, maxLine = 5)
+            CustomTextField(
+                text = viewModel.deskripsi.value,
+                placeholder = "",
+                minLine = 4,
+                maxLine = 5,
+                onValueChange = {
+                    viewModel.onDeskripsiChange(it)
+                }
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(text = "Ekspedisi", style = Type.textSmMedium())
+            CustomTextField(
+                text = viewModel.ekspedisi.value,
+                placeholder = "",
+                minLine = 4,
+                maxLine = 5,
+                onValueChange = {
+                    viewModel.onEkspedisiChange(it)
+                }
+            )
         }
 
         item {
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = "Nomer Resi", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.resi.value,
+                placeholder = "",
+                onValueChange = {
+                    viewModel.onResiChange(it)
+                }
+            )
         }
 
         item {
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = "Jumlah", style = Type.textSmMedium())
-            CustomTextField(text = "", placeholder = "")
+            CustomTextField(
+                text = viewModel.jumlah.value.toString(),
+                placeholder = "",
+                isNumeric = true,
+                onValueChange = {
+                    viewModel.onJumlahChange(it)
+                }
+            )
         }
 
         item {
@@ -72,27 +109,15 @@ fun FormBarang(
         }
 
         item {
-            CustomButton(onClick = {
-                scope.launch {
-                    viewModel.onUploadFile(context).collect {
-                        when(it) {
-                            is Resource.Loading -> {
-                                viewModel.setLoading(true)
-                            }
-                            is Resource.Success -> {
-                                viewModel.setLoading(false)
-                                Toast.makeText(context, it.data, Toast
-                                    .LENGTH_SHORT).show()
-                            }
-                            is Resource.Error -> {
-                                viewModel.setLoading(false)
-                                Toast.makeText(context, it.message, Toast
-                                    .LENGTH_SHORT).show()
-                            }
-                        }
-                    }
+            Spacer(modifier = Modifier.height(8.dp))
+            CustomButton(
+                text = "Kirim",
+                type = ButtonType.LARGE,
+                onClick = {
+                    viewModel.donasiBarangSubmit(context, namaDonasi= namaDonasi, donasiId=
+                    donasiId, donasiType= donasiType, relawan= relawan, idRelawan = idRelawan)
                 }
-            }, text = "Kirim", type = ButtonType.LARGE)
+            )
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
@@ -17,7 +18,10 @@ import com.fajri.strayver.ui.presentation.relawan.donasi.component.RelawanDonasi
 import com.fajri.strayver.ui.theme.Primary700
 
 @Composable
-fun RelawanDonasiScreen(navController: NavController) {
+fun RelawanDonasiScreen(
+    navController: NavController,
+    viewModel: RelawanDonasiViewModel = hiltViewModel()
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -28,9 +32,9 @@ fun RelawanDonasiScreen(navController: NavController) {
             contentDescription = ""
         )
         Column {
-            RelawanDonasiHead()
+            RelawanDonasiHead(viewModel)
             Spacer(modifier = Modifier.height(22.dp))
-            RelawanDonasiContent(navController)
+            RelawanDonasiContent(navController, viewModel)
         }
     }
 }

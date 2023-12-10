@@ -13,11 +13,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.fajri.strayver.R
+import com.fajri.strayver.model.UserData
 import com.fajri.strayver.ui.presentation.member.profil.component.OpsiButton
 import com.fajri.strayver.ui.theme.Shades50
 
 @Composable
-fun RelawanProfilContent(navController: NavController) {
+fun RelawanProfilContent(userData: UserData,navController: NavController) {
     LazyColumn(
         Modifier
             .fillMaxSize()
@@ -27,16 +28,21 @@ fun RelawanProfilContent(navController: NavController) {
             .padding(top = 80.dp, start = 20.dp, end = 20.dp)
     ) {
         item {
-            RelawanInfoItem(value = "Anabul Foundation", title = "Nama", icon = R.drawable.ic_user)
+            RelawanInfoItem(value = userData.nama, title = "Nama", icon = R.drawable.ic_user)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            RelawanInfoItem(value = "anabulz", title = "Username", icon = R.drawable.ic_card)
+            RelawanInfoItem(value = userData.username, title = "Username", icon = R.drawable.ic_card)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
             RelawanInfoItem(
-                value = "Anabul Foundation merupakan komunitas relawan yang bergerak untuk menyelamatkan hewan-hewan terlantar dimana sudah berdiri sejak tahun 2010.\n",
+                value =
+                    if (userData.deskripsi != "") {
+                        userData.deskripsi
+                    } else {
+                        "-"
+                    },
                 title = "Deskripsi",
                 icon = R.drawable.ic_info,
                 isOverflow = true
@@ -44,19 +50,19 @@ fun RelawanProfilContent(navController: NavController) {
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            RelawanInfoItem(value = "anabul.foundation@gmail.com", title = "Email", icon = R.drawable.ic_email)
+            RelawanInfoItem(value = userData.email, title = "Email", icon = R.drawable.ic_email)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
             RelawanInfoItem(
-                value = "Jl Veteran no 8, Ketawanggede, Malang",
+                value = userData.alamat ,
                 title = "Alamat",
                 icon = R.drawable.ic_location
             )
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            RelawanInfoItem(value = "08519081945", title = "Nomer Telepon", icon = R.drawable.ic_phone)
+            RelawanInfoItem(value = userData.telp, title = "Nomer Telepon", icon = R.drawable.ic_phone)
         }
         item {
             Spacer(modifier = Modifier.height(16.dp))

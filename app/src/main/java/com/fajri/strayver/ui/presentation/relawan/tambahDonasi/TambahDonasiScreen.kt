@@ -14,11 +14,17 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fajri.strayver.R
@@ -27,13 +33,38 @@ import com.fajri.strayver.ui.theme.Shades50
 import com.fajri.strayver.util.Route
 
 @Composable
-fun TambahDonasiScreen(navController: NavController) {
+fun TambahDonasiScreen(
+    navController: NavController,
+    donasiId: String,
+    viewModel: TambahDonasiViewModel = hiltViewModel()
+) {
+    val donasiData by viewModel.donasiData
+
+    val colors = listOf(
+        Color.Transparent,
+        Color(red = 0f, green = 0f, blue = 0f, alpha = .55f)
+    )
+
+    LaunchedEffect(key1 = true) {
+        viewModel.getDonasiById(donasiId)
+        viewModel.getTransaksiByIdDonasi(donasiId)
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         AsyncImage(
-            modifier = Modifier.fillMaxWidth(),
-            model = R.drawable.terbaru,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(260.dp)
+                .drawWithContent {
+                    drawContent()
+                    drawRect(
+                        brush = Brush.verticalGradient(colors),
+                        blendMode = BlendMode.DstOut
+                    )
+                },
+            model = donasiData.gambar,
             contentDescription = "",
             contentScale = ContentScale.FillWidth
         )
@@ -58,7 +89,7 @@ fun TambahDonasiScreen(navController: NavController) {
                 .fillMaxSize()
         ) {
             Spacer(modifier = Modifier.height(230.dp))
-            TambahDonasiContainerJudul(navController)
+            TambahDonasiContainerJudul(navController, donasiData, viewModel)
         }
     }
 }

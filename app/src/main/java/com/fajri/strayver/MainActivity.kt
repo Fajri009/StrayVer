@@ -21,6 +21,7 @@ import com.fajri.strayver.ui.presentation.component.CustomScaffold
 import com.fajri.strayver.util.Route
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagerApi::class)
@@ -48,6 +49,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {

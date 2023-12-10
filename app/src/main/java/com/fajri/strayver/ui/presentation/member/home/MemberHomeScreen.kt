@@ -66,6 +66,7 @@ fun MemberHomeScreen(
     LaunchedEffect(key1 = true) {
         memberViewModel.getArtikel(context)
         memberViewModel.getUser()
+        memberViewModel.getDonasi()
     }
 
     LazyColumn(Modifier.padding(bottom = 56.dp)) {
@@ -90,7 +91,7 @@ fun MemberHomeScreen(
 
         item {
             Spacer(modifier = Modifier.height(56.dp))
-            ProyekTerbaru(navController = navController)
+            ProyekTerbaru(navController = navController, memberViewModel)
         }
 
         item {
@@ -102,11 +103,11 @@ fun MemberHomeScreen(
                 Text(text = "Artikel Terkini", style = Type.textMdSemiBold())
             }
         }
-        ArtikelItem(artikelLoading, artikel)
+        ArtikelItem(artikelLoading, artikel, navController)
     }
 }
 
-fun LazyListScope.ArtikelItem(isLoading: Boolean, artikelList: List<ArtikelModelResponse>) {
+fun LazyListScope.ArtikelItem(isLoading: Boolean, artikelList: List<ArtikelModelResponse>, navController: NavController) {
 
     if (isLoading) {
         items(3) {
@@ -132,7 +133,7 @@ fun LazyListScope.ArtikelItem(isLoading: Boolean, artikelList: List<ArtikelModel
         }
     } else {
         items(artikelList) {
-            ArtikelItemCard(artikel = it.item!!)
+            ArtikelItemCard(artikel = it.item!!, navController = navController)
         }
     }
 }

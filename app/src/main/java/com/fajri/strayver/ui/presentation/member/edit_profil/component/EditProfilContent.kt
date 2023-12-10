@@ -65,20 +65,6 @@ fun EditProfilContent(viewModel: EditProfilMemberViewModel, scope: CoroutineScop
         }
 
         item {
-            Text(text = "Bio", style = Type.textSmMedium())
-            CustomTextField(
-                text = viewModel.deskripsi.value,
-                placeholder = "",
-                minLine = 6,
-                maxLine = 6,
-                onValueChange = {
-                    viewModel.onChangeDeskripsi(it)
-                }
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-
-        item {
             Text(text = "Email", style = Type.textSmMedium())
             CustomTextField(
                 text = viewModel.email.value,
@@ -131,11 +117,13 @@ fun EditProfilContent(viewModel: EditProfilMemberViewModel, scope: CoroutineScop
             CustomButton(
                 onClick = {
                     scope.launch {
-                        viewModel.updateProfil().collect {
+                        viewModel.updateProfil(context).collect {
                             when(it) {
                                 is Resource.Success -> {
                                     viewModel.getUserData()
                                     viewModel.onChangeLoadingState(false)
+                                    Toast.makeText(context, "Data akun berhasil diubah", Toast.LENGTH_SHORT).show()
+                                    viewModel.setImageUri(null)
                                     navController.navigate(Route.MEMBER_PROFIL)
                                 }
                                 is Resource.Loading -> {

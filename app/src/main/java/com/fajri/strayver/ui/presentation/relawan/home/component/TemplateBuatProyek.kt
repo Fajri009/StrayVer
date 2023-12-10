@@ -34,7 +34,6 @@ import com.fajri.strayver.util.TipeDonasi
 @Composable
 fun TemplateBuatProyek(
     type: String,
-    onClick: () -> Unit,
     navController: NavController
 ) {
     Card(

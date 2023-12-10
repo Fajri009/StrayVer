@@ -11,6 +11,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,15 +33,14 @@ fun CustomTextField(
     trailingIcon: ImageVector? = null,
     showPassword: Boolean = false,
     onValueChange: (String) -> Unit = {},
-//    onValueIntChange:
     onPasswordToggle: (Boolean) -> Unit = {},
     label: String? = null,
     isPassword: Boolean = false,
-    isNumeric: Boolean= false,
+    isNumeric: Boolean = false,
     maxLine: Int = 1,
     minLine: Int = 1,
-    onIconClick: () -> Unit= {},
-    modifier: Modifier= Modifier.fillMaxWidth()
+    onIconClick: () -> Unit = {},
+    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -53,21 +53,38 @@ fun CustomTextField(
         },
         trailingIcon = {
             if (trailingIcon != null) {
-                if (showPassword) {
-                    IconButton(onClick = { onPasswordToggle(!showPassword) }) {
-                        Icon(
-                            imageVector = trailingIcon,
-                            contentDescription = "show",
-                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
-                            tint = Primary900
-                        )
+                if (isPassword) {
+                    if (!showPassword) {
+                        IconButton(onClick = { onPasswordToggle(!showPassword) }) {
+                            Icon(
+                                imageVector = Icons.Default.VisibilityOff,
+                                contentDescription = "show",
+                                Modifier
+                                    .size(25.dp)
+                                    .clickable { onPasswordToggle(!showPassword) },
+                                tint = Primary900
+                            )
+                        }
+                    } else {
+                        IconButton(onClick = { onPasswordToggle(!showPassword) }) {
+                            Icon(
+                                imageVector = Icons.Default.Visibility,
+                                contentDescription = "",
+                                Modifier
+                                    .size(25.dp)
+                                    .clickable { onPasswordToggle(!showPassword) },
+                                tint = Primary900
+                            )
+                        }
                     }
                 } else {
-                    IconButton(onClick = { onPasswordToggle(!showPassword) }) {
+                    IconButton(onClick = { onIconClick() }) {
                         Icon(
-                            imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = "hide",
-                            Modifier.size(25.dp).clickable { onPasswordToggle(!showPassword) },
+                            imageVector = trailingIcon,
+                            contentDescription = "",
+                            Modifier
+                                .size(25.dp)
+                                .clickable { onPasswordToggle(!showPassword) },
                             tint = Primary900
                         )
                     }
@@ -103,11 +120,9 @@ fun CustomTextField(
         keyboardOptions =
         if (isPassword) {
             KeyboardOptions(keyboardType = KeyboardType.Password)
-        }
-        else if (isNumeric) {
+        } else if (isNumeric) {
             KeyboardOptions(keyboardType = KeyboardType.Number)
-        }
-        else {
+        } else {
             KeyboardOptions(keyboardType = KeyboardType.Text)
         },
         maxLines = maxLine,

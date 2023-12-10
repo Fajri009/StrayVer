@@ -1,6 +1,5 @@
 package com.fajri.strayver.ui.presentation.login.component
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,10 +13,6 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,11 +29,10 @@ import com.fajri.strayver.ui.theme.Type
 import com.fajri.strayver.util.ButtonType
 import com.fajri.strayver.util.Route
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
-fun Form(
+fun LoginForm(
     viewModel: LoginViewModel, navController: NavController, scope: CoroutineScope
 ) {
 
@@ -70,7 +64,6 @@ fun Form(
         showPassword = viewModel.showPassword.value,
         onPasswordToggle = {
             viewModel.showPassword(!viewModel.showPassword.value)
-            Toast.makeText(context, "awdadada", Toast.LENGTH_SHORT).show()
         },
         onValueChange = {
             viewModel.onChangePassword(it)
@@ -145,6 +138,8 @@ fun Form(
                                         .LENGTH_SHORT
                                 ).show()
                             }
+
+                            else -> {}
                         }
                     }
                 }
